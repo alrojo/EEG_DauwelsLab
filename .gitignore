@@ -1,3 +1,4 @@
 *.npy.gz
 *c
 *.png
+*.csv
