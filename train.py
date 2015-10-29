@@ -42,6 +42,7 @@ john = [xb_train, xb_valid, xb_test, tb_train, tb_valid, tb_test, \
     xs_train, xs_valid, xs_test, ts_train, ts_valid, ts_test]
 
 if data_type == 'csv':
+    print "@@@so it's a CSV@@@"
     dat = utils.add_dims_csv([xb_train, xb_valid, xb_test, xs_train, xs_valid, xs_test])
     xb_train = dat[0]
     xb_valid = dat[1]
