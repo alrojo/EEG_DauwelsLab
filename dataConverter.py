@@ -22,10 +22,6 @@ def save_gz(path, arr):
 
 file_paths = glob.glob(file_path)
 
-def make_split():
-    
-    
-
 # Case of .csv
 if extension == '.csv':
     for path in file_paths:
