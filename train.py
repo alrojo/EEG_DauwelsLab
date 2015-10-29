@@ -38,8 +38,6 @@ print "Experiment id: %s" % experiment_id
 xb_train, xb_valid, xb_test, tb_train, tb_valid, tb_test, \
     xs_train, xs_valid, xs_test, ts_train, ts_valid, ts_test \
     = data.load_data(mset, data_type)
-john = [xb_train, xb_valid, xb_test, tb_train, tb_valid, tb_test, \
-    xs_train, xs_valid, xs_test, ts_train, ts_valid, ts_test]
 
 if data_type == 'csv':
     print "@@@so it's a CSV@@@"
@@ -50,6 +48,9 @@ if data_type == 'csv':
     xs_train = dat[3]
     xs_valid = dat[4]
     xs_test = dat[5]
+
+john = [xb_train, xb_valid, xb_test, tb_train, tb_valid, tb_test, \
+    xs_train, xs_valid, xs_test, ts_train, ts_valid, ts_test]
 for i in john:
     print(i.shape)
 

@@ -43,8 +43,6 @@ def load_data(mset, data_type):
     print('Making train/val splits ...')
     Bsplit = load_gz('./data/dat%s/Bsplit.npy.gz' % mset).astype('float32').astype('int').ravel()
     Ssplit = load_gz('./data/dat%s/Ssplit.npy.gz' % mset).astype('float32').astype('int').ravel()
-    print(xb_train.shape)
-    print(Bsplit.shape)
     # Have to do a huge work around for making it from an R/matlab style
     # logical vector into a numpy one ... Should optimize, prob. O(n^2)
     # because of the list append ...
