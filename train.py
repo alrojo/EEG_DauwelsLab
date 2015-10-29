@@ -5,7 +5,7 @@ import numpy as np
 import lasagne as nn
 import sys
 import importlib
-import datetime
+from datetime import datetime, timedelta
 import cPickle as pickle
 import time
 
