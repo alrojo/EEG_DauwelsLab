@@ -20,7 +20,7 @@ if len(sys.argv) != 5:
 config_name = sys.argv[1]
 mset = sys.argv[2]
 data_type = sys.argv[3]
-num_epochs = sys.argv[4]
+num_epochs = int(sys.argv[4])
 
 # Configuration file
 config = importlib.import_module("configurations.%s" % config_name)
