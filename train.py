@@ -42,7 +42,6 @@ xb_train, xb_valid, xb_test, tb_train, tb_valid, tb_test, \
     = data.load_data(mset, data_type)
 
 if data_type == 'csv':
-    print "@@@so it's a CSV@@@"
     dat = utils.add_dims_csv([xb_train, xb_valid, xb_test, xs_train, xs_valid, xs_test])
     xb_train = dat[0]
     xb_valid = dat[1]
@@ -189,7 +188,6 @@ for epoch in range(num_epochs):
         ts_batch = ts_train[shuf[i:i + batch_size]]
         t_batch = np.vstack((tb_batch,ts_batch))
         loss, out = train(x_batch, t_batch)
-        print(loss)
         preds.append(out)
         losses.append(loss)
         label.append(t_batch)
