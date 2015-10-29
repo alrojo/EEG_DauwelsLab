@@ -24,7 +24,7 @@ data_type = sys.argv[3]
 config = importlib.import_module("configurations.%s" % config_name)
 optimizer = config.optimizer
 lambda_reg = config.lambda_reg
-num_epochs = config.epochs
+num_epochs = 100
 batch_size = config.batch_size
 print "Using configurations: '%s'" % config_name
 
