@@ -21,6 +21,7 @@ learning_rate_schedule = {
 
 def build_model():
     l_in = nn.layers.InputLayer((None, 1, 64, 1))
-    l_out = nn.layers.DenseLayer(l_in, num_units=1, nonlinearity=utils.softmax)
+    l_h1 = nn.layers.DenseLayer(nn.layers.DropoutLayer(l_in), num_units=200, nonlinearity=nn.nonlinearities.leaky_rectify)
+    l_out = nn.layers.DenseLayer(l_h1, num_units=1, nonlinearity=utils.softmax)
     
     return l_in, l_out
