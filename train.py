@@ -174,21 +174,25 @@ for epoch in range(num_epochs):
             y = np.vstack((tb,ts))
             n = np.size(X,axis=0)
             print "  validating: %s loss" % subset
+            print "X, y, n"            
+            print(X.shape)
+            print(y.shape)
+            print(n)
             preds = []
             num_batches = n // batch_size
             for i in range(num_batches):
                 print(i)
                 idx = range(i*batch_size, (i+1)*batch_size)
                 x_batch = X[idx]
-                y_batch = y[idx]
-                out = predict(x_batch, y_batch)
+                print "x_batch shape"
+                print(x_batch.shape)
+                out = predict(x_batch)
                 preds.append(out)
             # Computing rest
             rest = n - num_batches * batch_size
             idx = range(n-rest, n)
             x_batch = X[idx]
-            y_batch = y[idx]
-            out = predict(x_batch, y_batch)
+            out = predict(x_batch)
             preds.append(out)
             # Making metadata
             predictions = np.concatenate(preds, axis = 0)

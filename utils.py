@@ -16,7 +16,8 @@ def Cross_Ent(y, t):
     return -t * T.log(y) - (1 - t) * T.log(1 - y)
     
 def accuracy(p, t):
-    return 0;
+    y = p>0.5    
+    return np.mean(y==t);
 
 def auc(p, t):
     return 0;
