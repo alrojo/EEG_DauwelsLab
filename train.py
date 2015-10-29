@@ -52,8 +52,8 @@ if data_type == 'csv':
     xs_test = dat[5]
 
 #### REMOVE THIS
-xb_train, tb_train, xb_valid, tb_valid, xb_test, tb_test = mnistloader.load_dataset
-xs_train, ts_train, xs_valid, ts_valid, xs_test, ts_test = mnistloader.load_dataset
+xb_train, tb_train, xb_valid, tb_valid, xb_test, tb_test = mnistloader.load_dataset()
+xs_train, ts_train, xs_valid, ts_valid, xs_test, ts_test = mnistloader.load_dataset()
 ####
 john = [xb_train, xb_valid, xb_test, tb_train, tb_valid, tb_test, \
     xs_train, xs_valid, xs_test, ts_train, ts_valid, ts_test]
