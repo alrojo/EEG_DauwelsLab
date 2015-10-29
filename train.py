@@ -164,7 +164,7 @@ for epoch in range(num_epochs):
             preds.append(out)
             # Making metadata
             predictions = np.concatenate(preds, axis = 0)
-            acc_eval = T.mean(T.eq(T.argmax(predictions, axis=1), y),
+            acc_eval = np.mean(np.equal(np.argmax(predictions, axis=1), y),
                       dtype=theano.config.floatX)
             #acc_eval = utils.accuracy(predictions, y)
             all_accuracy.append(acc_eval)
@@ -213,7 +213,7 @@ for epoch in range(num_epochs):
     loss_train = np.mean(losses)
     all_losses_train.append(loss_train)
 
-    acc_train = T.mean(T.eq(T.argmax(predictions, axis=1), labels),
+    acc_train = np.mean(np.equal(np.argmax(predictions, axis=1), labels),
                       dtype=theano.config.floatX)
     #acc_train = utils.accuracy(predictions, labels)
     all_accuracy_train.append(acc_train)
