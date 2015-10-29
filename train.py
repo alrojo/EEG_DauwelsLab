@@ -60,11 +60,11 @@ def load_gz(path): # load a .npy.gz file
         return np.load(path)
         
 xb_train = load_gz('./data/X_train.npy.gz')
-tb_train = load_gz('./data/t_train.npy.gz')
+tb_train = load_gz('./data/y_train.npy.gz')
 xb_valid = load_gz('./data/X_val.npy.gz')
-tb_valid = load_gz('./data/t_val.npy.gz')
+tb_valid = load_gz('./data/y_val.npy.gz')
 xb_test = load_gz('./data/X_test.npy.gz')
-tb_test = load_gz('./data/t_test.npy.gz')
+tb_test = load_gz('./data/y_test.npy.gz')
 xs_train = xb_train
 ts_train = tb_train
 xs_valid = xb_valid
