@@ -134,6 +134,36 @@ for epoch in range(num_epochs):
     num_batches = nb_train // batch_size
 
     print("Train ...")
+    if 1==1:#(i + 1) % config.validate_every == 0:
+        sets = [#('train', X_train, y_train, mask_train, all_losses_eval_train, all_accuracy_eval_train),
+                ('valid', xb_valid, xs_valid, tb_valid, ts_valid, all_accuracy_eval_valid, all_auc_eval_valid),
+                ('test', xb_test, xs_test, tb_test, ts_test, all_accuracy_eval_test, all_auc_eval_test)]
+        for subset, xb, xs, tb, ts, all_accuracy, all_auc in sets:
+            X = np.vstack((xb,xs))
+            y = np.vstack((tb,ts))
+            n = np.size(X,axis=0)
+            print "  validating: %s loss" % subset
+            preds = []
+            num_batches = n // batch_size
+            for i in range(num_batches):
+                idx = range(i*batch_size, (i+1)*batch_size)
+                x_batch = X[idx]
+                out = predict(x_batch)
+                preds.append(out)
+            # Computing rest
+            rest = n - num_batches * batch_size
+            idx = range(n-rest, n)
+            x_batch = X[idx]
+            out = predict(x_batch)
+            preds.append(out)
+            # Making metadata
+            predictions = np.concatenate(preds, axis = 0)
+            acc_eval = utils.accuracy(predictions, y)
+            all_accuracy.append(acc_eval)
+            print "  average evaluation accuracy (%s): %.5f" % (subset, acc_eval)
+            auc_eval = utils.auc(predictions, y)
+            all_auc.append(auc_eval)
+            print "  average evaluation accuracy (%s): %.5f" % (subset, auc_eval)
     losses = []
     preds = []
     label = []
@@ -165,36 +195,7 @@ for epoch in range(num_epochs):
         print "  average training accuracy: %.5f" % acc_train
         print "  average auc: %.5f" % auc_train
         
-    if 1==1:#(i + 1) % config.validate_every == 0:
-        sets = [#('train', X_train, y_train, mask_train, all_losses_eval_train, all_accuracy_eval_train),
-                ('valid', xb_valid, xs_valid, tb_valid, ts_valid, all_accuracy_eval_valid, all_auc_eval_valid),
-                ('test', xb_test, xs_test, tb_test, ts_test, all_accuracy_eval_test, all_auc_eval_test)]
-        for subset, xb, xs, tb, ts, all_accuracy, all_auc in sets:
-            X = np.vstack((xb,xs))
-            y = np.vstack((tb,ts))
-            n = np.size(X,axis=0)
-            print "  validating: %s loss" % subset
-            preds = []
-            num_batches = n // batch_size
-            for i in range(num_batches):
-                idx = range(i*batch_size, (i+1)*batch_size)
-                x_batch = X[idx]
-                out = predict(x_batch)
-                preds.append(out)
-            # Computing rest
-            rest = n - num_batches * batch_size
-            idx = range(n-rest, n)
-            x_batch = X[idx]
-            out = predict(x_batch)
-            preds.append(out)
-            # Making metadata
-            predictions = np.concatenate(preds, axis = 0)
-            acc_eval = utils.accuracy(predictions, y)
-            all_accuracy.append(acc_eval)
-            print "  average evaluation accuracy (%s): %.5f" % (subset, acc_eval)
-            auc_eval = utils.auc(predictions, y)
-            all_auc.append(auc_eval)
-            print "  average evaluation accuracy (%s): %.5f" % (subset, auc_eval)
+
 
     now = time.time()
     time_since_start = now - start_time
