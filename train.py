@@ -12,19 +12,21 @@ import time
 # repo libs
 import utils
 import data
+import mnistloader
 
 # Sys parameters
-if len(sys.argv) != 4:
-    sys.exit("Usage: python train.py <config_name> <CVNumber> <data_type")
+if len(sys.argv) != 5:
+    sys.exit("Usage: python train.py <config_name> <CVNumber> <data_type> <num_epochs>")
 config_name = sys.argv[1]
 mset = sys.argv[2]
 data_type = sys.argv[3]
+num_epochs = sys.argv[4]
 
 # Configuration file
 config = importlib.import_module("configurations.%s" % config_name)
 optimizer = config.optimizer
 lambda_reg = config.lambda_reg
-num_epochs = 100
+#num_epochs = config.epochs
 batch_size = config.batch_size
 print "Using configurations: '%s'" % config_name
 
@@ -49,6 +51,10 @@ if data_type == 'csv':
     xs_valid = dat[4]
     xs_test = dat[5]
 
+#### REMOVE THIS
+xb_train, tb_train, xb_valid, tb_valid, xb_test, tb_test = mnistloader.load_dataset
+xs_train, ts_train, xs_valid, ts_valid, xs_test, ts_test = mnistloader.load_dataset
+####
 john = [xb_train, xb_valid, xb_test, tb_train, tb_valid, tb_test, \
     xs_train, xs_valid, xs_test, ts_train, ts_valid, ts_test]
 for i in john:
@@ -141,12 +147,14 @@ for epoch in range(num_epochs):
             preds.append(out)
             # Making metadata
             predictions = np.concatenate(preds, axis = 0)
-            acc_eval = utils.accuracy(predictions, y)
+            acc_eval = T.mean(T.eq(T.argmax(test_prediction, axis=1), target_var),
+                      dtype=theano.config.floatX)
+            #acc_eval = utils.accuracy(predictions, y)
             all_accuracy.append(acc_eval)
             print "  average evaluation accuracy (%s): %.5f" % (subset, acc_eval)
             auc_eval = utils.auc(predictions, y)
-            all_auc.append(auc_eval)
-            print "  average evaluation AUC (%s): %.5f" % (subset, auc_eval)
+    #        all_auc.append(auc_eval)
+    #        print "  average evaluation AUC (%s): %.5f" % (subset, auc_eval)
     print
     if (epoch % 5) == 0:
         print "Epoch %d of %d" % (epoch + 1, num_epochs)
@@ -188,14 +196,16 @@ for epoch in range(num_epochs):
     loss_train = np.mean(losses)
     all_losses_train.append(loss_train)
 
-    acc_train = utils.accuracy(predictions, labels)
+    acc_train = T.mean(T.eq(T.argmax(test_prediction, axis=1), target_var),
+                      dtype=theano.config.floatX)
+    #acc_train = utils.accuracy(predictions, labels)
     all_accuracy_train.append(acc_train)
-    auc_train = utils.auc(predictions, labels)
-    all_auc_train.append(auc_train)
+    #auc_train = utils.auc(predictions, labels)
+    #all_auc_train.append(auc_train)
     if 1==1:
         print "  average training loss: %.5f" % loss_train
         print "  average training accuracy: %.5f" % acc_train
-        print "  average auc: %.5f" % auc_train
+    #    print "  average auc: %.5f" % auc_train
         
 
 
