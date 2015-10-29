@@ -152,7 +152,6 @@ for epoch in range(num_epochs):
             preds = []
             num_batches = n // batch_size
             for i in range(num_batches):
-                print(i)
                 idx = range(i*batch_size, (i+1)*batch_size)
                 x_batch = X[idx]
                 out = predict(x_batch)
@@ -172,7 +171,7 @@ for epoch in range(num_epochs):
             #acc_eval = utils.accuracy(predictions, y)
             all_accuracy.append(acc_eval)
             print "  average evaluation accuracy (%s): %.5f" % (subset, acc_eval)
-            auc_eval = utils.auc(predictions, y)
+    #        auc_eval = utils.auc(predictions, y)
     #        all_auc.append(auc_eval)
     #        print "  average evaluation AUC (%s): %.5f" % (subset, auc_eval)
     print
