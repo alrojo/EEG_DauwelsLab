@@ -13,7 +13,6 @@ import gzip
 # repo libs
 import utils
 import data
-import mnistloader
 
 # Sys parameters
 if len(sys.argv) != 5:
