@@ -213,8 +213,9 @@ for epoch in range(num_epochs):
     labels = np.concatenate(label, axis = 0)
     loss_train = np.mean(losses)
     all_losses_train.append(loss_train)
-    acc_train = np.mean(np.equal(np.argmax(predictions, axis=1), labels),
-                      dtype=theano.config.floatX)
+    max_vals = np.argmax(predictions, axis=1)
+    pre_vec = (max_vals == labels.ravel())
+    acc_train = np.mean(pre_vec, dtype='float32')
     #acc_train = utils.accuracy(predictions, labels)
     all_accuracy_train.append(acc_train)
     #auc_train = utils.auc(predictions, labels)
