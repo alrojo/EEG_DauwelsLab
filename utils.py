@@ -19,7 +19,7 @@ def Cross_Ent(y, t):
 def accuracy(p, t):
     
     y = p>0.5    
-    r = sk.accuracy_score(p,t)
+    r = sk.accuracy_score(y,t)
     #r = np.mean(y==t)    
     return r;
 
