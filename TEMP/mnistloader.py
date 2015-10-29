@@ -1,7 +1,15 @@
 # -*- coding: utf-8 -*-
+from __future__ import print_function
+
 import sys
 import os
+import time
+
 import numpy as np
+import theano
+import theano.tensor as T
+
+import lasagne
 
 def load_dataset():
     # We first define a download function, supporting both Python 2 and 3.
