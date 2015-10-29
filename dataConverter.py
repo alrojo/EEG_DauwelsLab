@@ -14,6 +14,13 @@ if len(sys.argv) != 3:
 extension = sys.argv[1]
 file_path = sys.argv[2]
 
+print "The file_path is: %s" %file_path
+print "The extension is: %s" %extension
+
+# Handling problems with shells scripting ...
+if (file_path[0] == "'") & (file_path[-1] == "'"):
+    file_path = file_path[1:-1]
+
 def save_gz(path, arr):
     tmp_path = os.path.join("/tmp", os.path.basename(path) + ".tmp.npy")
     np.save(tmp_path, arr)
@@ -56,4 +63,5 @@ if extension == '.png':
         save_path += subset
         save_gz(save_path, pngs)
         print "Saved to %s" % save_path
-        
+
+
