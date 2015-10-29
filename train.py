@@ -178,7 +178,7 @@ for epoch in range(num_epochs):
     losses = []
     preds = []
     label = []
-    for i in range(100):
+    for i in range(num_batches):
         xb_batch = xb_train[i:i + batch_size]
         shuf = np.arange(0,ns_train) # Shuffles the spikes at every batch
         np.random.shuffle(shuf)
@@ -191,7 +191,6 @@ for epoch in range(num_epochs):
         preds.append(out)
         losses.append(loss)
         label.append(t_batch)
-    sys.exit()
     predictions = np.concatenate(preds, axis = 0)
     labels = np.concatenate(label, axis = 0)
     loss_train = np.mean(losses)
