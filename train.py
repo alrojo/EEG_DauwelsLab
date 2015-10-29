@@ -164,12 +164,8 @@ for epoch in range(num_epochs):
             preds.append(out)
             # Making metadata
             predictions = np.concatenate(preds, axis = 0)
-            print(predictions.shape)
-            print(y.shape)
             max_vals = np.argmax(predictions, axis=1)
-            print(max_vals.shape)
             pre_vec = (max_vals == y.ravel())
-            print(pre_vec.shape)
             acc_eval = np.mean(pre_vec, dtype='float32')
             #acc_eval = utils.accuracy(predictions, y)
             all_accuracy.append(acc_eval)
@@ -208,6 +204,8 @@ for epoch in range(num_epochs):
         tb_batch = tb_train[i:i + batch_size]
         ts_batch = ts_train[shuf[i:i + batch_size]]
         t_batch = np.vstack((tb_batch,ts_batch))
+        print(x_batch.shape)
+        print(t_batch.shape)
         loss, out = train(x_batch, t_batch)
         preds.append(out)
         losses.append(loss)
