@@ -166,7 +166,9 @@ for epoch in range(num_epochs):
             predictions = np.concatenate(preds, axis = 0)
             print(predictions.shape)
             print(y.shape)
-            acc_eval = np.mean(np.equal(np.argmax(predictions, axis=1), y),
+            max_vals = np.argmax(predictions, axis=1)
+            print(max_vals.shape)
+            acc_eval = np.mean(max_vals == y),
                       dtype=theano.config.floatX)
             #acc_eval = utils.accuracy(predictions, y)
             all_accuracy.append(acc_eval)
