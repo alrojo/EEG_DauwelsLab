@@ -168,8 +168,9 @@ for epoch in range(num_epochs):
             print(y.shape)
             max_vals = np.argmax(predictions, axis=1)
             print(max_vals.shape)
-            acc_eval = np.mean(max_vals == y),
-                      dtype=theano.config.floatX)
+            pre_vec = (max_vals == y)
+            print(pre_vec)
+            acc_eval = np.mean(pre_vec, dtype='float32')
             #acc_eval = utils.accuracy(predictions, y)
             all_accuracy.append(acc_eval)
             print "  average evaluation accuracy (%s): %.5f" % (subset, acc_eval)
