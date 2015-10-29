@@ -117,23 +117,6 @@ all_auc_eval_train = []
 all_auc_eval_valid = []
 all_auc_eval_test = []
 for epoch in range(num_epochs):
-    if (epoch % 10) == 0:
-        print "Epoch %d of %d" % (epoch + 1, num_epochs)
-
-    if epoch in learning_rate_schedule:
-        lr = np.float32(learning_rate_schedule[epoch])
-        print "  setting learning rate to %.7f" % lr
-        learning_rate.set_value(lr)
-    print "Shuffling data"
-    seq_names_b = np.arange(0,nb_train)
-    seq_names_s = np.arange(0,ns_train)
-    np.random.shuffle(seq_names_b)     
-    np.random.shuffle(seq_names_s) 
-    xb_train = xb_train[seq_names_b]
-    xs_train = xs_train[seq_names_s]
-    num_batches = nb_train // batch_size
-
-    print("Train ...")
     if 1==1:#(i + 1) % config.validate_every == 0:
         sets = [('train', xb_train, xs_train, tb_train, ts_train, all_accuracy_eval_train, all_auc_eval_train),
                 ('valid', xb_valid, xs_valid, tb_valid, ts_valid, all_accuracy_eval_valid, all_auc_eval_valid),
@@ -163,7 +146,26 @@ for epoch in range(num_epochs):
             print "  average evaluation accuracy (%s): %.5f" % (subset, acc_eval)
             auc_eval = utils.auc(predictions, y)
             all_auc.append(auc_eval)
-            print "  average evaluation accuracy (%s): %.5f" % (subset, auc_eval)
+            print "  average evaluation AUC (%s): %.5f" % (subset, auc_eval)
+    print
+    if (epoch % 5) == 0:
+        print "Epoch %d of %d" % (epoch + 1, num_epochs)
+
+    if epoch in learning_rate_schedule:
+        lr = np.float32(learning_rate_schedule[epoch])
+        print "  setting learning rate to %.7f" % lr
+        learning_rate.set_value(lr)
+    print "Shuffling data"
+    seq_names_b = np.arange(0,nb_train)
+    seq_names_s = np.arange(0,ns_train)
+    np.random.shuffle(seq_names_b)     
+    np.random.shuffle(seq_names_s) 
+    xb_train = xb_train[seq_names_b]
+    xs_train = xs_train[seq_names_s]
+    num_batches = nb_train // batch_size
+
+    print("Train ...")
+
     losses = []
     preds = []
     label = []
@@ -228,5 +230,3 @@ for epoch in range(num_epochs):
                 }, f, pickle.HIGHEST_PROTOCOL)
 
         print "  stored in %s" % metadata_path
-
-    print
