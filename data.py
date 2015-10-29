@@ -41,8 +41,8 @@ def load_data(mset, data_type):
         xs_test = load_gz('data/dat%s/%s/tst/S_pngs.npy.gz' % (mset,data_type)).astype('float32')
         ts_test = np.ones((xs_test.shape[0],1), dtype='float32')
     print('Making train/val splits ...')
-    Bsplit = load_gz('./data/dat%s/Bsplit.npy.gz' % mset).astype('float32').astype('int')
-    Ssplit = load_gz('./data/dat%s/Ssplit.npy.gz' % mset).astype('float32').astype('int')
+    Bsplit = load_gz('./data/dat%s/Bsplit.npy.gz' % mset).astype('float32').astype('int').ravel()
+    Ssplit = load_gz('./data/dat%s/Ssplit.npy.gz' % mset).astype('float32').astype('int').ravel()
     print(xb_train.shape)
     print(Bsplit.shape)
     xb_valid = xb_train[Bsplit]
