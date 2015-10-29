@@ -2,6 +2,7 @@
 import numpy as np
 import theano.tensor as T
 import time
+from sklearn import metrics as sk
 
 def add_dims_csv(dat):    
     for i in range(len(dat)):
@@ -20,7 +21,7 @@ def accuracy(p, t):
     return np.mean(y==t);
 
 def auc(p, t):
-    return 0;
+    return sk.roc_auc_score(t,p);
     
 def hms(seconds):
     seconds = np.floor(seconds)

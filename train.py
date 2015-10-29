@@ -135,7 +135,7 @@ for epoch in range(num_epochs):
 
     print("Train ...")
     if 1==1:#(i + 1) % config.validate_every == 0:
-        sets = [#('train', X_train, y_train, mask_train, all_losses_eval_train, all_accuracy_eval_train),
+        sets = [('train', xb_train, xs_train, tb_train, ts_train, all_accuracy_eval_train, all_auc_eval_train),
                 ('valid', xb_valid, xs_valid, tb_valid, ts_valid, all_accuracy_eval_valid, all_auc_eval_valid),
                 ('test', xb_test, xs_test, tb_test, ts_test, all_accuracy_eval_test, all_auc_eval_test)]
         for subset, xb, xs, tb, ts, all_accuracy, all_auc in sets:
