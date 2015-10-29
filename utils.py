@@ -17,8 +17,11 @@ def Cross_Ent(y, t):
     return -t * T.log(y) - (1 - t) * T.log(1 - y)
     
 def accuracy(p, t):
+    
     y = p>0.5    
-    return np.mean(y==t);
+    r = sk.accuracy_score(p,t)
+    #r = np.mean(y==t)    
+    return r;
 
 def auc(p, t):
     return sk.roc_auc_score(t,p);
