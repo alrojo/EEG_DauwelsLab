@@ -204,8 +204,6 @@ for epoch in range(num_epochs):
         tb_batch = tb_train[i:i + batch_size]
         ts_batch = ts_train[shuf[i:i + batch_size]]
         t_batch = np.vstack((tb_batch,ts_batch))
-        print(x_batch.shape)
-        print(t_batch.shape)
         loss, out = train(x_batch, t_batch)
         preds.append(out)
         losses.append(loss)
