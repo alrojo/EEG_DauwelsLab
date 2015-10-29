@@ -40,9 +40,7 @@ xb_train, xb_valid, xb_test, tb_train, tb_valid, tb_test, \
     = data.load_data(mset, data_type)
 john = [xb_train, xb_valid, xb_test, tb_train, tb_valid, tb_test, \
     xs_train, xs_valid, xs_test, ts_train, ts_valid, ts_test]
-for i in john:
-    print(i.shape)
-sys.exit
+
 if data_type == 'csv':
     dat = utils.add_dims_csv([xb_train, xb_valid, xb_test, xs_train, xs_valid, xs_test])
     xb_train = dat[0]
@@ -51,6 +49,8 @@ if data_type == 'csv':
     xs_train = dat[3]
     xs_valid = dat[4]
     xs_test = dat[5]
+for i in john:
+    print(i.shape)
 
 nb_train = np.size(xb_train, axis=0)
 ns_train = np.size(xs_train, axis=0)
