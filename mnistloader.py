@@ -6,10 +6,19 @@ import os
 import time
 
 import numpy as np
-import theano
-import theano.tensor as T
 
-import lasagne
+def save_gz(path, arr):
+    tmp_path = os.path.join("/tmp", os.path.basename(path) + ".tmp.npy")
+    np.save(tmp_path, arr)
+    os.system("gzip -c %s > %s" % (tmp_path, path))
+    os.remove(tmp_path)
+
+def load_gz(path): # load a .npy.gz file
+    if path.endswith(".gz"):
+        f = gzip.open(path, 'rb')
+        return np.load(f)
+    else:
+        return np.load(path)
 
 def load_dataset():
     # We first define a download function, supporting both Python 2 and 3.
@@ -50,10 +59,10 @@ def load_dataset():
         return data
 
     # We can now download and read the training and test set images and labels.
-    X_train = load_mnist_images('train-images-idx3-ubyte.gz')
-    y_train = load_mnist_labels('train-labels-idx1-ubyte.gz')
-    X_test = load_mnist_images('t10k-images-idx3-ubyte.gz')
-    y_test = load_mnist_labels('t10k-labels-idx1-ubyte.gz')
+    X_train = load_mnist_images('train-images-idx3-ubyte.gz').astype('float32')
+    y_train = load_mnist_labels('train-labels-idx1-ubyte.gz').astype('float32')
+    X_test = load_mnist_images('t10k-images-idx3-ubyte.gz').astype('float32')
+    y_test = load_mnist_labels('t10k-labels-idx1-ubyte.gz').astype('float32')
 
     # We reserve the last 10000 training examples for validation.
     X_train, X_val = X_train[:-10000], X_train[-10000:]
@@ -62,3 +71,11 @@ def load_dataset():
     # We just return all the arrays in order, as expected in main().
     # (It doesn't matter how we do this as long as we can read them again.)
     return X_train, y_train, X_val, y_val, X_test, y_test
+X_train, y_train, X_val, y_val, X_test, y_test = load_dataset()
+
+save_gz('./data/X_train.npy.gz', X_train)
+save_gz('./data/X_val.npy.gz', X_val)
+save_gz('./data/X_test.npy.gz', X_test)
+save_gz('./data/y_train.npy.gz', y_train)
+save_gz('./data/y_val.npy.gz', y_val)
+save_gz('./data/y_test.npy.gz', y_test)
