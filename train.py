@@ -8,6 +8,7 @@ import importlib
 from datetime import datetime, timedelta
 import cPickle as pickle
 import time
+import gzip
 
 # repo libs
 import utils
@@ -52,8 +53,25 @@ if data_type == 'csv':
     xs_test = dat[5]
 
 #### REMOVE THIS
-xb_train, tb_train, xb_valid, tb_valid, xb_test, tb_test = mnistloader.load_dataset()
-xs_train, ts_train, xs_valid, ts_valid, xs_test, ts_test = mnistloader.load_dataset()
+def load_gz(path): # load a .npy.gz file
+    if path.endswith(".gz"):
+        f = gzip.open(path, 'rb')
+        return np.load(f)
+    else:
+        return np.load(path)
+        
+xb_train = load_gz('.data/X_train.npy.gz')
+tb_train = load_gz('.data/t_train.npy.gz')
+xb_valid = load_gz('.data/X_val.npy.gz')
+tb_valid = load_gz('.data/t_val.npy.gz')
+xb_test = load_gz('.data/X_test.npy.gz')
+tb_test = load_gz('.data/t_test.npy.gz')
+xs_train = xb_train
+ts_train = tb_train
+xs_valid = xb_valid
+ts_valid = tb_valid
+xs_test = xb_test
+ts_test = tb_test
 ####
 john = [xb_train, xb_valid, xb_test, tb_train, tb_valid, tb_test, \
     xs_train, xs_valid, xs_test, ts_train, ts_valid, ts_test]
