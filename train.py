@@ -92,7 +92,7 @@ print("Building cost function ...")
 out_train = nn.layers.get_output(l_out, x, deterministic=False)
 out_eval = nn.layers.get_output(l_out, x, deterministic=True)
 
-cost = T.mean(utils.Cross_Ent(out_train, t))
+cost = T.mean(utils.Cross_Ent(T.argmax(out_train), t))
 # Retrieve all parameters from the network
 all_params = nn.layers.get_all_params(l_out)
 # Setting the weights
