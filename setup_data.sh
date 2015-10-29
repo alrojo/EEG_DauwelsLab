@@ -2,6 +2,11 @@
 echo -e "Converting the .csv's ...\n"
 python ./dataConverter.py '.csv' './data/dat*/csv/*.csv'
 
+echo -e "Making splits ...\n"
+python ./create_validation_split.py './data/dat1/csv' './data/dat1' '0.1'
+python ./create_validation_split.py './data/dat2/csv' './data/dat2' '0.1'
+python ./create_validation_split.py './data/dat3/csv' './data/dat3' '0.1'
+
 pngpath[0]="'./data/dat1/png/trn/*.png'"
 pngpath[1]="'./data/dat2/png/trn/*.png'"
 pngpath[2]="'./data/dat3/png/trn/*.png'"
