@@ -45,13 +45,38 @@ def load_data(mset, data_type):
     Ssplit = load_gz('./data/dat%s/Ssplit.npy.gz' % mset).astype('float32').astype('int').ravel()
     print(xb_train.shape)
     print(Bsplit.shape)
-    xb_valid = xb_train[Bsplit]
-    tb_valid = tb_train[Bsplit]
-    xs_valid = xs_train[Ssplit]
-    ts_valid = ts_train[Ssplit]
-    xb_train = xb_train[(-Bsplit+1)]
-    tb_train = tb_train[(-Bsplit+1)]
-    xs_train = xs_train[(-Ssplit+1)]
-    ts_train = ts_train[(-Ssplit+1)]
+    # Have to do a huge work around for making it from an R/matlab style
+    # logical vector into a numpy one ... Should optimize, prob. O(n^2)
+    # because of the list append ...
+    loc_B_V = []
+    loc_B_T = []
+    loc_S_V = []
+    loc_S_T = []
+    for i in range(np.size(Bsplit)):
+        john = np.array(([i]),dtype='int')        
+        if Bsplit[i] == 1:            
+            loc_B_V.append(john)
+        else:
+            loc_B_T.append(john)
+    for i in range(np.size(Ssplit)):
+        john = np.array(([i]),dtype='int')        
+        if Ssplit[i] == 1:            
+            loc_S_V.append(john)
+        else:
+            loc_S_T.append(john)    
+
+    loc_B_V = np.concatenate(loc_B_V)
+    loc_B_T = np.concatenate(loc_B_T)
+    loc_S_V = np.concatenate(loc_S_V)
+    loc_S_T = np.concatenate(loc_S_T)
+    
+    xb_valid = xb_train[loc_B_V]
+    tb_valid = tb_train[loc_B_V]
+    xs_valid = xs_train[loc_S_V]
+    ts_valid = ts_train[loc_S_V]
+    xb_train = xb_train[loc_B_T]
+    tb_train = tb_train[loc_B_T]
+    xs_train = xs_train[loc_S_T]
+    ts_train = ts_train[loc_S_T]
     
     return xb_train, xb_valid, xb_test, tb_train, tb_valid, tb_test, xs_train, xs_valid, xs_test, ts_train, ts_valid, ts_test
