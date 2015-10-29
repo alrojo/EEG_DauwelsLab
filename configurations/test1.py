@@ -7,7 +7,7 @@ start_saving_at = 0
 save_every = 5
 #write_every_batch = 10
 
-epochs = 300
+epochs = 50
 batch_size = 64
 optimizer = "nag"
 lambda_reg = 0.0001
