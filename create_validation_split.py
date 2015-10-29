@@ -42,8 +42,8 @@ S_seq = np.arange(0,S_n)
 np.random.shuffle(B_seq)
 np.random.shuffle(S_seq)
 
-B_n_val = np.floor(B_n * split)
-S_n_val = np.floor(S_n * split)
+B_n_val = int(np.floor(B_n * split))
+S_n_val = int(np.floor(S_n * split))
 
 B_split = np.zeros((B_n,1))
 B_split[B_seq[0:B_n_val]] = 1
