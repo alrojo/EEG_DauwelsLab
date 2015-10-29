@@ -152,6 +152,7 @@ for epoch in range(num_epochs):
             preds = []
             num_batches = n // batch_size
             for i in range(num_batches):
+                print(i)
                 idx = range(i*batch_size, (i+1)*batch_size)
                 x_batch = X[idx]
                 out = predict(x_batch)
