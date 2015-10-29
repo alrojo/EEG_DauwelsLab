@@ -59,19 +59,6 @@ def load_gz(path): # load a .npy.gz file
     else:
         return np.load(path)
         
-xb_train = load_gz('./data/X_train.npy.gz')
-tb_train = np.expand_dims(load_gz('./data/y_train.npy.gz'),1)
-xb_valid = load_gz('./data/X_val.npy.gz')
-tb_valid = np.expand_dims(load_gz('./data/y_val.npy.gz'),1)
-xb_test = load_gz('./data/X_test.npy.gz')
-tb_test = np.expand_dims(load_gz('./data/y_test.npy.gz'),1)
-xs_train = xb_train
-ts_train = tb_train
-xs_valid = xb_valid
-ts_valid = tb_valid
-xs_test = xb_test
-ts_test = tb_test
-####
 john = [xb_train, xb_valid, xb_test, tb_train, tb_valid, tb_test, \
     xs_train, xs_valid, xs_test, ts_train, ts_valid, ts_test]
 for i in john:
@@ -92,7 +79,7 @@ print("Building cost function ...")
 out_train = nn.layers.get_output(l_out, x, deterministic=False)
 out_eval = nn.layers.get_output(l_out, x, deterministic=True)
 
-cost = T.mean(utils.Cross_Ent(T.argmax(out_train), t))
+cost = T.mean(utils.Cross_Ent(out_train, t))
 # Retrieve all parameters from the network
 all_params = nn.layers.get_all_params(l_out)
 # Setting the weights
@@ -164,15 +151,12 @@ for epoch in range(num_epochs):
             preds.append(out)
             # Making metadata
             predictions = np.concatenate(preds, axis = 0)
-            max_vals = np.argmax(predictions, axis=1)
-            pre_vec = (max_vals == y.ravel())
-            acc_eval = np.mean(pre_vec, dtype='float32')
-            #acc_eval = utils.accuracy(predictions, y)
+            acc_eval = utils.accuracy(predictions, y)
             all_accuracy.append(acc_eval)
             print "  average evaluation accuracy (%s): %.5f" % (subset, acc_eval)
-    #        auc_eval = utils.auc(predictions, y)
-    #        all_auc.append(auc_eval)
-    #        print "  average evaluation AUC (%s): %.5f" % (subset, auc_eval)
+            auc_eval = utils.auc(predictions, y)
+            all_auc.append(auc_eval)
+            print "  average evaluation AUC (%s): %.5f" % (subset, auc_eval)
     print
     if (epoch % 5) == 0:
         print "Epoch %d of %d" % (epoch + 1, num_epochs)
@@ -214,17 +198,14 @@ for epoch in range(num_epochs):
     labels = np.concatenate(label, axis = 0)
     loss_train = np.mean(losses)
     all_losses_train.append(loss_train)
-    max_vals = np.argmax(predictions, axis=1)
-    pre_vec = (max_vals == labels.ravel())
-    acc_train = np.mean(pre_vec, dtype='float32')
-    #acc_train = utils.accuracy(predictions, labels)
+    acc_train = utils.accuracy(predictions, labels)
     all_accuracy_train.append(acc_train)
-    #auc_train = utils.auc(predictions, labels)
-    #all_auc_train.append(auc_train)
+    auc_train = utils.auc(predictions, labels)
+    all_auc_train.append(auc_train)
     if 1==1:
         print "  average training loss: %.5f" % loss_train
         print "  average training accuracy: %.5f" % acc_train
-    #    print "  average auc: %.5f" % auc_train
+        print "  average auc: %.5f" % auc_train
         
 
 
