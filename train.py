@@ -93,8 +93,8 @@ l_in, l_out = config.build_model()
 print("Building cost function ...")
 out_train = nn.layers.get_output(l_out, x, deterministic=False)
 out_eval = nn.layers.get_output(l_out, x, deterministic=True)
-
-cost = T.mean(utils.Cross_Ent(out_train, t))
+TOL=1e-5
+cost = T.mean(utils.Cross_Ent(T.clip(out_train,TOL, 1-TOL), t))
 # Retrieve all parameters from the network
 all_params = nn.layers.get_all_params(l_out)
 # Setting the weights
@@ -204,6 +204,7 @@ for epoch in range(num_epochs):
         ts_batch = ts_train[shuf[i:i + batch_size]]
         t_batch = np.vstack((tb_batch,ts_batch))
         loss, out = train(x_batch, t_batch)
+        print(loss)
         preds.append(out)
         losses.append(loss)
         label.append(t_batch)
