@@ -23,22 +23,22 @@ def load_data(mset, data_type):
     print('Loading data ...')
     if data_type == 'csv':
         # Should make an error handler if path is not valid and return options ...
-        xb_train = load_gz('data/dat%s/%s/Btrn.npy.gz' % (mset,data_type)).astype('float32')
+        xb_train = load_gz('data/dat%s/%s/Btrn.npy.gz' % (mset,data_type)).astype('float32')/255.0
         tb_train = np.zeros((xb_train.shape[0],1), dtype='float32')
-        xs_train = load_gz('data/dat%s/%s/Strn.npy.gz' % (mset,data_type)).astype('float32')
+        xs_train = load_gz('data/dat%s/%s/Strn.npy.gz' % (mset,data_type)).astype('float32')/255.0
         ts_train = np.ones((xs_train.shape[0],1), dtype='float32')
-        xb_test = load_gz('data/dat%s/%s/Btst.npy.gz' % (mset,data_type)).astype('float32')
+        xb_test = load_gz('data/dat%s/%s/Btst.npy.gz' % (mset,data_type)).astype('float32')/255.0
         tb_test = np.zeros((xb_test.shape[0],1), dtype='float32')
-        xs_test = load_gz('data/dat%s/%s/Stst.npy.gz' % (mset,data_type)).astype('float32')
+        xs_test = load_gz('data/dat%s/%s/Stst.npy.gz' % (mset,data_type)).astype('float32')/255.0
         ts_test = np.ones((xs_test.shape[0],1), dtype='float32')
     else:
-        xb_train = load_gz('data/dat%s/%s/trn/B_pngs.npy.gz' % (mset,data_type)).astype('float32')
+        xb_train = load_gz('data/dat%s/%s/trn/B_pngs.npy.gz' % (mset,data_type)).astype('float32')/255.0
         tb_train = np.zeros((xb_train.shape[0],1), dtype='float32')
-        xs_train = load_gz('data/dat%s/%s/trn/S_pngs.npy.gz' % (mset,data_type)).astype('float32')
+        xs_train = load_gz('data/dat%s/%s/trn/S_pngs.npy.gz' % (mset,data_type)).astype('float32')/255.0
         ts_train = np.ones((xs_train.shape[0],1), dtype='float32')
-        xb_test = load_gz('data/dat%s/%s/tst/B_pngs.npy.gz' % (mset,data_type)).astype('float32')
+        xb_test = load_gz('data/dat%s/%s/tst/B_pngs.npy.gz' % (mset,data_type)).astype('float32')/255.0
         tb_test = np.zeros((xb_test.shape[0],1), dtype='float32')
-        xs_test = load_gz('data/dat%s/%s/tst/S_pngs.npy.gz' % (mset,data_type)).astype('float32')
+        xs_test = load_gz('data/dat%s/%s/tst/S_pngs.npy.gz' % (mset,data_type)).astype('float32')/255.0
         ts_test = np.ones((xs_test.shape[0],1), dtype='float32')
     print('Making train/val splits ...')
     Bsplit = load_gz('./data/dat%s/Bsplit.npy.gz' % mset).astype('float32').astype('int').ravel()
