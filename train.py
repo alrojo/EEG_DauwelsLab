@@ -83,7 +83,6 @@ nb_train = np.size(xb_train, axis=0)
 ns_train = np.size(xs_train, axis=0)
 
 print(xb_train.max())
-sys.exit()
 # define symbolic Theano variables
 x = T.ftensor4('x')
 t = T.matrix('t')

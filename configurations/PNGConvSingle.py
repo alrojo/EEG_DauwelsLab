@@ -20,7 +20,7 @@ learning_rate_schedule = {
 }
 
 def build_model():
-    l_in = nn.layers.InputLayer((None, 3, 128, 128))
+    l_in = nn.layers.InputLayer((None, 3, 96, 96))
     l_conv1_a = nn.layers.Conv2DLayer(l_in, num_filters=8, filter_size=(3,3), nonlinearity=nn.nonlinearities.leaky_rectify)
     l_h1 = nn.layers.DenseLayer(l_conv1_a, num_units=150, nonlinearity=nn.nonlinearities.leaky_rectify)
     l_out = nn.layers.DenseLayer(l_h1, num_units=1, nonlinearity=utils.softmax)
