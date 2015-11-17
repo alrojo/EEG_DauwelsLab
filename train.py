@@ -205,7 +205,7 @@ for epoch in range(num_epochs):
         ts_batch = ts_train[shuf[i:i + batch_size]]
         t_batch = np.vstack((tb_batch,ts_batch))
         loss, out = train(x_batch, t_batch)
-        print(loss)
+#        print(loss)
         preds.append(out)
         losses.append(loss)
         label.append(t_batch)
