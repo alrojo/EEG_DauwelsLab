@@ -170,7 +170,6 @@ for epoch in range(num_epochs):
             predictions = np.concatenate(preds, axis = 0)
             print(predictions.dtype)
             print(y.dtype)
-            sys.exit()
             acc_eval = utils.accuracy(predictions, y)
             all_accuracy.append(acc_eval)
             print "  average evaluation accuracy (%s): %.5f" % (subset, acc_eval)
