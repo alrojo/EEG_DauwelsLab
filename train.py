@@ -16,7 +16,7 @@ import data
 
 # Sys parameters
 if len(sys.argv) != 5:
-    sys.exit("Usage: python train.py <config_name> <CVNumber> <data_type> <num_epochs>")
+    sys.exit("Usage: python train.py <config_name> <CVNumber1,2,3> <csv/png> <num_epochs>")
 config_name = sys.argv[1]
 mset = sys.argv[2]
 data_type = sys.argv[3]
@@ -82,7 +82,7 @@ for i in john:
 nb_train = np.size(xb_train, axis=0)
 ns_train = np.size(xs_train, axis=0)
 
-print(nb_train.max())
+print(nb_train[0])
 sys.exit()
 
 # define symbolic Theano variables
