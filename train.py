@@ -82,7 +82,7 @@ for i in john:
 nb_train = np.size(xb_train, axis=0)
 ns_train = np.size(xs_train, axis=0)
 
-print(nb_train[0])
+print(xb_train[0])
 sys.exit()
 
 # define symbolic Theano variables
