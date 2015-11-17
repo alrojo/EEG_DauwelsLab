@@ -58,21 +58,21 @@ def load_gz(path): # load a .npy.gz file
     else:
         return np.load(path)
 
-dogs = load_gz('dogs.npy.gz')
-xb_train = dogs[0:7500,:,:]/255.0
-tb_train = np.zeros((7500,1),dtype='float32')
-xb_valid = dogs[7500:9000,:,:]/255.0
-tb_valid = np.zeros((1500,1),dtype='float32')
-xb_test = dogs[9000:11000,:,:]/255.0
-tb_test = np.zeros((2000,1),dtype='float32')
+#dogs = load_gz('dogs.npy.gz')
+#xb_train = dogs[0:7500,:,:]/255.0
+#tb_train = np.zeros((7500,1),dtype='float32')
+#xb_valid = dogs[7500:9000,:,:]/255.0
+#tb_valid = np.zeros((1500,1),dtype='float32')
+#xb_test = dogs[9000:11000,:,:]/255.0
+#tb_test = np.zeros((2000,1),dtype='float32')
 
-cats = load_gz('cats.npy.gz')
-xs_train = cats[0:7500,:,:]/255.0
-ts_train = np.ones((7500,1),dtype='float32')
-xs_valid = cats[7500:9000,:,:]/255.0
-ts_valid = np.ones((1500,1),dtype='float32')
-xs_test = cats[9000:11000,:,:]/255.0
-ts_test = np.ones((2000,1),dtype='float32')
+#cats = load_gz('cats.npy.gz')
+#xs_train = cats[0:7500,:,:]/255.0
+#ts_train = np.ones((7500,1),dtype='float32')
+#xs_valid = cats[7500:9000,:,:]/255.0
+#ts_valid = np.ones((1500,1),dtype='float32')
+#xs_test = cats[9000:11000,:,:]/255.0
+#ts_test = np.ones((2000,1),dtype='float32')
 
 john = [xb_train, xb_valid, xb_test, tb_train, tb_valid, tb_test, \
     xs_train, xs_valid, xs_test, ts_train, ts_valid, ts_test]
@@ -83,7 +83,7 @@ nb_train = np.size(xb_train, axis=0)
 ns_train = np.size(xs_train, axis=0)
 
 print(xb_train.max())
-
+sys.exit()
 # define symbolic Theano variables
 x = T.ftensor4('x')
 t = T.matrix('t')
