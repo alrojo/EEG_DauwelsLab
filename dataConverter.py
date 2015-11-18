@@ -5,8 +5,8 @@ import glob
 import sys
 
 # For working with .png extensions
-import skimage.transform
-import skimage.io
+#import skimage.transform
+#import skimage.io
 if len(sys.argv) != 3:
     sys.exit("Usage: python dataConverter.py <.csv/.png> <globPath> Notive that \
     csv needs complete path where as png only works with path to one directory at a time")
@@ -57,7 +57,7 @@ if extension == '.png':
     sets = [['/S_pngs.npy.gz',S_pngs, S_paths], ['/B_pngs.npy.gz',B_pngs, B_paths]]
     for subset, pngs, paths in sets:
         for idx, path in enumerate(paths):
-            im = skimage.io.imread(path)
+            im = 0#skimage.io.imread(path)
             pngs[idx,:,:,:] = im.transpose(2,0,1)
         save_path = os.path.dirname(paths[0])
         save_path += subset
