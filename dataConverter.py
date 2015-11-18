@@ -34,6 +34,7 @@ if extension == '.csv':
     for path in file_paths:
         print "Opening: %s" % path
         dat = np.genfromtxt(path, delimiter=',').astype('float32')
+        path = path[:-1] #removing the [0-9] after the data, this is hardcoded.
         save_path = path.replace(extension, ".npy.gz")
         save_gz(save_path,dat)
         print "Saved to %s" % save_path
