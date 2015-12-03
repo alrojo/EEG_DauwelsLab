@@ -3,12 +3,9 @@ import numpy as np
 import os
 import gzip
 import sys
+import glob
 
-def save_gz(path, arr):
-    tmp_path = os.path.join("/tmp", os.path.basename(path) + ".tmp.npy")
-    np.save(tmp_path, arr)
-    os.system("gzip -c %s > %s" % (tmp_path, path))
-    os.remove(tmp_path)
+paths_csv = "./data/csv/*"
 
 def load_gz(path): # load a .npy.gz file
     if path.endswith(".gz"):
@@ -16,65 +13,39 @@ def load_gz(path): # load a .npy.gz file
         return np.load(f)
     else:
         return np.load(path)
-    
-# This function requires that all data is placed in data/dat%s/%s/ %(mset,data_type) as a .npy.gz file.
-# Future work: Make a stochastic loader (amount of data might exceed memory capacity)
-def load_data(mset, data_type):
-    print('Loading data ...')
-    if data_type == 'csv':
-        # Should make an error handler if path is not valid and return options ...
-        xb_train = load_gz('data/dat%s/%s/Btrn.npy.gz' % (mset,data_type)).astype('float32')
-        tb_train = np.zeros((xb_train.shape[0],1), dtype='float32')
-        xs_train = load_gz('data/dat%s/%s/Strn.npy.gz' % (mset,data_type)).astype('float32')
-        ts_train = np.ones((xs_train.shape[0],1), dtype='float32')
-        xb_test = load_gz('data/dat%s/%s/Btst.npy.gz' % (mset,data_type)).astype('float32')
-        tb_test = np.zeros((xb_test.shape[0],1), dtype='float32')
-        xs_test = load_gz('data/dat%s/%s/Stst.npy.gz' % (mset,data_type)).astype('float32')
-        ts_test = np.ones((xs_test.shape[0],1), dtype='float32')
-    else:
-        xb_train = load_gz('data/dat%s/%s/trn/B_pngs.npy.gz' % (mset,data_type)).astype('float32')/255.0
-        tb_train = np.zeros((xb_train.shape[0],1), dtype='float32')
-        xs_train = load_gz('data/dat%s/%s/trn/S_pngs.npy.gz' % (mset,data_type)).astype('float32')/255.0
-        ts_train = np.ones((xs_train.shape[0],1), dtype='float32')
-        xb_test = load_gz('data/dat%s/%s/tst/B_pngs.npy.gz' % (mset,data_type)).astype('float32')/255.0
-        tb_test = np.zeros((xb_test.shape[0],1), dtype='float32')
-        xs_test = load_gz('data/dat%s/%s/tst/S_pngs.npy.gz' % (mset,data_type)).astype('float32')/255.0
-        ts_test = np.ones((xs_test.shape[0],1), dtype='float32')
-    print('Making train/val splits ...')
-    Bsplit = load_gz('./data/dat%s/Bsplit.npy.gz' % mset).astype('float32').astype('int').ravel()
-    Ssplit = load_gz('./data/dat%s/Ssplit.npy.gz' % mset).astype('float32').astype('int').ravel()
-    # Have to do a huge work around for making it from an R/matlab style
-    # logical vector into a numpy one ... Should optimize, prob. O(n^2)
-    # because of the list append ...
-    loc_B_V = []
-    loc_B_T = []
-    loc_S_V = []
-    loc_S_T = []
-    for i in range(np.size(Bsplit)):
-        john = np.array(([i]),dtype='int')        
-        if Bsplit[i] == 1:            
-            loc_B_V.append(john)
-        else:
-            loc_B_T.append(john)
-    for i in range(np.size(Ssplit)):
-        john = np.array(([i]),dtype='int')        
-        if Ssplit[i] == 1:            
-            loc_S_V.append(john)
-        else:
-            loc_S_T.append(john)    
 
-    loc_B_V = np.concatenate(loc_B_V)
-    loc_B_T = np.concatenate(loc_B_T)
-    loc_S_V = np.concatenate(loc_S_V)
-    loc_S_T = np.concatenate(loc_S_T)
-    
-    xb_valid = xb_train[loc_B_V]
-    tb_valid = tb_train[loc_B_V]
-    xs_valid = xs_train[loc_S_V]
-    ts_valid = ts_train[loc_S_V]
-    xb_train = xb_train[loc_B_T]
-    tb_train = tb_train[loc_B_T]
-    xs_train = xs_train[loc_S_T]
-    ts_train = ts_train[loc_S_T]
+def save_gz(path, arr):
+    tmp_path = os.path.join("/tmp", os.path.basename(path) + ".tmp.npy")
+    np.save(tmp_path, arr)
+    os.system("gzip -c %s > %s" % (tmp_path, path))
+    os.remove(tmp_path)
+
+def convertData():
+    file_paths = glob.glob(paths_csv)
+    for path in file_paths:
+        print "Opening: %s" % path
+        dat = np.genfromtxt(path, delimiter=',').astype('float32')
+        save_path = path.replace('.csv', ".npy.gz")
+        save_path = save_path.replace('csv', 'numpy')
+        save_gz(save_path,dat)
+        print "Saved to %s" % save_path
+
+def loadData(CVsplit):
+    print "loadData started!"
+    if(len(glob.glob('./data/csv/*'))!=len(glob.glob('./data/numpy/*'))):
+        print "converting data ..."
+        convertData();
+    xb_train = load_gz('data/numpy/Btrn%s.npy.gz' % CVsplit).astype('float32')
+    tb_train = np.zeros((xb_train.shape[0],1), dtype='float32')
+    xs_train = load_gz('data/numpy/Strn%s.npy.gz' % CVsplit).astype('float32')
+    ts_train = np.ones((xs_train.shape[0],1), dtype='float32')
+    xb_test = load_gz('data/numpy/Btst%s.npy.gz' % CVsplit).astype('float32')
+    tb_test = np.zeros((xb_test.shape[0],1), dtype='float32')
+    xs_test = load_gz('data/numpy/Stst%s.npy.gz' % CVsplit).astype('float32')
+    ts_test = np.ones((xs_test.shape[0],1), dtype='float32')
+    xb_valid = load_gz('data/numpy/Bval%s.npy.gz' % CVsplit).astype('float32')
+    tb_valid = np.zeros((xb_valid.shape[0],1), dtype='float32')
+    xs_valid = load_gz('data/numpy/Sval%s.npy.gz' % CVsplit).astype('float32')
+    ts_valid = np.ones((xs_valid.shape[0],1), dtype='float32')
     
     return xb_train, xb_valid, xb_test, tb_train, tb_valid, tb_test, xs_train, xs_valid, xs_test, ts_train, ts_valid, ts_test
