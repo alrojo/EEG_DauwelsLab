@@ -18,9 +18,9 @@ def Cross_Ent(y, t):
     
 def accuracy(p, t):
     y = p>0.5
-    print("p sum = %.5f" % p.sum())
-    print("t sum = %.5f" % t.sum())
-    print("y sum = %.5f" % y.sum())
+#    print("p sum = %.5f" % p.sum())
+#    print("t sum = %.5f" % t.sum())
+#    print("y sum = %.5f" % y.sum())
     r = sk.accuracy_score(y.astype('int'),t.astype('int'))
     #r = np.mean(y==t)
     return r;
