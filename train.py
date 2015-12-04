@@ -15,12 +15,12 @@ import utils
 import data
 
 # Sys parameters
-if len(sys.argv) != 5:
-    sys.exit("Usage: python train.py <config_name> <CVNumber1,2,3> <csv/png> <num_epochs>")
+if len(sys.argv) != 4:
+    sys.exit("Usage: python train.py <config_name> <CVNumber1,2,3> <num_epochs>")
 config_name = sys.argv[1]
-mset = sys.argv[2]
-data_type = sys.argv[3]
-num_epochs = int(sys.argv[4])
+CVsplit = sys.argv[2]
+#data_type = sys.argv[3]
+num_epochs = int(sys.argv[3])
 
 # Configuration file
 config = importlib.import_module("configurations.%s" % config_name)
@@ -39,16 +39,16 @@ print "Experiment id: %s" % experiment_id
 # Data loading
 xb_train, xb_valid, xb_test, tb_train, tb_valid, tb_test, \
     xs_train, xs_valid, xs_test, ts_train, ts_valid, ts_test \
-    = data.load_data(mset, data_type)
+    = data.load_data(CVsplit)
 
-if data_type == 'csv':
-    dat = utils.add_dims_csv([xb_train, xb_valid, xb_test, xs_train, xs_valid, xs_test])
-    xb_train = dat[0]
-    xb_valid = dat[1]
-    xb_test = dat[2]
-    xs_train = dat[3]
-    xs_valid = dat[4]
-    xs_test = dat[5]
+#if data_type == 'csv':
+dat = utils.add_dims_csv([xb_train, xb_valid, xb_test, xs_train, xs_valid, xs_test])
+xb_train = dat[0]
+xb_valid = dat[1]
+xb_test = dat[2]
+xs_train = dat[3]
+xs_valid = dat[4]
+xs_test = dat[5]
 
 #### REMOVE THIS
 def load_gz(path): # load a .npy.gz file
@@ -90,6 +90,14 @@ t = T.matrix('t')
 # define model: logistic regression
 print("Building network ...")
 l_in, l_out = config.build_model()
+
+all_layers = nn.layers.get_all_layers(l_out)
+num_params = nn.layers.count_params(l_out)
+print("  number of parameters: %d" % num_params)
+print("  layer output shapes:")
+for layer in all_layers:
+    name = string.ljust(layer.__class__.__name__, 32)
+    print("    %s %s" % (name, nn.layers.get_output_shape(layer)))
 
 print("Building cost function ...")
 out_train = nn.layers.get_output(l_out, x, deterministic=False)
