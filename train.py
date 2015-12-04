@@ -172,7 +172,7 @@ for epoch in range(num_epochs):
                 ('test', xb_test, xs_test, tb_test, ts_test,
                  all_accuracy_eval_test, all_auc_eval_test,
                  all_roc_tpr_eval_test, all_roc_fpr_eval_test, all_roc_thresholds_eval_test)]
-        for subset, xb, xs, tb, ts, all_accuracy, all_auc in sets:
+        for subset, xb, xs, tb, ts, all_accuracy, all_auc, all_roc_tpr, all_roc_fpr, all_roc_thresholds in sets:
             X = np.vstack((xb,xs))
             y = np.vstack((tb,ts))
             n = np.size(X,axis=0)
@@ -199,7 +199,9 @@ for epoch in range(num_epochs):
             all_auc.append(auc_eval)
             print "  average evaluation AUC (%s): %.5f" % (subset, auc_eval)
             roc_eval_fpr, roc_eval_tpr, roc_eval_thresholds = utils.roc(predictions, y)
-            
+            all_roc_fpr.append(roc_eval_fpr)
+            all_roc_tpr.append(roc_eval_tpr)
+            all_roc_thresholds.append(roc_eval_thresholds)
     print
     if (epoch % 5) == 0:
         print "Epoch %d of %d" % (epoch + 1, num_epochs)
