@@ -10,7 +10,7 @@ def add_dims_csv(dat):
         dat[i] = np.expand_dims(dat[i], 3)
     return dat        
 
-def softmax(x):
+def sigmoid(x):
     return 1 / (1 + T.exp(-x))
 
 def Cross_Ent(y, t):

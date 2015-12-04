@@ -7,6 +7,11 @@
 #PBS -m abe
 if test X$PBS_ENVIRONMENT = XPBS_BATCH; then cd $PBS_O_WORKDIR; fi
 module load cuda
-python train.py ConvMulti 1 csv 300
-python train.py ConvMulti 2 csv 300
-python train.py ConvMulti 3 csv 300
+python train.py test1 1 300
+python train.py test1 2 300
+python train.py test1 3 300
+python train.py test1 4 300
+python train.py test1 5 300
+python train.py test1 6 300
+python train.py test1 7 300
+python train.py test1 8 300
