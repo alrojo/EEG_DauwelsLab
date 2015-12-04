@@ -20,7 +20,7 @@ def save_gz(path, arr):
     os.system("gzip -c %s > %s" % (tmp_path, path))
     os.remove(tmp_path)
 
-def convertData():
+def convert_data():
     file_paths = glob.glob(paths_csv)
     for path in file_paths:
         print "Opening: %s" % path
@@ -30,11 +30,11 @@ def convertData():
         save_gz(save_path,dat)
         print "Saved to %s" % save_path
 
-def loadData(CVsplit):
+def load_data(CVsplit):
     print "loadData started!"
     if(len(glob.glob('./data/csv/*'))!=len(glob.glob('./data/numpy/*'))):
         print "converting data ..."
-        convertData();
+        convert_data();
     xb_train = load_gz('data/numpy/Btrn%s.npy.gz' % CVsplit).astype('float32')
     tb_train = np.zeros((xb_train.shape[0],1), dtype='float32')
     xs_train = load_gz('data/numpy/Strn%s.npy.gz' % CVsplit).astype('float32')
