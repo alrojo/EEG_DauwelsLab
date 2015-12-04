@@ -163,20 +163,19 @@ all_roc_thresholds_eval_test = []
 
 for epoch in range(num_epochs):
     if 1==1:#(i + 1) % config.validate_every == 0:
-        sets = [('train', xb_train, xs_train, tb_train, ts_train,
+        sets = [('train', True, xb_train, xs_train, tb_train, ts_train,
                  all_accuracy_eval_train, all_auc_eval_train,
                  all_roc_tpr_eval_train, all_roc_fpr_eval_train, all_roc_thresholds_eval_train),
-                ('valid', xb_valid, xs_valid, tb_valid, ts_valid,
+                ('valid', True, xb_valid, xs_valid, tb_valid, ts_valid,
                  all_accuracy_eval_valid, all_auc_eval_valid,
                  all_roc_tpr_eval_valid, all_roc_fpr_eval_valid, all_roc_thresholds_eval_valid),
-                ('test', xb_test, xs_test, tb_test, ts_test,
+                ('test', False, xb_test, xs_test, tb_test, ts_test,
                  all_accuracy_eval_test, all_auc_eval_test,
                  all_roc_tpr_eval_test, all_roc_fpr_eval_test, all_roc_thresholds_eval_test)]
-        for subset, xb, xs, tb, ts, all_accuracy, all_auc, all_roc_tpr, all_roc_fpr, all_roc_thresholds in sets:
+        for subset, Print, xb, xs, tb, ts, all_accuracy, all_auc, all_roc_tpr, all_roc_fpr, all_roc_thresholds in sets:
             X = np.vstack((xb,xs))
             y = np.vstack((tb,ts))
             n = np.size(X,axis=0)
-            print "  validating: %s loss" % subset
             preds = []
             num_batches = n // batch_size
             for i in range(num_batches):
@@ -194,14 +193,18 @@ for epoch in range(num_epochs):
             predictions = np.concatenate(preds, axis = 0)
             acc_eval = utils.accuracy(predictions, y)
             all_accuracy.append(acc_eval)
-            print "  average evaluation accuracy (%s): %.5f" % (subset, acc_eval)
+
             auc_eval = utils.auc(predictions, y)
             all_auc.append(auc_eval)
-            print "  average evaluation AUC (%s): %.5f" % (subset, auc_eval)
+            
             roc_eval_fpr, roc_eval_tpr, roc_eval_thresholds = utils.roc(predictions, y)
             all_roc_fpr.append(roc_eval_fpr)
             all_roc_tpr.append(roc_eval_tpr)
             all_roc_thresholds.append(roc_eval_thresholds)
+            if Print:
+                print "  validating: %s loss" % subset
+                print "  average evaluation accuracy (%s): %.5f" % (subset, acc_eval)
+                print "  average evaluation AUC (%s): %.5f" % (subset, auc_eval)
     print
     if (epoch % 5) == 0:
         print "Epoch %d of %d" % (epoch + 1, num_epochs)
