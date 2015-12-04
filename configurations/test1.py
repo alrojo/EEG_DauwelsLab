@@ -4,7 +4,7 @@ import theano.tensor as T
 
 #validate_every = 40
 start_saving_at = 0
-save_every = 5
+save_every = 20
 #write_every_batch = 10
 
 epochs = 25
