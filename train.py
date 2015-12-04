@@ -9,6 +9,7 @@ from datetime import datetime, timedelta
 import cPickle as pickle
 import time
 import gzip
+import string
 
 # repo libs
 import utils
