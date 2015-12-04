@@ -151,11 +151,27 @@ all_accuracy_eval_test = []
 all_auc_eval_train = []
 all_auc_eval_valid = []
 all_auc_eval_test = []
+all_roc_tpr_eval_train = []
+all_roc_tpr_eval_valid = []
+all_roc_tpr_eval_test = []
+all_roc_fpr_eval_train = []
+all_roc_fpr_eval_valid = []
+all_roc_fpr_eval_test = []
+all_roc_thresholds_eval_train = []
+all_roc_thresholds_eval_valid = []
+all_roc_thresholds_eval_test = []
+
 for epoch in range(num_epochs):
     if 1==1:#(i + 1) % config.validate_every == 0:
-        sets = [('train', xb_train, xs_train, tb_train, ts_train, all_accuracy_eval_train, all_auc_eval_train),
-                ('valid', xb_valid, xs_valid, tb_valid, ts_valid, all_accuracy_eval_valid, all_auc_eval_valid),
-                ('test', xb_test, xs_test, tb_test, ts_test, all_accuracy_eval_test, all_auc_eval_test)]
+        sets = [('train', xb_train, xs_train, tb_train, ts_train,
+                 all_accuracy_eval_train, all_auc_eval_train,
+                 all_roc_tpr_eval_train, all_roc_fpr_eval_train, all_roc_thresholds_eval_train),
+                ('valid', xb_valid, xs_valid, tb_valid, ts_valid,
+                 all_accuracy_eval_valid, all_auc_eval_valid,
+                 all_roc_tpr_eval_valid, all_roc_fpr_eval_valid, all_roc_thresholds_eval_valid),
+                ('test', xb_test, xs_test, tb_test, ts_test,
+                 all_accuracy_eval_test, all_auc_eval_test,
+                 all_roc_tpr_eval_test, all_roc_fpr_eval_test, all_roc_thresholds_eval_test)]
         for subset, xb, xs, tb, ts, all_accuracy, all_auc in sets:
             X = np.vstack((xb,xs))
             y = np.vstack((tb,ts))
@@ -182,6 +198,8 @@ for epoch in range(num_epochs):
             auc_eval = utils.auc(predictions, y)
             all_auc.append(auc_eval)
             print "  average evaluation AUC (%s): %.5f" % (subset, auc_eval)
+            roc_eval_fpr, roc_eval_tpr, roc_eval_thresholds = utils.roc(predictions, y)
+            
     print
     if (epoch % 5) == 0:
         print "Epoch %d of %d" % (epoch + 1, num_epochs)
@@ -259,6 +277,15 @@ for epoch in range(num_epochs):
                 'auc_eval_train': all_auc_eval_train,
                 'auc_eval_valid': all_auc_eval_valid,
                 'auc_eval_test': all_auc_eval_test,
+                'roc_tpr_eval_train': all_roc_tpr_eval_train,
+                'roc_tpr_eval_valid': all_roc_tpr_eval_valid,
+                'roc_tpr_eval_test': all_roc_tpr_eval_test,
+                'roc_fpr_eval_train': all_roc_fpr_eval_train,
+                'roc_fpr_eval_valid': all_roc_fpr_eval_valid,
+                'roc_fpr_eval_test': all_roc_fpr_eval_test,
+                'roc_thresholds_eval_train': all_roc_thresholds_eval_train,
+                'roc_thresholds_eval_valid': all_roc_thresholds_eval_valid,
+                'roc_thresholds_eval_test': all_roc_thresholds_eval_test,
                 'time_since_start': time_since_start,
                 'i': i,
                 }, f, pickle.HIGHEST_PROTOCOL)

@@ -26,7 +26,10 @@ def accuracy(p, t):
     return r;
 
 def auc(p, t):
-    return sk.roc_auc_score(t,p);
+    return sk.roc_auc_score(t, p);
+
+def roc(p, t):
+    return sk.roc_curve(t, p)
     
 def hms(seconds):
     seconds = np.floor(seconds)
