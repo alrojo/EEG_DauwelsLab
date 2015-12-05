@@ -20,6 +20,7 @@ The code can be run through *train.py*, dumps will be saved in *metadata/* and c
 ## Current model performance(averaged over all CV splits)
 
 ### Logistic Regression
+As of 5'th December
 
 Model config: https://github.com/alrojo/EEG_DauwelsLab/blob/master/configurations/LogisticRegression.py
 
@@ -28,6 +29,7 @@ Training AUC: 0.835
 Validation AUC: 0.672
 
 ### MLP
+As of 5'th December
 
 Model config: https://github.com/alrojo/EEG_DauwelsLab/blob/master/configurations/MLP.py
 
