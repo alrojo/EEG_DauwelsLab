@@ -15,5 +15,7 @@ The data is split into eight equal size training, validation and test splits wit
 The code can be run through *train.py*, dumps will be saved in *metadata/* and can be evaluated using *debug_metadata.py*. Configurations for the different models used can be found in *configurations/*
 
 <sup>1</sup>: Technical University of Denmark, DTU Compute, Lyngby, Denmark
+
 <sup>2</sup>: Nanyang Technological University, School of Electrical and Electronic Engineering, Singapore
+
 <sup>3</sup>: Massechusetts General Hospital, Neurology Department, and Harvard Medical School, USA
