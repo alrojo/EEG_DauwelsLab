@@ -37,6 +37,13 @@ Training AUC: 0.999
 
 Validation AUC: 0.972
 
+## Next to train
+Convolutional models
+
+LSTM models
+
+Convolutional + LSTM models
+
 <sup>1</sup>: Technical University of Denmark, DTU Compute, Lyngby, Denmark
 
 <sup>2</sup>: Nanyang Technological University, School of Electrical and Electronic Engineering, Singapore
