@@ -1,7 +1,10 @@
 # EEG_DauwelsLab
 This github project is dedicated to spike detection in EEG data from epileptical patients.
+
 The code is Produced by A. Rosenberg Johansen<sup>1</sup>.
+
 The project is supervisioned by PhD. Justin Dauwels<sup>2</sup> lab.
+
 The data is supplied by M.D. Sydney Cash<sup>3</sup> and M.D. M. Brandon Westover<sup>3</sup>.
 
 The code as been used for ICASSP 2016 submission, using a dataset of five patients, and is now being used for a journal paper with a dataset of 100 patients.
