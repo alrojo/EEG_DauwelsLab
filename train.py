@@ -32,7 +32,7 @@ batch_size = config.batch_size
 print "Using configurations: '%s'" % config_name
 
 timestamp = datetime.now().strftime("%Y%m%d-%H%M%S")
-experiment_id = "%s-%s" % (config_name, timestamp)
+experiment_id = "%s-%s-%s" % (config_name, CVsplit, timestamp)
 metadata_path = "metadata/dump_%s" % experiment_id
 
 print "Experiment id: %s" % experiment_id
