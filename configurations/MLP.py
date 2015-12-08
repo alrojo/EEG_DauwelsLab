@@ -9,7 +9,7 @@ save_every = 20
 epochs = 300
 batch_size = 128
 optimizer = "rmsprop"
-lambda_reg = 0.0001
+lambda_reg = 0.0005
 cut_grad = 20
 N_L1 = 200
 
