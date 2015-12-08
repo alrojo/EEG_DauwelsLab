@@ -2,6 +2,8 @@
 import numpy as np
 import theano.tensor as T
 import time
+import gzip
+import os
 from sklearn import metrics as sk
 
 def add_dims_csv(dat):    
@@ -40,3 +42,16 @@ def hms(seconds):
     
 def timestamp():
     return time.strftime("%Y%m%d-%H%M%S", time.localtime())
+    
+def load_gz(path): # load a .npy.gz file
+    if path.endswith(".gz"):
+        f = gzip.open(path, 'rb')
+        return np.load(f)
+    else:
+        return np.load(path)
+
+def save_gz(path, arr):
+    tmp_path = os.path.join("/tmp", os.path.basename(path) + ".tmp.npy")
+    np.save(tmp_path, arr)
+    os.system("gzip -c %s > %s" % (tmp_path, path))
+    os.remove(tmp_path)
