@@ -25,6 +25,6 @@ def build_model():
     l_conv1_c = nn.layers.Conv2DLayer(l_in, num_filters=8, filter_size=(7,1), nonlinearity=nn.nonlinearities.leaky_rectify)
     l_con_a = nn.layers.ConcatLayer([l_conv1_a, l_conv1_b, l_conv1_c], axis=2)
     l_h1 = nn.layers.DenseLayer(nn.layers.DropoutLayer(l_con_a), num_units=200, nonlinearity=nn.nonlinearities.leaky_rectify)
-    l_out = nn.layers.DenseLayer(l_h1, num_units=1, nonlinearity=utils.softmax)
+    l_out = nn.layers.DenseLayer(l_h1, num_units=1, nonlinearity=utils.sigmoid)
     
     return l_in, l_out
