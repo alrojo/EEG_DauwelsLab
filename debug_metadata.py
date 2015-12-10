@@ -17,7 +17,7 @@ topX = int(sys.argv[2])
 #metadata_path = sys.argv[3]
 
 MLPs = glob.glob("./metadata/*MLP*")
-Logistics = glob.glob("./metadata/*test1*")
+Logistics = glob.glob("./metadata/*Conv*")
 
 metasets = [(MLPs, "Multi Layer Perceptron"), (Logistics, "Logistic regression")]
 plt.figure(1)
@@ -59,6 +59,7 @@ for metadata_paths, name in metasets:
         max_val = np.zeros(shape=topX, dtype=int)
         for i in range(topX):
             max_val[i] = np.argmax(auc_eval_valid)
+            print max_val[i]
             all_aucs_train.append(auc_eval_train[max_val[i]])
             all_aucs_valid.append(auc_eval_valid[max_val[i]])
             all_aucs_test.append(auc_eval_test[max_val[i]])
