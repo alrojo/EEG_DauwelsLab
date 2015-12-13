@@ -1,0 +1,199 @@
+\begin{thebibliography}{10}
+
+\bibitem{EFA2014epilepsy}
+{E}pilepsy {F}oundation~of {A}merica,
+\newblock ``About {E}pilepsy: {T}he {B}asics,''
+\newblock {\em {E}pilepsy {F}oundation,
+  http://www.epilepsy.com/learn/about-epilepsy-basics}, 2014.
+
+\bibitem{racette2014supply}
+Brad~A Racette, David~M Holtzman, Timothy~M Dall, and Oksana Drogan,
+\newblock ``Supply and demand analysis of the current and future us neurology
+  workforce,''
+\newblock {\em Neurology}, vol. 82, no. 24, pp. 2254--2255, 2014.
+
+\bibitem{jin2014spikegui}
+Jing Jin, Justin Dauwels, Sydney Cash, and M~Brandon Westover,
+\newblock ``Spikegui: Software for rapid interictal discharge annotation via
+  template matching and online machine learning,''
+\newblock in {\em Engineering in Medicine and Biology Society (EMBC), 2014 36th
+  Annual International Conference of the IEEE}. IEEE, 2014, pp. 4435--4438.
+
+\bibitem{wilson2002spike}
+Scott~B Wilson and Ronald Emerson,
+\newblock ``Spike detection: a review and comparison of algorithms,''
+\newblock {\em Clinical Neurophysiology}, vol. 113, no. 12, pp. 1873--1881,
+  2002.
+
+\bibitem{gotman1992state}
+Jean Gotman and Li-Yan Wang,
+\newblock ``State dependent spike detection: validation,''
+\newblock {\em Electroencephalography and clinical neurophysiology}, vol. 83,
+  no. 1, pp. 12--18, 1992.
+
+\bibitem{guedes1983spike}
+Pedro Guedes De~Oliveira, Carlos Queiroz, and Fernando Lopes Da~Silva,
+\newblock ``Spike detection based on a pattern recognition approach using a
+  microcomputer,''
+\newblock {\em Electroencephalography and clinical neurophysiology}, vol. 56,
+  no. 1, pp. 97--103, 1983.
+
+\bibitem{wilson1999spike}
+Scott~B Wilson, Christine~A Turner, Ronald~G Emerson, and Mark~L Scheuer,
+\newblock ``Spike detection ii: automatic, perception-based detection and
+  clustering,''
+\newblock {\em Clinical neurophysiology}, vol. 110, no. 3, pp. 404--411, 1999.
+
+\bibitem{gotman1991state}
+J~Gotman and LY~Wang,
+\newblock ``State-dependent spike detection: concepts and preliminary
+  results,''
+\newblock {\em Electroencephalography and clinical neurophysiology}, vol. 79,
+  no. 1, pp. 11--19, 1991.
+
+\bibitem{faure1985attributed}
+Claudie Faure,
+\newblock ``Attributed strings for recognition of epileptic transients in
+  {EEG},''
+\newblock {\em International journal of bio-medical computing}, vol. 16, no. 3,
+  pp. 217--229, 1985.
+
+\bibitem{davey1989expert}
+BLK Davey, WR~Fright, GJ~Carroll, and RD~Jones,
+\newblock ``Expert system approach to detection of epileptiform activity in the
+  {EEG},''
+\newblock {\em Medical and Biological Engineering and Computing}, vol. 27, no.
+  4, pp. 365--370, 1989.
+
+\bibitem{webber1994practical}
+WRS Webber, Brian Litt, K~Wilson, and RP~Lesser,
+\newblock ``Practical detection of epileptiform discharges ({ED}s) in the {EEG}
+  using an artificial neural network: a comparison of raw and parameterized
+  {EEG} data,''
+\newblock {\em Electroencephalography and clinical Neurophysiology}, vol. 91,
+  no. 3, pp. 194--204, 1994.
+
+\bibitem{gabor1992automated}
+Andrew~J Gabor and Masud Seyal,
+\newblock ``Automated interictal {EEG} spike detection using artificial neural
+  networks,''
+\newblock {\em Electroencephalography and clinical Neurophysiology}, vol. 83,
+  no. 5, pp. 271--280, 1992.
+
+\bibitem{ramabhadran1999automated}
+Bhuvana Ramabhadran, James~D Frost~Jr, John~R Glover, and Periklis~Y Ktonas,
+\newblock ``An automated system for epileptogenic focus localization in the
+  electroencephalogram,''
+\newblock {\em Journal of clinical neurophysiology}, vol. 16, no. 1, pp.
+  59--68, 1999.
+
+\bibitem{black2000real}
+Michael~A Black, Richard~D Jones, Grant~J Carroll, Alison~A Dingle, Ivan~M
+  Donaldson, and Philip~J Parkin,
+\newblock ``Real-time detection of epileptiform activity in the {EEG}: a
+  blinded clinical trial,''
+\newblock {\em Clinical {EEG} and Neuroscience}, vol. 31, no. 3, pp. 122--130,
+  2000.
+
+\bibitem{NIPS2012_4824}
+Alex Krizhevsky, Ilya Sutskever, and Geoffrey~E. Hinton,
+\newblock ``Imagenet classification with deep convolutional neural networks,''
+\newblock in {\em Advances in Neural Information Processing Systems 25},
+  F.~Pereira, C.J.C. Burges, L.~Bottou, and K.Q. Weinberger, Eds., pp.
+  1097--1105. Curran Associates, Inc., 2012.
+
+\bibitem{DBLP:journals/corr/HeZR015}
+Kaiming He, Xiangyu Zhang, Shaoqing Ren, and Jian Sun,
+\newblock ``Delving deep into rectifiers: Surpassing human-level performance on
+  imagenet classification,''
+\newblock {\em CoRR}, vol. abs/1502.01852, 2015.
+
+\bibitem{DBLP:journals/corr/ZhangL15}
+Xiang Zhang and Yann LeCun,
+\newblock ``Text understanding from scratch,''
+\newblock {\em CoRR}, vol. abs/1502.01710, 2015.
+
+\bibitem{sonderby2015convolutional}
+S{\o}ren~Kaae S{\o}nderby, Casper~Kaae S{\o}nderby, Henrik Nielsen, and Ole
+  Winther,
+\newblock ``Convolutional lstm networks for subcellular localization of
+  proteins,''
+\newblock {\em arXiv preprint arXiv:1503.01919}, 2015.
+
+\bibitem{lawrence1997face}
+Steve Lawrence, C~Lee Giles, Ah~Chung Tsoi, and Andrew~D Back,
+\newblock ``Face recognition: A convolutional neural-network approach,''
+\newblock {\em Neural Networks, IEEE Transactions on}, vol. 8, no. 1, pp.
+  98--113, 1997.
+
+\bibitem{Simonyan14c}
+K.~Simonyan and A.~Zisserman,
+\newblock ``Very deep convolutional networks for large-scale image
+  recognition,''
+\newblock {\em CoRR}, vol. abs/1409.1556, 2014.
+
+\bibitem{JMLR:v15:srivastava14a}
+Nitish Srivastava, Geoffrey Hinton, Alex Krizhevsky, Ilya Sutskever, and Ruslan
+  Salakhutdinov,
+\newblock ``Dropout: A simple way to prevent neural networks from
+  overfitting,''
+\newblock {\em Journal of Machine Learning Research}, vol. 15, pp. 1929--1958,
+  2014.
+
+\bibitem{icml2013_sutskever13}
+Ilya Sutskever, James Martens, George Dahl, and Geoffrey Hinton,
+\newblock ``On the importance of initialization and momentum in deep
+  learning,''
+\newblock in {\em Proceedings of the 30th International Conference on Machine
+  Learning (ICML-13)}, Sanjoy Dasgupta and David Mcallester, Eds. May 2013,
+  vol.~28, pp. 1139--1147, JMLR Workshop and Conference Proceedings.
+
+\bibitem{bergstra+al:2010-scipy}
+James Bergstra, Olivier Breuleux, Fr{\'{e}}d{\'{e}}ric Bastien, Pascal Lamblin,
+  Razvan Pascanu, Guillaume Desjardins, Joseph Turian, David Warde-Farley, and
+  Yoshua Bengio,
+\newblock ``Theano: a {CPU} and {GPU} math expression compiler,''
+\newblock in {\em Proceedings of the Python for Scientific Computing Conference
+  ({SciPy})}, June 2010,
+\newblock Oral Presentation.
+
+\bibitem{Bastien-Theano-2012}
+Fr{\'{e}}d{\'{e}}ric Bastien, Pascal Lamblin, Razvan Pascanu, James Bergstra,
+  Ian~J. Goodfellow, Arnaud Bergeron, Nicolas Bouchard, and Yoshua Bengio,
+\newblock ``Theano: new features and speed improvements,'' Deep Learning and
+  Unsupervised Feature Learning NIPS 2012 Workshop, 2012.
+
+\bibitem{sander_dieleman_2015_27878}
+Sander Dieleman, Jan Schlüter, Colin Raffel, Eben Olson, Søren~Kaae
+  Sønderby, Daniel Nouri, Daniel Maturana, Martin Thoma, Eric Battenberg, Jack
+  Kelly, Jeffrey~De Fauw, Michael Heilman, diogo149, Brian McFee, Hendrik
+  Weideman, takacsg84, peterderivaz, Jon, instagibbs, Dr.~Kashif Rasul,
+  CongLiu, Britefury, and Jonas Degrave,
+\newblock ``Lasagne: First release.,'' Aug. 2015.
+
+\bibitem{hearst1998support}
+Marti~A. Hearst, Susan~T Dumais, Edgar Osman, John Platt, and Bernhard
+  Scholkopf,
+\newblock ``Support vector machines,''
+\newblock {\em Intelligent Systems and their Applications, IEEE}, vol. 13, no.
+  4, pp. 18--28, 1998.
+
+\bibitem{svetnik2003random}
+Vladimir Svetnik, Andy Liaw, Christopher Tong, J~Christopher Culberson,
+  Robert~P Sheridan, and Bradley~P Feuston,
+\newblock ``Random forest: a classification and regression tool for compound
+  classification and qsar modeling,''
+\newblock {\em Journal of chemical information and computer sciences}, vol. 43,
+  no. 6, pp. 1947--1958, 2003.
+
+\bibitem{peterson2009k}
+Leif~E Peterson,
+\newblock ``K-nearest neighbor,''
+\newblock {\em Scholarpedia}, vol. 4, no. 2, pp. 1883, 2009.
+
+\bibitem{quinlan1986induction}
+J.~Ross Quinlan,
+\newblock ``Induction of decision trees,''
+\newblock {\em Machine learning}, vol. 1, no. 1, pp. 81--106, 1986.
+
+\end{thebibliography}
