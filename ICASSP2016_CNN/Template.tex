@@ -36,7 +36,7 @@
 
 \name{\small A.~Rosenberg Johansen$^{a,b}$, Jing Jin$^b$, Tomasz Maszczyk$^b$, Justin Dauwels$^b$, Sydney S.~Cash$^c$, M.~Brandon Westover$^c$}
 
-\address{\small $^a$ Technical University of Denmark DTU Compute Lygnby, Denmark\\
+\address{\small $^a$ Technical University of Denmark, DTU Compute, Lyngby, Denmark\\
          \small $^b$ Nanyang Technological University, School of Electrical and Electronic Engineering, Singapore\\
          \small $^c$ Massachusetts General Hospital Neurology Department, and Harvard Medical School, USA\\}
 
@@ -52,7 +52,7 @@ The EEG of epileptic patients often contains sharp waveforms called ``spikes", o
 Detecting such spikes is crucial for diagnosing epilepsy.
 In this paper, we develop a convolutional neural network~(CNN) for detecting spikes in EEG of epileptic patients in an automated fashion.~The CNN has a convolutional architecture with filters of various sizes applied to the input layer, leaky ReLUs as activation functions, and a sigmoid output layer.
 Balanced mini-batches were applied to handle the imbalance in the data set.
-Leave-one-patient-out crossvalidation was carried out to test the CNN and benchmark models on EEG data of five epilepsy patients.~We achieved 0.947 AUC for the CNN, while the best performing benchmark model, Support Vector Machines with Gaussian kernel, achieved
+Leave-one-patient-out cross-validation was carried out to test the CNN and benchmark models on EEG data of five epilepsy patients.~We achieved 0.947 AUC for the CNN, while the best performing benchmark model, Support Vector Machines with Gaussian kernel, achieved
 an AUC of 0.912.
 
 \end{abstract}
@@ -76,7 +76,7 @@ field of spike~\cite{gotman1991state,wilson1999spike,gabor1992automated,webber19
 artifact rejection~\cite{gotman1991state,guedes1983spike,wilson1999spike}, and temporal and spatial contexts~\cite{gotman1991state,ramabhadran1999automated,black2000real}.~Unfortunately, none of them are universally accepted or tested on a significantly large dataset of patients and spikes. To date, no algorithmic approach has overcome these challenges to yield expert-level detection of spikes~\cite{jin2014spikegui}.\\
 
 In this study, we analyze the scalp EEG recordings of five patients diagnosed with epilepsy. Suspected interictal epileptiform spikes were cross-annotated by two neurologists.~We applied convolutional neural networks~(CNNs) to learn the discriminative features of spikes.~CNNs are statistical models incorporating prior knowledge about the discriminative features of spikes.~CNNs are commonly applied for finding local pixel dependencies~\cite{NIPS2012_4824}.
-Furthermore, CNNs have been proven successful in surpassing human accuracy in image recognition tasks~\cite{DBLP:journals/corr/HeZR015}, time-series tasks for text analysis~\cite{DBLP:journals/corr/ZhangL15} and biological sequences~\cite{sonderby2015convolutional}.~In addition, CNNs possess a much fewer connections compared to a fully-connected neural network, due to the sparsity and the parameter sharing across the filters. Nevertheless, the computational complexity remains a key challenge to implementing CNNs.~To address this issue, we utilize Graphical Processing Units~(GPUs) and high performance libraries for modeling CNNs. \\
+Furthermore, CNNs have been proven successful in surpassing human accuracy in image recognition tasks~\cite{DBLP:journals/corr/HeZR015}, time-series tasks for text analysis~\cite{DBLP:journals/corr/ZhangL15} and biological sequences~\cite{sonderby2015convolutional}.~In addition, CNNs possess much fewer connections compared to a fully-connected neural network, due to the sparsity and the parameter sharing across the filters. Nevertheless, the computational complexity remains a key challenge to implementing CNNs.~To address this issue, we utilize Graphical Processing Units~(GPUs) and high performance libraries for modeling CNNs. \\
 
 We benchmarked the CNN approach with several standard classification methods.~Leave-one-patient-out crossvalidation was conducted to generate the receiver operating characteristic~(ROC) curve for each model, with the average area-under-the-curve~(AUC) as the benchmark criterion. We achieved 0.947 AUC for the CNN, while the best performing benchmark model, Support Vector Machines with Gaussian kernel, achieved an AUC of 0.912.
 \\
@@ -85,9 +85,9 @@ This paper is organized as follows. In Section 2, we provide information on the 
 
 \section{Methods}
 \subsection{Epileptiform EEG}
-We analyzed the scalp EEG recordings of five patients with known epilepsy. Each EEG data lasts 30~min recorded from 19 standard 10-20 scalp electrodes.~The sampling rate is 128Hz. A high-pass filter at 1Hz was applied to remove the baseline drifts. A notch filter centered at 60Hz was applied to remove the power line interference.~The common average referencing montage was applied to remove the common EKG artifacts.\\
+We analyzed the scalp EEG recordings of five patients with known epilepsy. Each EEG data lasts 30~minutes recorded from 19 standard 10-20 scalp electrodes.~The sampling rate is 128Hz. A high-pass filter at 1Hz was applied to remove the baseline drifts. A notch filter centered at 60Hz was applied to remove the power line interference.~The common average referencing montage was applied to remove the common EKG artifacts.\\
 
-As shown in Fig.\ref{fig:waveforms}a, interictal epileptiform spikes are morphologically defined events with an outstanding sharp peak distinguishable from the background fluctuations~(see Fig.\ref{fig:waveforms}b). Spikes were cross-annotated independently by two neurologists, and extracted with a fixed duration of 0.5~s. In order to reduce the computational load, we randomly sampled 1,500 spikes and 150,000 background waveforms from each subject.~Leave-one-patient-out crossvalidation was conducted to evaluate the CNN model. Moreover, 10\% of the training data was further extracted under stratified sampling for validation, in order to tune the CNN model.\\
+As shown in Fig. \ref{fig:waveforms}a, interictal epileptiform spikes are morphologically defined events with an outstanding sharp peak distinguishable from the background fluctuations~(see Fig.\ref{fig:waveforms}b). Spikes were cross-annotated independently by two neurologists, and extracted with a fixed duration of 0.5~s. In order to reduce the computational load, we randomly sampled 1,500 spikes and 150,000 background waveforms from each subject.~Leave-one-patient-out crossvalidation was conducted to evaluate the CNN model. Moreover, 10\% of the training data was further extracted under stratified sampling for validation, in order to tune the CNN model.\\
 
 \begin{figure}[!tbh]
         \centering
@@ -130,32 +130,32 @@ We applied the backpropagation algorithm to train the CNN. In this way, we can e
 \subsubsection{Activation function}
 \label{ssec:leakyrelus}
 In computational networks, the activation function defines the output of a layer given an input or a set of inputs.
-Nonlinear activation functions are commonly used in neural networks to improve the learning capacity and system robustness for nontrivial problems.~Let us denote the output of layer $\ell$ as $h_\ell$~(with $h_0$ the input layer), $\Theta_{\ell+1}$ as the weight matrix of layer $\ell$$+$$1$, and $z_{\ell+1}$ as the linear combination of the weighted input to each neuron.~The output of layer $\ell$$+$$1$ is computed as follows:
+Nonlinear activation functions are commonly used in neural networks to improve the learning capacity and system robustness for nontrivial problems.~Let us denote the output of layer $\ell$ as $h_\ell$~(with $h_0$ being the input layer), $\Theta_{\ell+1}$ as the weight matrix of layer $\ell$$+$$1$, and $z_{\ell+1}$ as the linear combination of the weighted input to each neuron.~The output of layer $\ell$$+$$1$ is computed as follows:
 $$
 z_{\ell+1} = h_\ell \Theta_{\ell+1},
 $$
 $$
 h_{\ell+1} = a(z_{\ell+1}),                    \eqno{(1)}
 $$
-where the activation function is denoted by $a(z)$. The most commonly used nonlinear activation functions in neural networks are the Logistic Sigmoid $a(z)=1/(1+e^{-z})$ and the Hyperbolic Tangent $a(z)=(e^z-e^{-z})/(e^z+e^{-z})$.
+Where the activation function is denoted by $a(z)$. The most commonly used nonlinear activation functions in neural networks are the Logistic Sigmoid $a(z)=1/(1+e^{-z})$ and the Hyperbolic Tangent $a(z)=(e^z-e^{-z})/(e^z+e^{-z})$.
 Non-saturating activation functions such as the Rectifier Linear Unit~(ReLU) with $a(z) = \max(0,~z)$ have become more popular for their non-vanishing gradients and computational efficiency~\cite{NIPS2012_4824}.~However, the ReLU also suffers from ``dead'' gradients,~i.e.~from large gradients that may deactivate the neurons, and further disable the network.~In order to avoid such problems, we applied the Leaky ReLU~\cite{DBLP:journals/corr/HeZR015} as our activation function in CNN, which is defined as:
 $$
 a(z) = \max(\alpha z, \ z),  \eqno{(2)}
 $$
-with $\alpha=0.3$.~``Leaky" refers to the additional slope when $a(z)<0$.
+with $\alpha=0.1$.~``Leaky" refers to the additional slope when $a(z)<0$.
 
 \subsubsection{The convolutional architecture}
 \label{ssec:convolutionalarchitecture}
 
 In convolutional architectures, the processing steps of (1) are modified as follows:
 $$
-z_{\ell+1} = x_\ell \Theta_{\ell+1},
+z_{\ell+1}^{id} = x_\ell^i \Theta_{\ell+1}^d,
 $$
 $$
-h_{\ell+1} = a(z_{\ell+1}),                    \eqno{(3)}
+h_{\ell+1}^{id} = a(z_{\ell+1}^{id}),                    \eqno{(3)}
 $$
-where the input $x_\ell\in\mathbb{R}^{kc\times1}$ represents a co-located vector of length $k$ in $c$ channels.
-The weight matrix $\Theta_\ell\in\mathbb{R}^{d\times n}$ corresponds to $d$ spatial weight filters with $n = k c$ connections between the input layer and each neuron in the output layer.
+Where the input $x_\ell^i\in\mathbb{R}^{kc\times1}$ represents a co-located vector of length $k$ in $c$ channels and $i$ refers to the specific co-located vector.
+The weight matrix $\Theta_\ell^d\in\mathbb{R}^{1\times n}$ corresponds to a spatial weight filter with $n = k c$ connections, in the $d'th$ output channel, between the input layer and each neuron in the output layer.
 As a result, convolutional layers are configurable to their filter size $k$ and number of filters $d$~\cite{NIPS2012_4824}, leading to many possible configurations of the CNN architecture. \\
 
 Multiple convolutional layers can help to reduce the parameter space, and to model non-linear mappings~\cite{Simonyan14c}.
@@ -165,17 +165,19 @@ Therefore, in this paper, we did not only test a single convolutional layer, but
 \subsubsection{The final CNN model}
 \label{ssec:overallarchitecture}
 As depicted in Fig.~\ref{fig:CNN}, the CNN model contains five layers. The first three layers are convolutional layers with different filter sizes.
-The fourth layer is a fully-connected layer, which feeds into a binary logistic layer~(for normalization purpose) to make final decisions on whether an input waveform is a spike or not.
-During the training process, the CNN network is optimized by minimizing the cross-entropy on the basis of the probability output from the neural network as:
+The fourth layer is a fully-connected layer, which feeds into a fifth binary logistic layer~(for normalization purposes) to make final decisions on whether an input waveform is a spike or not.
+During the training process, the CNN network is optimized by minimizing the binomial cross-entropy on the basis of the probability output from the neural network as:
 $$
-L(y, f(x)) = -f(x)\log(y) - (1 - y)\log(1-f(x)). \eqno{(4)}
+L(x, y) = -f(x)\log(y) - (1 - y)\log(1-f(x)). \eqno{(4)}
 $$
-After being activated by inputs, the convolutional layers are merged and pass the inputs to the neurons of the next fully-connected layer.~The output of the fully-connected layer is then passed to the logistic output function.~The leaky ReLU nonlinear activation function is applied after each convolutional layer as well as the fully-connected layer.~The three convolutional layers in the CNN model contain one-dimensional filter of size 3, 5 and 7 respectively, and a stride of 1 with 8 filters each.~The fully-connected layer has 150 hidden neurons.
+Where $f(x)$ is the neural networks prediction given $x$.
+
+After being activated by inputs, the convolutional layers are merged and passes the inputs to the neurons of the next fully-connected layer.~The output of the fully-connected layer is then passed to the logistic output function.~The leaky ReLU nonlinear activation function is applied after each convolutional layer as well as the fully-connected layer.~The three convolutional layers in the CNN model contains one-dimensional filter of size 3, 5 and 7 respectively, and a stride of 1 with 8 filters each.~The fully-connected layer has 150 hidden neurons.
 In order to avoid overfitting, we are using dropouts~\cite{JMLR:v15:srivastava14a} with $p=0.5$ on the fully-connected layer. \\
 
-The data is extremely skewed~(or ``imbalanced"), since there are vastly more background waveforms than spikes. Therefore, the CNN may mostly model the background waveforms, instead of the spikes.~This problem can be addressed by training the CNN by means of balanced mini-batches.\\
+The data is extremely skewed~(or ``imbalanced"), since there are vastly more background waveforms than spikes. Therefore, the CNN may mostly model the background waveforms, instead of the spikes.~This problem is addressed by training the CNN by means of balanced mini-batches.\\
 
-Our CNN model is relatively small in size compared to conventional CNN models for image processing~\cite{NIPS2012_4824}.
+Our CNN model is relatively small in size(220k parameters) compared to conventional CNN models for image processing~\cite{NIPS2012_4824}.
 As we only analyzed the EEG of five subjects in this preliminary study, we limited the number of parameters in the CNN model in order to avoid overfitting.
 Data augmentation~\cite{NIPS2012_4824} may alleviate the problem of overfitting by generating synthetic data.
 In future work, we will implement data augmentation procedures such as shifting the spikes by a few data points.
@@ -189,9 +191,9 @@ $$
 $$
 \Theta_{t+1} = \Theta+v_{t+1}, \eqno{(5)}
 $$
-with $\epsilon>0$ the learning rate, $\mu \in [0,1]$ the momentum coefficient, and $\Delta f(\Theta_t + \mu v_t)$ the gradient. In this study, the learning rate is $\epsilon = 0.0002$, with a momentum of $\mu = 0.9$.\\
+with $\epsilon>0$ the learning rate, $\mu \in [0,1]$ the momentum coefficient, and $\Delta f(\Theta_t + \mu v_t)$ the gradient. In this study, the learning rate, $\epsilon$ was set by grid searching from $1e-3$ to $1e-5$ where $0.0002$ gave the best convergence in the training data. The momentum applied was set to $\mu = 0.9$ and not optimized further on.\\
 
-The CNN network was trained for a maximum of 50 epochs. The training was stopped when both the validation error and training error diverged from one another.
+The CNN network was trained for a maximum of 50 epochs. The training was stopped when the validation error and training error diverged from one another.
 Leave-one-patient-out crossvalidation was carried out to test the CNN model.~The training was performed on a Tesla K40 GPU. We applied the Python built Theano library~\cite{bergstra+al:2010-scipy,Bastien-Theano-2012} to compile to CUDA~(a GPU interpretable language). We made use of the Lasagne library~\cite{sander_dieleman_2015_27878} to build and configure our CNN model.
 
 \section{Results}
@@ -218,7 +220,7 @@ The receiver operating characteristic~(ROC) curve was computed for each model, a
 
 \end{table}
 
-Our numerical results show that the CNN achieves the largest AUC of 0.947, which outperforms the other four classifiers. As illustrated in Fig.~\ref{fig:ROC}, the ROC curves show that the CNN has favorable specificity and sensitivity compared to the other classifiers.
+Our numerical results shows that the CNN achieves the largest AUC of 0.947, which outperforms the other four classifiers. As illustrated in Fig.~\ref{fig:ROC}, the ROC curves shows that the CNN has favorable specificity and sensitivity compared to the other classifiers.
 
 \begin{figure}[htb]
     \centering
@@ -232,7 +234,7 @@ Our numerical results show that the CNN achieves the largest AUC of 0.947, which
 \section{Conclusion}
 
 In this paper, we develop a CNN model for detecting spikes in the EEG of epileptic patients.
-Our numerical results for a small pool of 5 patients show that the CNN performs better than four standard classifiers.
+Our numerical results for a small pool of 5 patients shows that the CNN performs better than four standard classifiers.
 The CNN model was relatively small compared to previous contributions in the field of convolutional neural networks, since we limited the number of parameters in order to avoid overfitting.~In future work, we will consider datasets of hundreds of epilepsy patients, and will train larger CNN models. Large-scale CNN models may yield even better detection results.
 
 \bibliographystyle{IEEE}
