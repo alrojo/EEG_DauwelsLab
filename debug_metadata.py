@@ -17,9 +17,9 @@ topX = int(sys.argv[2])
 #metadata_path = sys.argv[3]
 
 MLPs = glob.glob("./metadata/*MLP*")
-Logistics = glob.glob("./metadata/*Conv*")
+Convs = glob.glob("./metadata/*Conv*")
 
-metasets = [(MLPs, "Multi Layer Perceptron"), (Logistics, "Logistic regression")]
+metasets = [(Convs, "Convolutional Neural Network"), (MLPs, "Multi Layer Perceptron")]
 plt.figure(1)
 for metadata_paths, name in metasets:
     all_aucs_train = []
