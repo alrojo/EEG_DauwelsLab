@@ -24,6 +24,27 @@ The data is split into eight equal size training, validation and test splits wit
 The code can be run through *train.py*, dumps will be saved in *metadata/* and can be evaluated using *debug_metadata.py*. Configurations for the different models used can be found in *configurations/*
 
 ## Current model performance(averaged over all CV splits)
+As of 11'th December
+### MultiConv w. L^2 = 0.0005
+As of 11'th December
+
+Model config: https://github.com/alrojo/EEG_DauwelsLab/blob/master/configurations/MultiConv.py
+
+Training AUC: 0.996
+
+Validation AUC: 0.961
+
+
+### MLP w. L^2 = 0.0005
+As of 11'th December
+
+Model config: https://github.com/alrojo/EEG_DauwelsLab/blob/master/configurations/MLP.py
+
+Training AUC: 0.998
+
+Validation AUC: 0.973
+
+
 
 ### Logistic Regression
 As of 5'th December
@@ -34,7 +55,7 @@ Training AUC: 0.835
 
 Validation AUC: 0.672
 
-### MLP
+### MLP w. L^2 = 0.0001
 As of 5'th December
 
 Model config: https://github.com/alrojo/EEG_DauwelsLab/blob/master/configurations/MLP.py
