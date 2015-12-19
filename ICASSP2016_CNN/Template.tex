@@ -34,7 +34,7 @@
 % ------
 \title{Epileptiform Spike Detection via Convolutional Neural Networks}
 
-\name{\small A.~Rosenberg Johansen$^{a,b}$, Jing Jin$^b$, Tomasz Maszczyk$^b$, Justin Dauwels$^b$, Sydney S.~Cash$^c$, M.~Brandon Westover$^c$}
+\name{\small Alexander Rosenberg Johansen$^{a,b}$, Jing Jin$^b$, Tomasz Maszczyk$^b$, Justin Dauwels$^b$, Sydney S.~Cash$^c$, M.~Brandon Westover$^c$}
 
 \address{\small $^a$ Technical University of Denmark, DTU Compute, Lyngby, Denmark\\
          \small $^b$ Nanyang Technological University, School of Electrical and Electronic Engineering, Singapore\\
@@ -115,7 +115,7 @@ As shown in Fig. \ref{fig:waveforms}a, interictal epileptiform spikes are morpho
 \subsection{Convolutional Neural Networks}
 
 The problem of spike detection is typically ill-posed,~i.e., there are many models which fit the training patients or spikes well but do not generalize well.
-In other words, there is often not suffecient training data to allow accurate estimation of class probabilities throughout the input space.~Convolutional neural networks~(CNNs)~\cite{lawrence1997face} are suitable for such scenario, since they incorporate constraints and achieve some degree of shift and deformation invariance.~The architecture of a CNN~(see Fig.~\ref{fig:CNN}) typically contains multiple layers: convolutional layers, dense layers, and an output layer.
+In other words, there is often not sufficient training data to allow accurate estimation of class probabilities throughout the input space.~Convolutional neural networks~(CNNs)~\cite{lawrence1997face} are suitable for such scenario, since they incorporate constraints and can achieve some degree of shift and deformation invariance.~The architecture of a CNN~(see Fig.~\ref{fig:CNN}) typically contains multiple layers: convolutional layers, dense layers, and an output layer.
 We applied the backpropagation algorithm to train the CNN. In this way, we can extract both low-level and high-level features from the input layer.
 
 \begin{figure}[htb]
@@ -123,7 +123,7 @@ We applied the backpropagation algorithm to train the CNN. In this way, we can e
     \setlength\fboxsep{0pt}
     \setlength\fboxrule{0.pt}
     \fbox{\includegraphics[trim = 45mm 16mm 44mm 8mm, clip, width=.45\textwidth]{CNN.pdf}}
-    \caption{The architecture of a typical CNN model.}
+    \caption{The architecture of a the CNN model applied.}
     \label{fig:CNN}
 \end{figure}
 
@@ -137,7 +137,7 @@ $$
 $$
 h_{\ell+1} = a(z_{\ell+1}),                    \eqno{(1)}
 $$
-Where the activation function is denoted by $a(z)$. The most commonly used nonlinear activation functions in neural networks are the Logistic Sigmoid $a(z)=1/(1+e^{-z})$ and the Hyperbolic Tangent $a(z)=(e^z-e^{-z})/(e^z+e^{-z})$.
+The activation function is denoted by $a(z)$. The most commonly used nonlinear activation functions in neural networks are the Logistic Sigmoid $a(z)=1/(1+e^{-z})$ and the Hyperbolic Tangent $a(z)=(e^z-e^{-z})/(e^z+e^{-z})$.
 Non-saturating activation functions such as the Rectifier Linear Unit~(ReLU) with $a(z) = \max(0,~z)$ have become more popular for their non-vanishing gradients and computational efficiency~\cite{NIPS2012_4824}.~However, the ReLU also suffers from ``dead'' gradients,~i.e.~from large gradients that may deactivate the neurons, and further disable the network.~In order to avoid such problems, we applied the Leaky ReLU~\cite{DBLP:journals/corr/HeZR015} as our activation function in CNN, which is defined as:
 $$
 a(z) = \max(\alpha z, \ z),  \eqno{(2)}
@@ -155,7 +155,7 @@ $$
 h_{\ell+1}^{id} = a(z_{\ell+1}^{id}),                    \eqno{(3)}
 $$
 Where the input $x_\ell^i\in\mathbb{R}^{kc\times1}$ represents a co-located vector of length $k$ in $c$ channels and $i$ refers to the specific co-located vector.
-The weight matrix $\Theta_\ell^d\in\mathbb{R}^{1\times kc}$ corresponds to a spatial weight filter with $k c$ connections, in the $d'th$ output channel, between the input layer and each neuron in the output layer.
+The weight matrix $\Theta_\ell^d\in\mathbb{R}^{1\times kc}$ corresponds to a spatial weight filter with $k c$ connections, in the $d^{th}$ output channel, between the input layer and each neuron in the output layer.
 As a result, convolutional layers are configurable to their filter size $k$ and number of filters $d$~\cite{NIPS2012_4824}, leading to many possible configurations of the CNN architecture. \\
 
 Multiple convolutional layers can help to reduce the parameter space, and to model non-linear mappings~\cite{Simonyan14c}.
@@ -170,14 +170,14 @@ During the training process, the CNN network is optimized by minimizing the bino
 $$
 L(x, y) = -f(x)\log(y) - (1 - y)\log(1-f(x)). \eqno{(4)}
 $$
-Where $f(x)$ is the neural networks prediction given $x$.
+Where $f(x)$ is the prediction of the neural network given $x$.
 
 After being activated by inputs, the convolutional layers are merged and passes the inputs to the neurons of the next fully-connected layer.~The output of the fully-connected layer is then passed to the logistic output function.~The leaky ReLU nonlinear activation function is applied after each convolutional layer as well as the fully-connected layer.~The three convolutional layers in the CNN model contains one-dimensional filter of size 3, 5 and 7 respectively, and a stride of 1 with 8 filters each.~The fully-connected layer has 150 hidden neurons.
 In order to avoid overfitting, we are using dropouts~\cite{JMLR:v15:srivastava14a} with $p=0.5$ on the fully-connected layer. \\
 
 The data is extremely skewed~(or ``imbalanced"), since there are vastly more background waveforms than spikes. Therefore, the CNN may mostly model the background waveforms, instead of the spikes.~This problem is addressed by training the CNN by means of balanced mini-batches.\\
 
-Our CNN model is relatively small in size(220k parameters) compared to conventional CNN models for image processing~\cite{NIPS2012_4824}.
+Our CNN model is relatively small in size (220k parameters) compared to conventional CNN models for image processing~\cite{NIPS2012_4824}.
 As we only analyzed the EEG of five subjects in this preliminary study, we limited the number of parameters in the CNN model in order to avoid overfitting.
 Data augmentation~\cite{NIPS2012_4824} may alleviate the problem of overfitting by generating synthetic data.
 In future work, we will implement data augmentation procedures such as shifting the spikes by a few data points.
@@ -191,7 +191,7 @@ $$
 $$
 \Theta_{t+1} = \Theta+v_{t+1}, \eqno{(5)}
 $$
-with $\epsilon>0$ the learning rate, $\mu \in [0,1]$ the momentum coefficient, and $\Delta f(\Theta_t + \mu v_t)$ the gradient. In this study, the learning rate, $\epsilon$ was set by grid searching from $1e-3$ to $1e-5$ where $0.0002$ gave the best convergence in the training data. The momentum applied was set to $\mu = 0.9$ and not optimized further on.\\
+with $\epsilon>0$ the learning rate, $\mu \in [0,1]$ the momentum coefficient, and $\Delta f(\Theta_t + \mu v_t)$ the gradient. In this study, the learning rate $\epsilon$ was set by grid searching from $10^{-3}$ to $10^{-5}$, where $2\, 10^{-4}$ gave the best convergence in the training data. The momentum applied was set to $\mu = 0.9$ and not optimized further on.\\
 
 The CNN network was trained for a maximum of 50 epochs. The training was stopped when the validation error and training error diverged from one another.
 Leave-one-patient-out crossvalidation was carried out to test the CNN model.~The training was performed on a Tesla K40 GPU. We applied the Python built Theano library~\cite{bergstra+al:2010-scipy,Bastien-Theano-2012} to compile to CUDA~(a GPU interpretable language). We made use of the Lasagne library~\cite{sander_dieleman_2015_27878} to build and configure our CNN model.
