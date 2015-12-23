@@ -21,11 +21,11 @@ learning_rate_schedule = {
     275: 0.00025,
 }
 
-def build_model(mask=None):
+def build_model():
     # 1. Input layer
     l_in = lasagne.layers.InputLayer(shape=(None, seq_len, n_inputs))
     # 2. LSTM Layer
-    l_forward = lasagne.layers.LSTMLayer(l_in, N_LSTM_F, mask=mask)
+    l_forward = lasagne.layers.LSTMLayer(l_in, N_LSTM_F)
 
     l_reshape_b = lasagne.layers.ReshapeLayer(
         l_forward, (-1, N_LSTM_F))
