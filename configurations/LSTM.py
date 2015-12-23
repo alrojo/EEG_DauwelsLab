@@ -5,12 +5,13 @@ start_saving_at = 0
 save_every = 5
 #write_every_batch = 10
 
+recurrent=True
 epochs = 300
 batch_size = 2048
 N_LSTM_F = 100
 n_inputs = 1
-num_classes = 2
-seq_len = 700
+num_classes = 1
+seq_len = 64
 optimizer = "rmsprop"
 lambda_reg = 0.0001
 cut_grad = 20
@@ -34,10 +35,10 @@ def build_model():
 #	lasagne.layers.dropout(l_reshape_b, p=0.5), num_units=N_L2, nonlinearity=lasagne.nonlinearities.rectify)
     # 5. Output Layer
     l_recurrent_out = lasagne.layers.DenseLayer(
-        l_reshape_b, num_units=num_classes, nonlinearity=lasagne.nonlinearities.softmax)
+        l_reshape_b, num_units=num_classes, nonlinearity=lasagne.nonlinearities.sigmoid)
 
     # Now, reshape the output back to the RNN format
     l_out = lasagne.layers.ReshapeLayer(
-        l_recurrent_out, (batch_size, seq_len, num_classes))
+        l_recurrent_out, (-1, seq_len, num_classes))
 
     return l_in, l_out
