@@ -6,10 +6,10 @@ import gzip
 import os
 from sklearn import metrics as sk
 
-def add_dims_csv(dat):    
+def add_dims_seq(dat):    
     for i in range(len(dat)):
         dat[i] = np.expand_dims(dat[i], 1)
-        dat[i] = np.expand_dims(dat[i], 3)
+#        dat[i] = np.expand_dims(dat[i], 3) only using for 2D Conv
     return dat        
 
 def sigmoid(x):

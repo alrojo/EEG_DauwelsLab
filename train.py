@@ -14,35 +14,46 @@ import string
 import utils
 import data
 
-# Sys parameters
+print "Setting sys parameters ..."
 if len(sys.argv) != 4:
     sys.exit("Usage: python train.py <config_name> <CVNumber1,2,3> <num_epochs>")
 config_name = sys.argv[1]
 CVsplit = sys.argv[2]
-#data_type = sys.argv[3]
 num_epochs = int(sys.argv[3])
 
-# Configuration file
+print "Defining symbolic variables ..."
+sym_x = T.ftensor4('x')
+sym_mask = T.matrix('mask')
+sym_t = T.matrix('t')
+
+print "Loading config file: '%s'" % config_name
 config = importlib.import_module("configurations.%s" % config_name)
+print "Setting config params ..."
 optimizer = config.optimizer
+print "Optimizer: %s" % optimizer
 lambda_reg = config.lambda_reg
+print "Lambda: %.5f" % lambda_reg
 #num_epochs = config.epochs
 batch_size = config.batch_size
-print "Using configurations: '%s'" % config_name
-
+print "Batch size: %d" % batch_size
 timestamp = datetime.now().strftime("%Y%m%d-%H%M%S")
 experiment_id = "%s-%s-%s" % (config_name, CVsplit, timestamp)
 metadata_path = "metadata/dump_%s" % experiment_id
 
+print "Hacking a mask ..."
+mask = np.zeros((config.batch_size*2, 64)) # a bit hardcoded
+mask[:,-1] += 1 # only last element
+mask_eval = mask[:config.batch_size] # only regular batch_size in eval
+
 print "Experiment id: %s" % experiment_id
 
-# Data loading
+print "Loading data ..."
 xb_train, xb_valid, xb_test, tb_train, tb_valid, tb_test, \
     xs_train, xs_valid, xs_test, ts_train, ts_valid, ts_test \
     = data.load_data(CVsplit)
 
-#if data_type == 'csv':
-dat = utils.add_dims_csv([xb_train, xb_valid, xb_test, xs_train, xs_valid, xs_test])
+print "Preprocesssing data ..."
+dat = utils.add_dims_seq([xb_train, xb_valid, xb_test, xs_train, xs_valid, xs_test])
 xb_train = dat[0]
 xb_valid = dat[1]
 xb_test = dat[2]
@@ -50,20 +61,18 @@ xs_train = dat[3]
 xs_valid = dat[4]
 xs_test = dat[5]
 
-john = [xb_train, xb_valid, xb_test, tb_train, tb_valid, tb_test, \
+print "Data shapes ..."
+dataset = [xb_train, xb_valid, xb_test, tb_train, tb_valid, tb_test, \
     xs_train, xs_valid, xs_test, ts_train, ts_valid, ts_test]
-for i in john:
-    print(i.shape)
-
+for dat in dataset:
+    print(dat.shape)
+assert False
 nb_train = np.size(xb_train, axis=0)
 ns_train = np.size(xs_train, axis=0)
 
+print "DEBUG: max train values"
 print(xb_train.max())
-# define symbolic Theano variables
-x = T.ftensor4('x')
-t = T.matrix('t')
 
-# define model: logistic regression
 print("Building network ...")
 l_in, l_out = config.build_model()
 
@@ -76,16 +85,27 @@ for layer in all_layers:
     print("    %s %s" % (name, nn.layers.get_output_shape(layer)))
 
 print("Building cost function ...")
-out_train = nn.layers.get_output(l_out, x, deterministic=False)
-out_eval = nn.layers.get_output(l_out, x, deterministic=True)
-TOL=1e-5
-cost = T.mean(utils.Cross_Ent(T.clip(out_train,TOL, 1-TOL), t))
-# Retrieve all parameters from the network
-all_params = nn.layers.get_all_params(l_out)
-# Setting the weights
+out_train = nn.layers.get_output(
+    l_out, sym_x, mask=sym_mask, deterministic=False)
+out_eval = nn.layers.get_output(
+    l_out, sym_x, mask=sym_mask, deterministic=True)
+TOL=1e-15
+
+probs_flat = out_train.reshape((-1, 1))
+
+lambda_reg = config.lambda_reg
+params = nn.layers.get_all_params(l_out, regularizable=True)
+reg_term = sum(T.sum(p**2) for p in params)
+cost = T.nnet.categorical_crossentropy(T.clip(probs_flat, TOL, 1-TOL), sym_t.flatten())
+cost = T.sum(cost*sym_mask.flatten()) / T.sum(sym_mask) + lambda_reg * reg_term
+
+print "Retreiving all parameters ..."
+all_params = nn.layers.get_all_params(l_out, trainable=True)
+
 if hasattr(config, 'set_weights'):
+    print "Setting weights from config file ..."
     nn.layers.set_all_param_values(l_out, config.set_weights())
-# Compute SGD updates for training
+
 print("Computing updates ...")
 if hasattr(config, 'learning_rate_schedule'):
     learning_rate_schedule = config.learning_rate_schedule              # Import learning rate schedule
@@ -93,27 +113,33 @@ else:
     learning_rate_schedule = { 0: config.learning_rate }
 learning_rate = theano.shared(np.float32(learning_rate_schedule[0]))
 
+print "Getting gradients ..."
 all_grads = T.grad(cost, all_params)
+print "Print configuring updates ..."
+cut_norm = config.cut_grad
+updates, norm_calc = nn.updates.total_norm_constraint(all_grads, max_norm=cut_norm, return_norm=True)
+
 if optimizer == "rmsprop":
-    updates = nn.updates.rmsprop(all_grads, all_params, learning_rate)
+    updates = nn.updates.rmsprop(updates, all_params, learning_rate)
+elif optimizer == "adadelta":
+    updates = nn.updates.adadelta(updates, all_params, learning_rate)
 elif optimizer == "adagrad":
-    updates = nn.updates.adagrad(all_grads, all_params, learning_rate)
+    updates = nn.updates.adagrad(updates, all_params, learning_rate)
 elif optimizer == "nag":
-    updates = nn.updates.nesterov_momentum(all_grads, all_params, learning_rate, 0.9)
+    momentum_schedule = config.momentum_schedule
+    momentum = theano.shared(np.float32(momentum_schedule[0]))
+    updates = nn.updates.nesterov_momentum(updates, all_params, learning_rate, momentum)
 else:
-    sys.exit("please choose either <rmsprop/adagrad/nag> as second input param")
-# Theano functions for training and computing cost
-print "config.batch_size %d" %batch_size
-if hasattr(config, 'build_model'):
-    print("has build model")
+    sys.exit("please choose either <rmsprop/adagrad/adadelta/nag> in configfile")
+
+
 print("Compiling functions ...")
 
-# compile theano functions
-train = theano.function([x, t], [cost, out_train], updates=updates)
-predict = theano.function([x], out_eval)
-print('Functions loaded')
+train = theano.function(
+    [sym_x, sym_t, sym_mask], [cost, out_train, norm_calc], updates=updates)
+
+predict = theano.function([sym_x, sym_t, sym_mask], [cost, out_eval])
 print('@@@@STARTING TO TRAIN@@@@')
-# Start timers
 start_time = time.time()
 prev_time = start_time
 
@@ -156,7 +182,7 @@ for epoch in range(num_epochs):
             for i in range(num_batches):
                 idx = range(i*batch_size, (i+1)*batch_size)
                 x_batch = X[idx]
-                out = predict(x_batch)
+                out = predict(x_batch, mask)
                 preds.append(out)
             # Computing rest
             rest = n - num_batches * batch_size
@@ -211,7 +237,7 @@ for epoch in range(num_epochs):
         tb_batch = tb_train[i:i + batch_size]
         ts_batch = ts_train[shuf[i:i + batch_size]]
         t_batch = np.vstack((tb_batch,ts_batch))
-        loss, out = train(x_batch, t_batch)
+        loss, out = train(x_batch, mask, t_batch)
 #        print(loss)
         preds.append(out)
         losses.append(loss)
