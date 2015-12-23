@@ -66,7 +66,7 @@ dataset = [xb_train, xb_valid, xb_test, tb_train, tb_valid, tb_test, \
     xs_train, xs_valid, xs_test, ts_train, ts_valid, ts_test]
 for dat in dataset:
     print(dat.shape)
-assert False
+
 nb_train = np.size(xb_train, axis=0)
 ns_train = np.size(xs_train, axis=0)
 
