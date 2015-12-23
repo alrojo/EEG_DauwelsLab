@@ -56,27 +56,27 @@ def build_model():
     l_c_b = lasagne.layers.ConcatLayer([l_in,l_dim_b], axis=2)
     # 2. First Dense Layer    
     l_reshape_a = lasagne.layers.ReshapeLayer(
-        l_c_b, (batch_size*seq_len,n_inputs+16*3))
+        l_c_b, (-1,n_inputs+N_CONV_A*3))
     l_1 = lasagne.layers.DenseLayer(
         l_reshape_a, num_units=N_L1, nonlinearity=lasagne.nonlinearities.rectify)
 #    l_1_b = batch_norm(l_1)
 
     l_reshape_b = lasagne.layers.ReshapeLayer(
-        l_1, (batch_size, seq_len, N_L1))
+        l_1, (-1, seq_len, N_L1))
 
     # 2. LSTM Layer
 
 
-    l_forward = lasagne.layers.LSTMLayer(l_1, N_LSTM_F)
+    l_forward = lasagne.layers.LSTMLayer(l_reshape_b, N_LSTM_F)
 
-    l_reshape_b = lasagne.layers.ReshapeLayer(
+    l_reshape_c = lasagne.layers.ReshapeLayer(
         l_forward, (-1, N_LSTM_F))
     # Our output layer is a simple dense connection, with 1 output unit
 #    l_2 = lasagne.layers.DenseLayer(
 #	lasagne.layers.dropout(l_reshape_b, p=0.5), num_units=N_L2, nonlinearity=lasagne.nonlinearities.rectify)
     # 5. Output Layer
     l_recurrent_out = lasagne.layers.DenseLayer(
-        l_reshape_b, num_units=num_classes, nonlinearity=lasagne.nonlinearities.sigmoid)
+        l_reshape_c, num_units=num_classes, nonlinearity=lasagne.nonlinearities.sigmoid)
 
     # Now, reshape the output back to the RNN format
     l_out = lasagne.layers.ReshapeLayer(
