@@ -78,7 +78,7 @@ artifact rejection~\cite{gotman1991state,guedes1983spike,wilson1999spike}, and t
 In this study, we analyze the scalp EEG recordings of five patients diagnosed with epilepsy. Suspected interictal epileptiform spikes were cross-annotated by two neurologists.~We applied convolutional neural networks~(CNNs) to learn the discriminative features of spikes.~CNNs are statistical models incorporating prior knowledge about the discriminative features of spikes.~CNNs are commonly applied for finding local pixel dependencies~\cite{NIPS2012_4824}.
 Furthermore, CNNs have been proven successful in surpassing human accuracy in image recognition tasks~\cite{DBLP:journals/corr/HeZR015}, time-series tasks for text analysis~\cite{DBLP:journals/corr/ZhangL15} and biological sequences~\cite{sonderby2015convolutional}.~In addition, CNNs possess much fewer connections compared to a fully-connected neural network, due to the sparsity and the parameter sharing across the filters. Nevertheless, the computational complexity remains a key challenge to implementing CNNs.~To address this issue, we utilize Graphical Processing Units~(GPUs) and high performance libraries for modeling CNNs. \\
 
-We benchmarked the CNN approach with several standard classification methods.~Leave-one-patient-out crossvalidation was conducted to generate the receiver operating characteristic~(ROC) curve for each model, with the average area-under-the-curve~(AUC) as the benchmark criterion. We achieved 0.947 AUC for the CNN, while the best performing benchmark model, Support Vector Machines with Gaussian kernel, achieved an AUC of 0.912.
+We benchmarked the CNN approach with several standard classification methods.~Leave-one-patient-out crosstesting with a hold out patient was conducted to generate the receiver operating characteristic~(ROC) curve for each model, with the average area-under-the-curve~(AUC) as the benchmark criterion. We achieved 0.947 AUC for the CNN, while the best performing benchmark model, Support Vector Machines with Gaussian kernel, achieved an AUC of 0.912.
 \\
 
 This paper is organized as follows. In Section 2, we provide information on the EEG data considered in this study. We also elaborate on the design of the CNN model. In Section 3, we provide results for the CNN approach and four standard classifiers.~In Section 4, we offer concluding remarks and ideas for future research. \\
@@ -87,7 +87,7 @@ This paper is organized as follows. In Section 2, we provide information on the 
 \subsection{Epileptiform EEG}
 We analyzed the scalp EEG recordings of five patients with known epilepsy. Each EEG data lasts 30~minutes recorded from 19 standard 10-20 scalp electrodes.~The sampling rate is 128Hz. A high-pass filter at 1Hz was applied to remove the baseline drifts. A notch filter centered at 60Hz was applied to remove the power line interference.~The common average referencing montage was applied to remove the common EKG artifacts.\\
 
-As shown in Fig. \ref{fig:waveforms}a, interictal epileptiform spikes are morphologically defined events with an outstanding sharp peak distinguishable from the background fluctuations~(see Fig.\ref{fig:waveforms}b). Spikes were cross-annotated independently by two neurologists, and extracted with a fixed duration of 0.5~s. In order to reduce the computational load, we randomly sampled 1,500 spikes and 150,000 background waveforms from each subject.~Leave-one-patient-out crossvalidation was conducted to evaluate the CNN model. Moreover, 10\% of the training data was further extracted under stratified sampling for validation, in order to tune the CNN model.\\
+As shown in Fig. \ref{fig:waveforms}a, interictal epileptiform spikes are morphologically defined events with an outstanding sharp peak distinguishable from the background fluctuations~(see Fig.\ref{fig:waveforms}b). Spikes were cross-annotated independently by two neurologists, and extracted with a fixed duration of 0.5~s. In order to reduce the computational load, we randomly sampled 1,500 spikes and 150,000 background waveforms from each subject.~Leave-one-patient-out crosstesting was conducted to evaluate the CNN model. Such that we averaged testing results over five datasets with a hold out patient only used for final model testing. Moreover, 10\% of the training data was further extracted under stratified sampling for validation, in order to tune the CNN model.\\
 
 \begin{figure}[!tbh]
         \centering
@@ -160,7 +160,7 @@ As a result, convolutional layers are configurable to their filter size $k$ and 
 
 Multiple convolutional layers can help to reduce the parameter space, and to model non-linear mappings~\cite{Simonyan14c}.
 Moreover, combining different filter sizes can improve the overall performance~\cite{sonderby2015convolutional}.
-Therefore, in this paper, we did not only test a single convolutional layer, but also stacked different convolutional layers on top of each other, and tested convolutional layers with different filter sizes. Based on our testing results, the implementation of multiple convolutional layers with different filter sizes provided the best validation performance, and thus was used to build the final CNN model.
+Therefore, in this paper, we did not only test a single convolutional layer, but also stacked different convolutional layers on top of each other, and tested convolutional layers with different filter sizes. Based on our validation results, the implementation of multiple convolutional layers with different filter sizes provided the best validation performance, and thus was used to build the final CNN model.
 
 \subsubsection{The final CNN model}
 \label{ssec:overallarchitecture}
@@ -178,7 +178,7 @@ In order to avoid overfitting, we are using dropouts~\cite{JMLR:v15:srivastava14
 The data is extremely skewed~(or ``imbalanced"), since there are vastly more background waveforms than spikes. Therefore, the CNN may mostly model the background waveforms, instead of the spikes.~This problem is addressed by training the CNN by means of balanced mini-batches.\\
 
 Our CNN model is relatively small in size (220k parameters) compared to conventional CNN models for image processing~\cite{NIPS2012_4824}.
-As we only analyzed the EEG of five subjects in this preliminary study, we limited the number of parameters in the CNN model in order to avoid overfitting.
+As we only analyzed the EEG of five subjects, and computational resources was limited in this preliminary study. We limited the number of parameters in the CNN model in order to avoid overfitting and keeping the model simple, which also gave a more fair comparison with the benchmark models as we put in similar amounts of hyperparameter optimization.
 Data augmentation~\cite{NIPS2012_4824} may alleviate the problem of overfitting by generating synthetic data.
 In future work, we will implement data augmentation procedures such as shifting the spikes by a few data points.
 
@@ -194,7 +194,7 @@ $$
 with $\epsilon>0$ the learning rate, $\mu \in [0,1]$ the momentum coefficient, and $\Delta f(\Theta_t + \mu v_t)$ the gradient. In this study, the learning rate $\epsilon$ was set by grid searching from $10^{-3}$ to $10^{-5}$, where $2\, 10^{-4}$ gave the best convergence in the training data. The momentum applied was set to $\mu = 0.9$ and not optimized further on.\\
 
 The CNN network was trained for a maximum of 50 epochs. The training was stopped when the validation error and training error diverged from one another.
-Leave-one-patient-out crossvalidation was carried out to test the CNN model.~The training was performed on a Tesla K40 GPU. We applied the Python built Theano library~\cite{bergstra+al:2010-scipy,Bastien-Theano-2012} to compile to CUDA~(a GPU interpretable language). We made use of the Lasagne library~\cite{sander_dieleman_2015_27878} to build and configure our CNN model.
+Leave-one-patient-out crosstesting was carried out to test the CNN model.~The training was performed on a Tesla K40 GPU. We applied the Python built Theano library~\cite{bergstra+al:2010-scipy,Bastien-Theano-2012} to compile to CUDA~(a GPU interpretable language). We made use of the Lasagne library~\cite{sander_dieleman_2015_27878} to build and configure our CNN model.
 
 \section{Results}
 \label{sec:Benchmark}
@@ -221,6 +221,8 @@ The receiver operating characteristic~(ROC) curve was computed for each model, a
 \end{table}
 
 Our numerical results show that the CNN achieves the largest AUC of 0.947, which outperforms the other four classifiers. As illustrated in Fig.~\ref{fig:ROC}, the ROC curves show that the CNN has favorable specificity and sensitivity compared to the other classifiers.
+
+However, the data set is relatively small (five patient) and AUC scores among the hold out test patients between the crosstests varied a lot. This emphasises that this is a preliminary study and further investigation with larger numbers of patients is needed to fully determine CNNs capabilities.
 
 \begin{figure}[htb]
     \centering
