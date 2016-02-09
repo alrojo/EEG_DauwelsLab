@@ -18,20 +18,21 @@ lambda_reg = 0.0001
 cut_grad = 20
 
 learning_rate_schedule = {
-    0: 0.001,
-    250: 0.0005,
-    275: 0.00025,
+	0: 0.001,
+	250: 0.0005,
+	275: 0.00025,
 }
 
 def build_model():
-  # 1. Input layer
+	# 1. Input layer
 	l_in = lasagne.layers.InputLayer(shape=(None, seq_len, n_inputs))
 
 	# 2. LSTM Layer
 	l_forward = lasagne.layers.LSTMLayer(l_in, N_LSTM_F)
 	l_forward_last = lasagne.layers.SliceLayer(l_forward, indices=-1, axis=1)
+
 	# 3. Output Layer
 	l_out = lasagne.layers.DenseLayer(
-		l_forward_last, num_units=num_classes, nonlinearity=lasagne.nonlinearities.sigmoid)
+	l_forward_last, num_units=num_classes, nonlinearity=lasagne.nonlinearities.sigmoid)
 
 	return l_in, l_out
