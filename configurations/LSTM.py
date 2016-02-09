@@ -1,5 +1,5 @@
 import lasagne
-
+#from BatchNormLayer import batch_norm
 #validate_every = 40
 start_saving_at = 0
 save_every = 5
@@ -8,6 +8,7 @@ save_every = 5
 recurrent=True
 epochs = 300
 batch_size = 2048
+N_L1 = 100
 N_LSTM_F = 100
 n_inputs = 1
 num_classes = 1
@@ -23,22 +24,15 @@ learning_rate_schedule = {
 }
 
 def build_model():
-    # 1. Input layer
-    l_in = lasagne.layers.InputLayer(shape=(None, seq_len, n_inputs))
-    # 2. LSTM Layer
-    l_forward = lasagne.layers.LSTMLayer(l_in, N_LSTM_F)
+  # 1. Input layer
+	l_in = lasagne.layers.InputLayer(shape=(None, seq_len, n_inputs))
+	l_dim_a = lasagne.layers.DimshuffleLayer(l_in, (0,2,1))
 
-    l_reshape_b = lasagne.layers.ReshapeLayer(
-        l_forward, (-1, N_LSTM_F))
-    # Our output layer is a simple dense connection, with 1 output unit
-#    l_2 = lasagne.layers.DenseLayer(
-#	lasagne.layers.dropout(l_reshape_b, p=0.5), num_units=N_L2, nonlinearity=lasagne.nonlinearities.rectify)
-    # 5. Output Layer
-    l_recurrent_out = lasagne.layers.DenseLayer(
-        l_reshape_b, num_units=num_classes, nonlinearity=lasagne.nonlinearities.sigmoid)
+	# 2. LSTM Layer
+	l_forward = lasagne.layers.LSTMLayer(l_in, N_LSTM_F)
+	l_forward_last = lasagne.layers.SliceLayer(l_forward, indices=-1, axis=1)
+	# 3. Output Layer
+	l_out = lasagne.layers.DenseLayer(
+		l_forward_last, num_units=num_classes, nonlinearity=lasagne.nonlinearities.sigmoid)
 
-    # Now, reshape the output back to the RNN format
-    l_out = lasagne.layers.ReshapeLayer(
-        l_recurrent_out, (-1, seq_len, num_classes))
-
-    return l_in, l_out
+	return l_in, l_out
