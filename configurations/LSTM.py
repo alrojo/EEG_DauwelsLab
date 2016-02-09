@@ -26,10 +26,10 @@ learning_rate_schedule = {
 def build_model():
   # 1. Input layer
 	l_in = lasagne.layers.InputLayer(shape=(None, seq_len, n_inputs))
-	l_dim_a = lasagne.layers.DimshuffleLayer(l_in, (0,2,1))
+	l_dim = lasagne.layers.DimshuffleLayer(l_in, (0,2,1))
 
 	# 2. LSTM Layer
-	l_forward = lasagne.layers.LSTMLayer(l_in, N_LSTM_F)
+	l_forward = lasagne.layers.LSTMLayer(l_dim, N_LSTM_F)
 	l_forward_last = lasagne.layers.SliceLayer(l_forward, indices=-1, axis=1)
 	# 3. Output Layer
 	l_out = lasagne.layers.DenseLayer(
