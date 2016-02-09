@@ -216,7 +216,7 @@ for epoch in range(num_epochs):
 	xs_train = xs_train[seq_names_s]
 	num_batches = nb_train // batch_size
 
-print("---------- Train ----------")
+	print("---------- Train ----------")
 
 	losses = []
 	preds = []
