@@ -176,11 +176,7 @@ for epoch in range(num_epochs):
 			all_roc_tpr_eval_test, all_roc_fpr_eval_test, all_roc_thresholds_eval_test)]
 		for subset, Print, xb, xs, tb, ts, all_accuracy, all_auc, all_roc_tpr, all_roc_fpr, all_roc_thresholds in sets:
 			X = np.vstack((xb,xs))
-			print("X: SIZE")
-			print(X.shape)
 			y = np.vstack((tb,ts))
-			print("y: SIZE")
-			print(y.shape)
 			n = np.size(X,axis=0)
 			preds = []
 			num_batches = n // batch_size
@@ -189,30 +185,30 @@ for epoch in range(num_epochs):
 				x_batch = X[idx]
 				out = predict(x_batch)
 				preds.append(out)
-				# Computing rest
-				rest = n - num_batches * batch_size
-				idx = range(n-rest, n)
-				x_batch = X[idx]
-				out = predict(x_batch)
-				preds.append(out)
-				# Making metadata
-				predictions = np.concatenate(preds, axis = 0)
-				acc_eval = utils.accuracy(predictions, y)
-				all_accuracy.append(acc_eval)
+			# Computing rest
+			rest = n - num_batches * batch_size
+			idx = range(n-rest, n)
+			x_batch = X[idx]
+			out = predict(x_batch)
+			preds.append(out)
+			# Making metadata
+			predictions = np.concatenate(preds, axis = 0)
+			acc_eval = utils.accuracy(predictions, y)
+			all_accuracy.append(acc_eval)
 
-				auc_eval = utils.auc(predictions, y)
-				all_auc.append(auc_eval)
-    
-				roc_eval_fpr, roc_eval_tpr, roc_eval_thresholds = utils.roc(predictions, y)
-				all_roc_fpr.append(roc_eval_fpr)
-				all_roc_tpr.append(roc_eval_tpr)
-				all_roc_thresholds.append(roc_eval_thresholds)
-				if Print:
-					print "  validating: %s loss" % subset
-					print "  average evaluation accuracy (%s): %.5f" % (subset, acc_eval)
-					print "  average evaluation AUC (%s): %.5f" % (subset, auc_eval)
-					print
-					print "Epoch %d of %d" % (epoch + 1, num_epochs)
+			auc_eval = utils.auc(predictions, y)
+			all_auc.append(auc_eval)
+
+			roc_eval_fpr, roc_eval_tpr, roc_eval_thresholds = utils.roc(predictions, y)
+			all_roc_fpr.append(roc_eval_fpr)
+			all_roc_tpr.append(roc_eval_tpr)
+			all_roc_thresholds.append(roc_eval_thresholds)
+			if Print:
+				print "  validating: %s loss" % subset
+				print "  average evaluation accuracy (%s): %.5f" % (subset, acc_eval)
+				print "  average evaluation AUC (%s): %.5f" % (subset, auc_eval)
+				print
+				print "Epoch %d of %d" % (epoch + 1, num_epochs)
 
 	if epoch in learning_rate_schedule:
 		lr = np.float32(learning_rate_schedule[epoch])
