@@ -84,13 +84,17 @@ out_train = nn.layers.get_output(
 	l_out, deterministic=False)
 out_eval = nn.layers.get_output(
 	l_out, deterministic=True)
-TOL=1e-5
+print("out_train.shape %s" % out_train().eval({sym_x: Xt}).shape)
 
+TOL=1e-5
 lambda_reg = config.lambda_reg
 params = nn.layers.get_all_params(l_out, regularizable=True)
-reg_term = sum(T.sum(p**2) for p in params)
-cost = T.mean(utils.Cross_Ent(T.clip(out_train, TOL, 1-TOL), sym_t))
-cost += lambda_reg * reg_term
+#reg_term = sum(T.sum(p**2) for p in params)
+out_train_cutted = T.clip(out_train, TOL, 1-TOL)
+print("out_train_cutted.shape %s" % out_train_cutted().eval({sym_x: Xt}).shape)
+cost = T.mean(utils.Cross_Ent(out_train_cutted, sym_t))
+print("cost for all zeros %.5f" % cost.eval({sym_x: Xt}))
+#cost += lambda_reg * reg_term
 print "Retreiving all parameters ..."
 all_params = nn.layers.get_all_params(l_out, trainable=True)
 
@@ -109,6 +113,7 @@ print "Getting gradients ..."
 all_grads = T.grad(cost, all_params)
 print "Print configuring updates ..."
 cut_norm = config.cut_grad
+print("cut_norm: %d" % cut_norm)
 updates, norm_calc = nn.updates.total_norm_constraint(all_grads, max_norm=cut_norm, return_norm=True)
 
 if optimizer == "rmsprop":
