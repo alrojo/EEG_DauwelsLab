@@ -176,7 +176,12 @@ for epoch in range(num_epochs):
 			all_roc_tpr_eval_test, all_roc_fpr_eval_test, all_roc_thresholds_eval_test)]
 		for subset, Print, xb, xs, tb, ts, all_accuracy, all_auc, all_roc_tpr, all_roc_fpr, all_roc_thresholds in sets:
 			X = np.vstack((xb,xs))
+			print("X - Y")
+			print(X.shape)
+			print(type(X))
 			y = np.vstack((tb,ts))
+			print(y.shape)
+			print(type(y))
 			n = np.size(X,axis=0)
 			preds = []
 			num_batches = n // batch_size
