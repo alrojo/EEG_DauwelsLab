@@ -84,20 +84,14 @@ out_train = nn.layers.get_output(
 	l_out, sym_x, deterministic=False)
 out_eval = nn.layers.get_output(
 	l_out, sym_x, deterministic=True)
-print("out_train.shape")
-print(out_train.eval({sym_x: Xt}).shape)
 
 TOL=1e-5
 lambda_reg = config.lambda_reg
 params = nn.layers.get_all_params(l_out, regularizable=True)
-#reg_term = sum(T.sum(p**2) for p in params)
+reg_term = sum(T.sum(p**2) for p in params)
 out_train_cutted = T.clip(out_train, TOL, 1-TOL)
-print("out_train_cutted.shape")
-print(out_train_cutted.eval({sym_x: Xt}).shape)
 cost = T.mean(utils.Cross_Ent(out_train_cutted, sym_t))
-#print("cost for all zeros %.5f" % cost.eval({sym_x: Xt}))
-#cost += lambda_reg * reg_term
-print "Retreiving all parameters ..."
+cost += lambda_reg * reg_term
 all_params = nn.layers.get_all_params(l_out, trainable=True)
 
 if hasattr(config, 'set_weights'):
@@ -176,24 +170,15 @@ for epoch in range(num_epochs):
 			all_roc_tpr_eval_test, all_roc_fpr_eval_test, all_roc_thresholds_eval_test)]
 		for subset, Print, xb, xs, tb, ts, all_accuracy, all_auc, all_roc_tpr, all_roc_fpr, all_roc_thresholds in sets:
 			X = np.vstack((xb,xs))
-			print("X - Y")
-			print(X.shape)
-			print(type(X))
 			y = np.vstack((tb,ts))
-			print(y.shape)
-			print(type(y))
 			n = np.size(X,axis=0)
-			print(n)
 			preds = []
 			num_batches = n // batch_size
-			print(num_batches)
-			print(num_batches*batch_size)
 			for i in range(num_batches):
 				idx = range(i*batch_size, (i+1)*batch_size)
 				x_batch = X[idx]
 				out = predict(x_batch)
 				preds.append(out)
-			print("computing rest")
 			if num_batches * batch_size < n:
 				# Computing rest
 				rest = n - num_batches * batch_size

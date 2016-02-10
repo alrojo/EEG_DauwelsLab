@@ -19,9 +19,9 @@ def Cross_Ent(y, t):
 	return -t * T.log(y) - (1 - t) * T.log(1 - y)
     
 def accuracy(p, t):
-	print "in accuracy, p and t shape"
-	print p.shape
-	print t.shape
+#	print "in accuracy, p and t shape"
+#	print p.shape
+#	print t.shape
 	y = p>0.5
 #    print("p sum = %.5f" % p.sum())
 #    print("t sum = %.5f" % t.sum())
