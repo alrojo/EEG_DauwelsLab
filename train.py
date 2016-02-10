@@ -183,13 +183,17 @@ for epoch in range(num_epochs):
 			print(y.shape)
 			print(type(y))
 			n = np.size(X,axis=0)
+			print(n)
 			preds = []
 			num_batches = n // batch_size
+			print(num_batches)
+			print(num_batches*batch_size)
 			for i in range(num_batches):
 				idx = range(i*batch_size, (i+1)*batch_size)
 				x_batch = X[idx]
 				out = predict(x_batch)
 				preds.append(out)
+			print("computing rest")
 			# Computing rest
 			rest = n - num_batches * batch_size
 			idx = range(n-rest, n)
