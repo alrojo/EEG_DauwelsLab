@@ -36,4 +36,4 @@ def load_data(CVsplit):
 	xs_valid = utils.load_gz('data/numpy/Sval%s.npy.gz' % CVsplit).astype('float32')
 	ts_valid = np.ones((xs_valid.shape[0],1), dtype='float32')
 
-return xb_train, xb_valid, xb_test, tb_train, tb_valid, tb_test, xs_train, xs_valid, xs_test, ts_train, ts_valid, ts_test
+	return xb_train, xb_valid, xb_test, tb_train, tb_valid, tb_test, xs_train, xs_valid, xs_test, ts_train, ts_valid, ts_test
