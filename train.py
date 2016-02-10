@@ -81,9 +81,9 @@ for layer in all_layers:
 
 print("Building cost function ...")
 out_train = nn.layers.get_output(
-	l_out, deterministic=False)
+	l_out, sym_x, deterministic=False)
 out_eval = nn.layers.get_output(
-	l_out, deterministic=True)
+	l_out, sym_x, deterministic=True)
 print("out_train.shape %s" % out_train().eval({sym_x: Xt}).shape)
 
 TOL=1e-5
