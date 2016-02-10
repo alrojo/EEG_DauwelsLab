@@ -208,13 +208,13 @@ for epoch in range(num_epochs):
 				print "  average evaluation accuracy (%s): %.5f" % (subset, acc_eval)
 				print "  average evaluation AUC (%s): %.5f" % (subset, auc_eval)
 				print
-				print "Epoch %d of %d" % (epoch + 1, num_epochs)
+	print "Epoch %d of %d" % (epoch + 1, num_epochs)
 
 	if epoch in learning_rate_schedule:
 		lr = np.float32(learning_rate_schedule[epoch])
 		print "  setting learning rate to %.7f" % lr
 		learning_rate.set_value(lr)
-		print "Shuffling data"
+	print "Shuffling data"
 	seq_names_b = np.arange(0,nb_train)
 	seq_names_s = np.arange(0,ns_train)
 	np.random.shuffle(seq_names_b)     
@@ -239,11 +239,11 @@ for epoch in range(num_epochs):
 		t_batch = np.vstack((tb_batch,ts_batch))
 		loss, out, norm = train(x_batch, t_batch)
 		# print(norm)
-	if np.isnan(loss):
-		raise RuntimeError("Loss is NaN.")
-	preds.append(out)
-	losses.append(loss)
-	label.append(t_batch)
+		if np.isnan(loss):
+			raise RuntimeError("Loss is NaN.")
+		preds.append(out)
+		losses.append(loss)
+		label.append(t_batch)
 	predictions = np.concatenate(preds, axis = 0)
 	labels = np.concatenate(label, axis = 0)
 	loss_train = np.mean(losses)
