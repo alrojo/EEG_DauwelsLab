@@ -11,7 +11,7 @@ paths_csv = "./data/csv/*"
 def convert_data():
 	file_paths = glob.glob(paths_csv)
 	for path in file_paths:
-	print "Opening: %s" % path
+		print "Opening: %s" % path
 		dat = np.genfromtxt(path, delimiter=',').astype('float32')
 		save_path = path.replace('.csv', ".npy.gz")
 		save_path = save_path.replace('csv', 'numpy')
