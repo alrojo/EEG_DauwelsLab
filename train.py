@@ -194,12 +194,13 @@ for epoch in range(num_epochs):
 				out = predict(x_batch)
 				preds.append(out)
 			print("computing rest")
-			# Computing rest
-			rest = n - num_batches * batch_size
-			idx = range(n-rest, n)
-			x_batch = X[idx]
-			out = predict(x_batch)
-			preds.append(out)
+			if num_batches * batch_size < n:
+				# Computing rest
+				rest = n - num_batches * batch_size
+				idx = range(n-rest, n)
+				x_batch = X[idx]
+				out = predict(x_batch)
+				preds.append(out)
 			# Making metadata
 			predictions = np.concatenate(preds, axis = 0)
 			acc_eval = utils.accuracy(predictions, y)
