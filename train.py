@@ -84,16 +84,18 @@ out_train = nn.layers.get_output(
 	l_out, sym_x, deterministic=False)
 out_eval = nn.layers.get_output(
 	l_out, sym_x, deterministic=True)
-print("out_train.shape %s" % out_train().eval({sym_x: Xt}).shape)
+print("out_train.shape")
+print(out_train.eval({sym_x: Xt}).shape)
 
 TOL=1e-5
 lambda_reg = config.lambda_reg
 params = nn.layers.get_all_params(l_out, regularizable=True)
 #reg_term = sum(T.sum(p**2) for p in params)
 out_train_cutted = T.clip(out_train, TOL, 1-TOL)
-print("out_train_cutted.shape %s" % out_train_cutted().eval({sym_x: Xt}).shape)
+print("out_train_cutted.shape")
+print(out_train_cutted.eval({sym_x: Xt}).shape)
 cost = T.mean(utils.Cross_Ent(out_train_cutted, sym_t))
-print("cost for all zeros %.5f" % cost.eval({sym_x: Xt}))
+#print("cost for all zeros %.5f" % cost.eval({sym_x: Xt}))
 #cost += lambda_reg * reg_term
 print "Retreiving all parameters ..."
 all_params = nn.layers.get_all_params(l_out, trainable=True)
