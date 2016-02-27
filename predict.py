@@ -7,6 +7,10 @@ from theano import tensor as T
 import os
 import glob
 
+# repo libs
+import data
+import utils
+
 if not (3 <= len(sys.argv) <= 4):
 	sys.exit("usage: python predict.py <metadata_path> <split> [subset=test]")
 
