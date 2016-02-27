@@ -43,41 +43,34 @@ else:
 X = np.vstack((xb_test, xs_test))
 n = np.size(X, axis=0)
 
+print("X shape:")
+print(X.shape)
+print("n:")
+print(n)
+
 for metadata_path in metadata_path_all:
 
 	print "Loading metadata file %s" % metadata_path
 
 	metadata = np.load(metadata_path)
-
 	config_name = metadata['config_name']
-
 	config = importlib.import_module("configurations.%s" % config_name)
-
 	print "Using configurations: '%s'" % config_name
-
 	print "Build model"
 
 	l_in, l_out = config.build_model()
 
 	print "Build eval function"
-
 	inference == nn.layers.get_output(
 		l_out, sym_x, deterministic=True)
-
 	print "Load parameters"
-
 	nn.layers.set_all_param_values(l_out, metadata['param_values'])
-
 	print "Compile functions"
-
 	predict = theano.function([sym_x], inference)
-
 	print "Predict"
-
 	predictions = []
 	batch_size = config.batch_size
 	num_batches = n // batch_size
-	
 
 	for i in range(num_batches):
 		idx = range(i*batch_size, (i+1)*batch_size)
@@ -93,8 +86,8 @@ for metadata_path in metadata_path_all:
 		out = predict(x_batch)
 		pred.append(out)
 
-	predictions = np.concatenate(predictions, axis = 0)
-	predictions_path = os.path.join("predictions", os.path.basename(matedata_path).replace("dump_", "predictions_").preplace(".pkl", ".npy"))
+predictions = np.concatenate(predictions, axis = 0)
+predictions_path = os.path.join("predictions", os.path.basename(matedata_path).replace("dump_", "predictions_").preplace(".pkl", ".npy"))
 
-	print "Storing predictions in %s" % predictions_path
-	np.save(predictions_path, predictions)
+print "Storing predictions in %s" % predictions_path
+np.save(predictions_path, predictions)
