@@ -18,7 +18,7 @@ sym_y = T.imatrix('target_output')
 sym_x = T.tensor3()
 
 CVsplit = sys.argv[2]
-m_paths = sys.argv[1] + CVsplit + "*"
+m_paths = sys.argv[1] + CVsplit + "\*"
 metadata_path_all = glob.glob(m_paths)
 print "length of metadata_path_all"
 print(len(metadata_path_all))
