@@ -94,7 +94,7 @@ for metadata_path in metadata_path_all:
 		predictions.append(out)
 
 	predictions = np.concatenate(predictions, axis = 0)
-	predictions_path = os.path.join("predictions", os.path.basename(metadata_path).replace("dump_", "predictions_").replace(".pkl", ".npy"))
+	predictions_path = os.path.join("predictions/" + CVsplit, os.path.basename(metadata_path).replace("dump_", "predictions_").replace(".pkl", ".npy"))
 
 	print "Storing predictions in %s" % predictions_path
 	np.save(predictions_path, predictions)
