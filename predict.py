@@ -18,7 +18,9 @@ sym_y = T.imatrix('target_output')
 sym_x = T.tensor3()
 
 CVsplit = sys.argv[2]
-m_paths = sys.argv[1] + CVsplit + "\*"
+m_paths = sys.argv[1] + CVsplit + "/*"
+print "m_paths"
+print m_paths
 metadata_path_all = glob.glob(m_paths)
 print "length of metadata_path_all"
 print(len(metadata_path_all))
@@ -66,7 +68,7 @@ for metadata_path in metadata_path_all:
 	l_in, l_out = config.build_model()
 
 	print "Build eval function"
-	inference == nn.layers.get_output(
+	inference = nn.layers.get_output(
 		l_out, sym_x, deterministic=True)
 	print "Load parameters"
 	nn.layers.set_all_param_values(l_out, metadata['param_values'])
@@ -80,18 +82,18 @@ for metadata_path in metadata_path_all:
 	for i in range(num_batches):
 		idx = range(i*batch_size, (i+1)*batch_size)
 		x_batch = X[idx]
-		p = predict(x_batch, mask_batch)
+		p = predict(x_batch)
 		predictions.append(p)
 
-	if num_batches * batch_size:
+	if n - (num_batches * batch_size):
 		print "Computing rest"
 		rest = n - num_batches * batch_size
 		idx = range(n-rest, n)
 		x_batch = X[idx]
 		out = predict(x_batch)
-		pred.append(out)
+		predictions.append(out)
 
-predictions = np.concatenate(predictions, axis = 0)
+	predictions = np.concatenate(predictions, axis = 0)
 predictions_path = os.path.join("predictions", os.path.basename(matedata_path).replace("dump_", "predictions_").preplace(".pkl", ".npy"))
 
 print "Storing predictions in %s" % predictions_path
