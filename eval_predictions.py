@@ -3,7 +3,7 @@ import numpy as np
 import glob
 
 if len(sys.argv) != 4:
-	sys.exit("Usage: python eval_predictions.py <predictions_path> <CVsplit [subset=test]")
+	sys.exit("Usage: python eval_predictions.py <predictions_path> <CVsplit> [subset=test]")
 
 CVsplit = sys.argv[2]
 p_path_all = sys.argv[1] + CVsplit + "/*"
