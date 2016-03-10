@@ -42,22 +42,20 @@ metadata_path = "metadata/dump_%s" % experiment_id
 print "Experiment id: %s" % experiment_id
 
 print "Loading data ..."
-xb_train, xb_valid, xb_test, tb_train, tb_valid, tb_test, \
-	xs_train, xs_valid, xs_test, ts_train, ts_valid, ts_test \
+xb_train, xb_valid, tb_train, tb_valid, \
+	xs_train, xs_valid, ts_train, ts_valid \
 	= data.load_data(CVsplit)
 
 print "Preprocesssing data ..."
-dat = utils.add_dims_seq([xb_train, xb_valid, xb_test, xs_train, xs_valid, xs_test])
+dat = utils.add_dims_seq([xb_train, xb_valid, xs_train, xs_valid])
 xb_train = dat[0]
 xb_valid = dat[1]
-xb_test = dat[2]
-xs_train = dat[3]
-xs_valid = dat[4]
-xs_test = dat[5]
+xs_train = dat[2]
+xs_valid = dat[3]
 
 print "Data shapes ..."
-dataset = [xb_train, xb_valid, xb_test, tb_train, tb_valid, tb_test, \
-	xs_train, xs_valid, xs_test, ts_train, ts_valid, ts_test]
+dataset = [xb_train, xb_valid, tb_train, tb_valid, \
+	xs_train, xs_valid, ts_train, ts_valid]
 for dat in dataset:
 	print(dat.shape)
 
@@ -142,19 +140,14 @@ all_accuracy_train = []
 all_auc_train = []
 all_accuracy_eval_train = []
 all_accuracy_eval_valid = []
-all_accuracy_eval_test = []
 all_auc_eval_train = []
 all_auc_eval_valid = []
-all_auc_eval_test = []
 all_roc_tpr_eval_train = []
 all_roc_tpr_eval_valid = []
-all_roc_tpr_eval_test = []
 all_roc_fpr_eval_train = []
 all_roc_fpr_eval_valid = []
-all_roc_fpr_eval_test = []
 all_roc_thresholds_eval_train = []
 all_roc_thresholds_eval_valid = []
-all_roc_thresholds_eval_test = []
 
 for epoch in range(num_epochs):
 	if 1==1:#(i + 1) % config.validate_every == 0:
@@ -164,10 +157,7 @@ for epoch in range(num_epochs):
 			all_roc_tpr_eval_train, all_roc_fpr_eval_train, all_roc_thresholds_eval_train),
 			('valid', True, xb_valid, xs_valid, tb_valid, ts_valid,
 			all_accuracy_eval_valid, all_auc_eval_valid,
-			all_roc_tpr_eval_valid, all_roc_fpr_eval_valid, all_roc_thresholds_eval_valid),
-			('test', True, xb_test, xs_test, tb_test, ts_test,
-			all_accuracy_eval_test, all_auc_eval_test,
-			all_roc_tpr_eval_test, all_roc_fpr_eval_test, all_roc_thresholds_eval_test)]
+			all_roc_tpr_eval_valid, all_roc_fpr_eval_valid, all_roc_thresholds_eval_valid)]
 		for subset, Print, xb, xs, tb, ts, all_accuracy, all_auc, all_roc_tpr, all_roc_fpr, all_roc_thresholds in sets:
 			X = np.vstack((xb,xs))
 			y = np.vstack((tb,ts))
@@ -250,7 +240,7 @@ for epoch in range(num_epochs):
 	if 1==1:
 		print "  average training loss: %.5f" % loss_train
 		print "  average training accuracy: %.5f" % acc_train
-		print "  average auc: %.5f" % auc_train    
+		print "  average auc: %.5f" % auc_train
 
 
 	now = time.time()
@@ -275,19 +265,14 @@ for epoch in range(num_epochs):
 			'auc_train': all_auc_train,
 			'accuracy_eval_valid': all_accuracy_eval_valid,
 			'accuracy_eval_train': all_accuracy_eval_train,
-			'accuracy_eval_test': all_accuracy_eval_test,
 			'auc_eval_train': all_auc_eval_train,
 			'auc_eval_valid': all_auc_eval_valid,
-			'auc_eval_test': all_auc_eval_test,
 			'roc_tpr_eval_train': all_roc_tpr_eval_train,
 			'roc_tpr_eval_valid': all_roc_tpr_eval_valid,
-			'roc_tpr_eval_test': all_roc_tpr_eval_test,
 			'roc_fpr_eval_train': all_roc_fpr_eval_train,
 			'roc_fpr_eval_valid': all_roc_fpr_eval_valid,
-			'roc_fpr_eval_test': all_roc_fpr_eval_test,
 			'roc_thresholds_eval_train': all_roc_thresholds_eval_train,
 			'roc_thresholds_eval_valid': all_roc_thresholds_eval_valid,
-			'roc_thresholds_eval_test': all_roc_thresholds_eval_test,
 			'time_since_start': time_since_start,
 			'i': i,
 			}, f, pickle.HIGHEST_PROTOCOL)
