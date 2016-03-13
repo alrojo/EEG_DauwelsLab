@@ -1,11 +1,10 @@
 import lasagne
 #from BatchNormLayer import batch_norm
-#validate_every = 40
+validate_every = 25
 start_saving_at = 0
 save_every = 1
 #write_every_batch = 10
 
-recurrent=True
 epochs = 300
 batch_size = 2048
 N_L1 = 100
@@ -19,8 +18,6 @@ cut_grad = 20
 
 learning_rate_schedule = {
 	0: 0.001,
-	250: 0.0005,
-	275: 0.00025,
 }
 
 def build_model():

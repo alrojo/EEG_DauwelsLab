@@ -150,7 +150,7 @@ all_roc_thresholds_eval_train = []
 all_roc_thresholds_eval_valid = []
 
 for epoch in range(num_epochs):
-	if 1==1:#(i + 1) % config.validate_every == 0:
+	if (epoch) % config.validate_every == 0:
 		print "--------- Validation ----------"
 		sets = [('train', True, xb_train, xs_train, tb_train, ts_train,
 			all_accuracy_eval_train, all_auc_eval_train,
