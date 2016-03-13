@@ -27,13 +27,18 @@ def load_data(CVsplit):
 	tb_train = np.zeros((xb_train.shape[0],1), dtype='float32')
 	xs_train = utils.load_gz('data/numpy_train_valid/Strn%s.npy.gz' % CVsplit).astype('float32')
 	ts_train = np.ones((xs_train.shape[0],1), dtype='float32')
-#	xb_test = utils.load_gz('data/numpy/Btst%s.npy.gz' % CVsplit).astype('float32')
-#	tb_test = np.zeros((xb_test.shape[0],1), dtype='float32')
-#	xs_test = utils.load_gz('data/numpy/Stst%s.npy.gz' % CVsplit).astype('float32')
-#	ts_test = np.ones((xs_test.shape[0],1), dtype='float32')
-	xb_valid = utils.load_gz('data/numpy_train_valid/Bval%s.npy.gz' % CVsplit).astype('float32')
+xb_valid = utils.load_gz('data/numpy_train_valid/Bval%s.npy.gz' % CVsplit).astype('float32')
 	tb_valid = np.zeros((xb_valid.shape[0],1), dtype='float32')
 	xs_valid = utils.load_gz('data/numpy_train_valid/Sval%s.npy.gz' % CVsplit).astype('float32')
 	ts_valid = np.ones((xs_valid.shape[0],1), dtype='float32')
 
 	return xb_train, xb_valid, tb_train, tb_valid, xs_train, xs_valid, ts_train, ts_valid
+
+def load_test(CVsplit):
+	print "loadTest started!"
+	xb_test = utils.load_gz('data/numpy/Btst%s.npy.gz' % CVsplit).astype('float32')
+	tb_test = np.zeros((xb_test.shape[0],1), dtype='float32')
+	xs_test = utils.load_gz('data/numpy/Stst%s.npy.gz' % CVsplit).astype('float32')
+	ts_test = np.ones((xs_test.shape[0],1), dtype='float32')
+
+	return xb_test, tb_test, xs_test, ts_test
