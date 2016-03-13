@@ -34,7 +34,7 @@ else:
 num_seq = 64
 
 if subset == "test":
-	xb_test, tb_test = data.load_test(CVsplit)
+	xb_test, _, xs_test, _ = data.load_test(CVsplit)
 	dat = utils.add_dims_seq([xb_test, xs_test])
 	xb_test = dat[0]
 	xs_test = dat[1]
