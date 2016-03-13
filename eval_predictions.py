@@ -31,9 +31,7 @@ if len(sys.argv) == 4:
 	assert subset in ['train', 'valid', 'test', 'train_valid']
 
 if subset == "test":
-	_, _, _, _, _, tb_test, \
-		_, _, _, _, _, ts_test \
-		= data.load_data(CVsplit)
+	_, tb_test, _, ts_test 	= data.load_test(CVsplit)
 elif subset == "train":
 	sys.exit(subset + ": not implemented yet")
 elif subset == "train_valid":
