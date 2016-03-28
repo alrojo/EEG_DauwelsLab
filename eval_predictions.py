@@ -2,11 +2,11 @@ import sys
 import numpy as np
 import glob
 
-if len(sys.argv) != 4:
-	sys.exit("Usage: python eval_predictions.py <predictions_path> <CVsplit> [subset=test]")
+if len(sys.argv) < 2:
+	sys.exit("Usage: python eval_predictions.py <CVsplit> [subset=test]")
 
-CVsplit = sys.argv[2]
-p_path_all = sys.argv[1] + CVsplit + "/*"
+CVsplit = sys.argv[1]
+p_path_all = "predictions/" + CVsplit + "/*"
 print p_path_all
 predictions_path_all = glob.glob(p_path_all)
 print(len(predictions_path_all))
@@ -26,9 +26,11 @@ predictions = predictions / len(predictions_path_all) # evening it out
 print(predictions.max())
 import data
 
-if len(sys.argv) == 4:
-	subset = sys.argv[3]
+if len(sys.argv) == 3:
+	subset = sys.argv[2]
 	assert subset in ['train', 'valid', 'test', 'train_valid']
+else:
+	subset = "test"
 
 if subset == "test":
 	_, tb_test, _, ts_test 	= data.load_test(CVsplit)

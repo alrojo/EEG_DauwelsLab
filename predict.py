@@ -11,22 +11,22 @@ import glob
 import data
 import utils
 
-if not (3 <= len(sys.argv) <= 4):
-	sys.exit("usage: python predict.py <metadata_path> <split> [subset=test]")
+if not (2 <= len(sys.argv) <= 3):
+	sys.exit("usage: python predict.py <split> [subset=test]")
 
 sym_y = T.imatrix('target_output')
 sym_x = T.tensor3()
 
-CVsplit = sys.argv[2]
-m_paths = sys.argv[1] + CVsplit + "/*"
+CVsplit = sys.argv[1]
+m_paths = "metadata/FOR_ENSEMBLE/" + CVsplit + "/*"
 print "m_paths"
 print m_paths
 metadata_path_all = glob.glob(m_paths)
 print "length of metadata_path_all"
 print(len(metadata_path_all))
 
-if len(sys.argv) >= 4:
-	subset = sys.argv[3]
+if len(sys.argv) >= 3:
+	subset = sys.argv[2]
 	assert subset in ['train', 'valid', 'test', 'train_valid']
 else:
 	subset = "test"
