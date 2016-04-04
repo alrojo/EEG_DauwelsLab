@@ -1,6 +1,6 @@
 import lasagne
 #from BatchNormLayer import batch_norm
-#validate_every = 40
+validate_every = 1
 start_saving_at = 0
 save_every = 5
 #write_every_batch = 10
@@ -55,13 +55,11 @@ def build_model():
 	l_c_a, (0,2,1))
     l_c_b = lasagne.layers.ConcatLayer([l_in,l_dim_b], axis=2)
     # 2. First Dense Layer    
-    l_reshape_a = lasagne.layers.ReshapeLayer(
-        l_c_b, (-1,n_inputs+N_CONV_A*3))
     l_1 = lasagne.layers.DenseLayer(
-        l_reshape_a, num_units=N_L1, nonlinearity=lasagne.nonlinearities.rectify)
+        l_c_b, num_units=N_L1, nonlinearity=lasagne.nonlinearities.rectify)
 
     # 5. Output Layer
-    l_recurrent_out = lasagne.layers.DenseLayer(
-        l_reshape_c, num_units=num_classes, nonlinearity=lasagne.nonlinearities.sigmoid)
+    l_out = lasagne.layers.DenseLayer(
+        l_1, num_units=num_classes, nonlinearity=lasagne.nonlinearities.sigmoid)
 
     return l_in, l_out

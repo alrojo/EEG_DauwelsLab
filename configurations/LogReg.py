@@ -1,20 +1,17 @@
 import lasagne
 #from BatchNormLayer import batch_norm
-#validate_every = 40
+validate_every = 1
 start_saving_at = 0
-save_every = 100
+save_every = 1
 #write_every_batch = 10
 
-recurrent=True
 epochs = 300
 batch_size = 2048
-N_L1 = 100
-N_LSTM_F = 100
 n_inputs = 1
 num_classes = 1
 seq_len = 64
 optimizer = "rmsprop"
-lambda_reg = 0.0
+lambda_reg = 0.0001
 cut_grad = 20
 
 learning_rate_schedule = {
