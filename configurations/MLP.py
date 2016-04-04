@@ -1,6 +1,6 @@
 import lasagne
 #from BatchNormLayer import batch_norm
-validate_every = 25
+validate_every = 1
 start_saving_at = 0
 save_every = 1
 #write_every_batch = 10
