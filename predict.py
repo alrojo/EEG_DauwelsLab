@@ -11,22 +11,23 @@ import glob
 import data
 import utils
 
-if not (2 <= len(sys.argv) <= 3):
-	sys.exit("usage: python predict.py <split> [subset=test]")
+if not (3 <= len(sys.argv) <= 4):
+	sys.exit("usage: python predict.py <split> <model> [subset=test]")
 
 sym_y = T.imatrix('target_output')
 sym_x = T.tensor3()
 
 CVsplit = sys.argv[1]
-m_paths = "metadata/FOR_ENSEMBLE/" + CVsplit + "/*"
+model = sys.argv[2]
+m_paths = "metadata/FOR_ENSEMBLE/" + model + "/" + CVsplit + "/*"
 print "m_paths"
 print m_paths
 metadata_path_all = glob.glob(m_paths)
 print "length of metadata_path_all"
 print(len(metadata_path_all))
 
-if len(sys.argv) >= 3:
-	subset = sys.argv[2]
+if len(sys.argv) >= 4:
+	subset = sys.argv[3]
 	assert subset in ['train', 'valid', 'test', 'train_valid']
 else:
 	subset = "test"
@@ -92,7 +93,7 @@ for metadata_path in metadata_path_all:
 		predictions.append(out)
 
 	predictions = np.concatenate(predictions, axis = 0)
-	predictions_path = os.path.join("predictions/" + CVsplit, os.path.basename(metadata_path).replace("dump_", "predictions_").replace(".pkl", ".npy"))
+	predictions_path = os.path.join("predictions/" + model + "/" + CVsplit, os.path.basename(metadata_path).replace("dump_", "predictions_").replace(".pkl", ".npy"))
 
 	print "Storing predictions in %s" % predictions_path
 	np.save(predictions_path, predictions)
