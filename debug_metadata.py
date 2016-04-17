@@ -9,25 +9,26 @@ import numpy as np
 import matplotlib.pyplot as plt
 import glob
 
-if not (len(sys.argv) == 3):
-    sys.exit("Usage: python debug_metadata.py <train/test> <topX> <plots>")
+if not (len(sys.argv) == 4):
+    sys.exit("Usage: python debug_metadata.py <path> <train/test> <topX>")
 
-test = sys.argv[1]
-topX = int(sys.argv[2])
-plots = sys.argv[1]
+RNNs = glob.glob(sys.argv[1] + "*")
+print(RNNs)
+test = sys.argv[2]
+topX = int(sys.argv[3])
 #metadata_path = sys.argv[3]
 
 #MLPs = glob.glob("./metadata/*MLP*")
 #Convs = glob.glob("./metadata/save/*")
-RNNs = glob.glob("./metadata/FOR_DEBUGGING/dump_LSTM-1-201603*")
+#RNNs = glob.glob("./metadata/FOR_DEBUGGING/dump_LSTM-1-201603*")
 
 metasets = [(RNNs, "Recurrent Neural Network", "r")]#, (MLPs, "Multi Layer Perceptron", "b")]
-plt.figure(1)
+#plt.figure(1)
 for metadata_paths, name, colours in metasets: # colours not used anymore
     print name
     all_aucs_train = []
     all_aucs_valid = []
-    all_aucs_test = []
+#    all_aucs_test = []
     all_roc_tprs_train = []
     all_roc_tprs_valid = []
 #    all_roc_tprs_test = []
