@@ -24,10 +24,22 @@ The data is split into eight equal size training, validation and test splits wit
 The code can be run through *train.py*, dumps will be saved in *metadata/* and can be evaluated using *debug_metadata.py*. Configurations for the different models used can be found in *configurations/*
 
 ## Current model performance(averaged over all CV splits)
-As of 23'th December
+Training AUC: 0.999
+Valid AUC: 0.999
+Test AUC: 0.998
 
 ### LSTMLayer w. L^2 = 0.0001
-As of 23'th December
+As of 4'th April 2016
+
+Model config: https://github.com/alrojo/EEG_DauwelsLab/blob/master/configurations/RNN.py
+
+Training AUC: 0.999
+
+Validation AUC: 0.999
+
+
+### LSTMLayer
+As of 23'th December 2015
 
 Model config: https://github.com/alrojo/EEG_DauwelsLab/blob/master/configurations/ConvBN_DenseBN_LSTM.py
 
@@ -35,10 +47,8 @@ Training AUC: 0.998
 
 Validation AUC: 0.997
 
-## Current model performance(averaged over all CV splits)
-As of 11'th December
 ### MultiConv w. L^2 = 0.0005
-As of 11'th December
+As of 11'th December 2015
 
 Model config: https://github.com/alrojo/EEG_DauwelsLab/blob/master/configurations/MultiConv.py
 
@@ -59,7 +69,7 @@ Validation AUC: 0.973
 
 
 ### Logistic Regression
-As of 5'th December
+As of 5'th December 2015
 
 Model config: https://github.com/alrojo/EEG_DauwelsLab/blob/master/configurations/LogisticRegression.py
 
@@ -68,7 +78,7 @@ Training AUC: 0.835
 Validation AUC: 0.672
 
 ### MLP w. L^2 = 0.0001
-As of 5'th December
+As of 5'th December 2015
 
 Model config: https://github.com/alrojo/EEG_DauwelsLab/blob/master/configurations/MLP.py
 
@@ -77,8 +87,4 @@ Training AUC: 0.999
 Validation AUC: 0.972
 
 ## Next to train
-Convolutional models
-
-LSTM models
-
-Convolutional + LSTM models
+Done training with LSTM, giving 0.999 AUC Train, 0.999 AUC valid and 0.998 AUC test.
