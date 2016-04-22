@@ -4,7 +4,9 @@
 https://github.com/Lasagne/Lasagne/wiki/From-Zero-to-Lasagne
 
 2. Installation of repo
+
 # About
+
 ## EEG_DauwelsLab
 This github project is dedicated to spike detection in EEG data from epileptical patients.
 
