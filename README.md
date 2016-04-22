@@ -1,9 +1,9 @@
 # Setup
-1. Get lasagne!
+#####Get lasagne!
 
 https://github.com/Lasagne/Lasagne/wiki/From-Zero-to-Lasagne
 
-2. Installation of repo
+#####Installation of repo
 
 # About
 
