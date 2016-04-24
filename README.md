@@ -104,18 +104,18 @@ Mon Apr 25 04:42:52 2016
 
 >> THEANO_FLAGS=device=gpu python mnist.py mlp 5
 
-output should look something like this:
+output should look something like this (notice it is much faster!):
 
 ```
 Using gpu device 1: GeForce GTX TITAN X (CNMeM is disabled, cuDNN Version is too old. Update to v5, was 3007.)
 Loading data...
 Building model and compiling functions...
 Starting training...
-Epoch 1 of 5 took 11.878s
+Epoch 1 of 5 took 1.878s
   training loss:		1.198237
   validation loss:		0.402080
   validation accuracy:		88.43 %
-Epoch 2 of 5 took 11.898s
+Epoch 2 of 5 took 1.898s
   training loss:		0.561074
   validation loss:		0.306817
   validation accuracy:		91.06 %
@@ -168,6 +168,21 @@ Saved to ./data/numpy/train/Bval6.npy.gz
 Opening: ./data/csv/train/Bval8.csv
 Saved to ./data/numpy/train/Bval8.npy.gz
 ```
+
+### Train the first model
+
+>> cd $PATH_TO_DIR/EEG_Dauwelslab/
+
+Training models is performed by the following command.
+
+Usage: python train.py <config_name> <CVNumber1,2,3> <num_epochs>
+
+>> python train.py RNN 1 151
+
+```
+
+```
+
 # About
 
 ## EEG_DauwelsLab
