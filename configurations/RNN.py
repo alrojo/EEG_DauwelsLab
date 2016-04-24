@@ -1,4 +1,7 @@
+import numpy
 import lasagne
+
+lasagne.random.set_rng(numpy.random.seed(42))
 #from BatchNormLayer import batch_norm
 validate_every = 1
 start_saving_at = 0

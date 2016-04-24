@@ -14,6 +14,8 @@ import string
 import utils
 import data
 
+numpy.random.seed(42)
+
 print "Setting sys parameters ..."
 if len(sys.argv) != 4:
 	sys.exit("Usage: python train.py <config_name> <CVNumber1,2,3> <num_epochs>")
