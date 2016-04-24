@@ -291,7 +291,9 @@ Remember to keep the other files, such that a `ls` in the metadata directory wil
 FOR_DEBUGGING  FOR_ENSEMBLE  __init__.py
 ```
 
-## Training models
+## Get results
+
+### Training models
 
 Run the following commands (to train a model for every split)
 
@@ -315,7 +317,9 @@ Cool tip: The model should only take up about 2400 mb memory. You should be able
 
 >> python train.py RNN 8 151
 
-### Training all models
+### Debugging all models
+
+Use the debugging tool `debug_model.py` to find maximas on the validation set.
 
 # About
 
