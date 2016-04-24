@@ -1,24 +1,54 @@
 # Setup
 
-###Installation and setup
+##Installation and setup
 
-#### Basics
+### Basics
 >> sudo apt-get install -y gcc g++ gfortran build-essential git wget libopenblas-dev python-dev python-pip python-nose python-numpy python-scipy
 
-#### Python
+### Python
 >> wget "http://repo.continuum.io/archive/Anaconda2-4.0.0-Linux-x86_64.sh"
 
 >> bash Anaconda2-4.0.0-Linux-x86_64.sh
 
-#### Theano and Lasagne
+### Theano and Lasagne
 >> pip install --upgrade https://github.com/Theano/Theano/archive/master.zip
 
 >> pip install --upgrade https://github.com/Lasagne/Lasagne/archive/master.zip
 
 (Append --user if you are not working as root and want it in your user directory)
 
-#### BLAS check (optional)
-Using BLAS can give a significant speed-up.
+### Testing Lasagne and Theano
+
+>> mkdir -p ~/code/mnist
+
+>> cd ~/code/mnist
+
+>> wget https://github.com/Lasagne/Lasagne/raw/master/examples/mnist.py
+
+>> python mnist.py mlp 5
+
+output should look something like this:
+
+```
+Loading data...
+Downloading train-images-idx3-ubyte.gz
+Downloading train-labels-idx1-ubyte.gz
+Downloading t10k-images-idx3-ubyte.gz
+Downloading t10k-labels-idx1-ubyte.gz
+Building model and compiling functions...
+Starting training...
+Epoch 1 of 5 took 11.483s
+  training loss:		1.225167
+  validation loss:		0.407454
+  validation accuracy:		88.55 %
+Epoch 2 of 5 took 11.299s
+  training loss:		0.565556
+  validation loss:		0.309781
+  validation accuracy:		90.92 %
+```
+
+### BLAS check (optional)
+Using direct BLAS can give a significant speed-up, but is not nessesary.
 
 >> mkdir tmp && cd tmp
 
@@ -29,6 +59,20 @@ Using BLAS can give a significant speed-up.
 Should say something like:
 
 `Total execution time: 31.37s on CPU (with direct Theano binding to blas).`
+
+### CUDA install
+
+Disclaimer, have not tested this as I have CUDA on my machines.
+
+Please follow this guide the Nvidia CUDA header. 
+
+https://github.com/Lasagne/Lasagne/wiki/From-Zero-to-Lasagne-on-Ubuntu-14.04
+
+### Testing it all works
+
+
+
+
 
 # About
 
