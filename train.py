@@ -14,7 +14,7 @@ import string
 import utils
 import data
 
-numpy.random.seed(42)
+np.random.seed(42)
 
 print "Setting sys parameters ..."
 if len(sys.argv) != 4:
