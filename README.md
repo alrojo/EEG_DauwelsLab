@@ -1,10 +1,34 @@
 # Setup
-#####Get lasagne!
 
-https://github.com/Lasagne/Lasagne/wiki/From-Zero-to-Lasagne
+###Installation and setup
 
-#####Installation of repo
-todo
+#### Basics
+>> sudo apt-get install -y gcc g++ gfortran build-essential git wget libopenblas-dev python-dev python-pip python-nose python-numpy python-scipy
+
+#### Python
+>> wget "http://repo.continuum.io/archive/Anaconda2-4.0.0-Linux-x86_64.sh"
+
+>> bash Anaconda2-4.0.0-Linux-x86_64.sh
+
+#### Theano and Lasagne
+>> pip install --upgrade https://github.com/Theano/Theano/archive/master.zip
+
+>> pip install --upgrade https://github.com/Lasagne/Lasagne/archive/master.zip
+
+(Append --user if you are not working as root and want it in your user directory)
+
+#### BLAS check (optional)
+Using BLAS can give a significant speed-up.
+
+>> mkdir tmp && cd tmp
+
+>> wget https://github.com/Theano/Theano/raw/master/theano/misc/check_blas.py
+
+>> python check_blas.py
+
+Should say something like:
+
+`Total execution time: 31.37s on CPU (with direct Theano binding to blas).`
 
 # About
 
