@@ -291,7 +291,7 @@ Remember to keep the other files, such that a `ls` in the metadata directory wil
 FOR_DEBUGGING  FOR_ENSEMBLE  __init__.py
 ```
 
-### Training all models
+## Training models
 
 Run the following commands (to train a model for every split)
 
