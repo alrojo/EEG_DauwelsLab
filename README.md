@@ -180,8 +180,142 @@ Usage: python train.py <config_name> <CVNumber1,2,3> <num_epochs>
 >> python train.py RNN 1 151
 
 ```
+Using gpu device 1: GeForce GTX TITAN X (CNMeM is disabled, cuDNN Version is too old. Update to v5, was 3007.)
+Setting sys parameters ...
+Defining symbolic variables ...
+Loading config file: 'RNN'
+Setting config params ...
+Optimizer: rmsprop
+Lambda: 0.00010
+Batch size: 2048
+Experiment id: RNN-1-20160425-052845
+Loading data ...
+loadData started!
+Preprocesssing data ...
+Data shapes ...
+(405429, 64, 1)
+(64446, 64, 1)
+(405429, 1)
+(64446, 1)
+(12763, 64, 1)
+(2010, 64, 1)
+(12763, 1)
+(2010, 1)
+DEBUG: max train values
+84.267
+Building network ...
+  number of parameters: 41401
+  layer output shapes:
+    InputLayer                       (2048, 64, 1)
+    LSTMLayer                        (2048, 64, 100)
+    SliceLayer                       (2048, 100)
+    DenseLayer                       (2048, 1)
+Building cost function ...
+Computing updates ...
+Getting gradients ...
+Print configuring updates ...
+cut_norm: 20
+Compiling functions ...
+@@@@STARTING TO TRAIN@@@@
+--------- Validation ----------
+  validating: train loss
+  average evaluation accuracy (train): 0.54948
+  average evaluation AUC (train): 0.72353
+
+  validating: valid loss
+  average evaluation accuracy (valid): 0.64233
+  average evaluation AUC (valid): 0.73729
+
+Epoch 1 of 151
+  setting learning rate to 0.0010000
+Shuffling data
+---------- Train ----------
+  average training loss: 0.55832
+  average training accuracy: 0.76965
+  average auc: 0.82934
+  00:01:05 since start (65.98 s)
+
+  saving parameters and metadata
+  stored in metadata/dump_RNN-1-20160425-052845
+--------- Validation ----------
+  validating: train loss
+  average evaluation accuracy (train): 0.89933
+  average evaluation AUC (train): 0.94912
+
+  validating: valid loss
+  average evaluation accuracy (valid): 0.90007
+  average evaluation AUC (valid): 0.92259
+
+Epoch 2 of 151
+Shuffling data
+---------- Train ----------
+  average training loss: 0.32418
+  average training accuracy: 0.89727
+  average auc: 0.94564
+  00:02:13 since start (67.51 s)
+
+  saving parameters and metadata
+  stored in metadata/dump_RNN-1-20160425-052845
+--------- Validation ----------
+  validating: train loss
+  average evaluation accuracy (train): 0.93125
+  average evaluation AUC (train): 0.98539
+
+  validating: valid loss
+  average evaluation accuracy (valid): 0.96249
+  average evaluation AUC (valid): 0.98593
 
 ```
+
+Cool tip: use `nohup <commands> > file &` to run script in background.
+
+>> nohup python train.py RNN 1 151 > out_file &
+
+>> ctrl+c
+
+Cool tip: use `nvidia-smi` to see usage.
+
+Cool tip: In the .theanorc file you specify the device. Setting device=gpu0 will make it use gpu numbered as 0, whereas device=gpu1 will make it use device 1. Using this will allow you to run multiple scripts simultanously.
+
+Cool tip: during "testing" the script, you will generate metadata files. You are probably not interested in these. To remove, do as follows.
+
+>> cd $PATH_TO_DIR/EEG_Dauwelslab/metadata/
+
+>> rm -rf dump*
+
+Remember to keep the other files, such that a `ls` in the metadata directory will give you
+
+>> ls
+
+```
+FOR_DEBUGGING  FOR_ENSEMBLE  __init__.py
+```
+
+### Training all models
+
+Run the following commands (to train a model for every split)
+
+Cool tip: The model should only take up about 2400 mb memory. You should be able to run 4 concurrently on a Nvidia Titan X.
+
+>> cd $PATH_TO_DIR/EEG_Dauwelslab/
+
+>> python train.py RNN 1 151
+
+>> python train.py RNN 2 151
+
+>> python train.py RNN 3 151
+
+>> python train.py RNN 4 151
+
+>> python train.py RNN 5 151
+
+>> python train.py RNN 6 151
+
+>> python train.py RNN 7 151
+
+>> python train.py RNN 8 151
+
+### Training all models
 
 # About
 
