@@ -9,5 +9,6 @@ data_name = sys.argv[1]
 assert data_name in ["train", "test"]
 
 paths_csv = "./data/csv/" + data_name + "/*"
+print("you csv path is: %s" % paths_csv)
 print("Converting data ...")
-convert_data(paths_csv)
+data.convert_data(paths_csv)

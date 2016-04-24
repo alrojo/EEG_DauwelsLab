@@ -11,6 +11,8 @@ paths_csv = "./data/csv/*"
 # to dir has to be as "numpy"
 def convert_data(paths_from):
 	file_paths = glob.glob(paths_from)
+	if file_paths == []:
+		sys.exit("no paths found ..!")
 	for path in file_paths:
 		print "Opening: %s" % path
 		dat = np.genfromtxt(path, delimiter=',').astype('float32')
