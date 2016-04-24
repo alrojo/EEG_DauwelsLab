@@ -3,7 +3,6 @@ import lasagne
 
 numpy.random.seed(42)
 
-lasagne.random.set_rng(numpy.random.RandomState)
 #from BatchNormLayer import batch_norm
 validate_every = 1
 start_saving_at = 0
@@ -26,6 +25,7 @@ learning_rate_schedule = {
 }
 
 def build_model():
+
 	# 1. Input layer
 	l_in = lasagne.layers.InputLayer(shape=(None, seq_len, n_inputs))
 
