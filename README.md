@@ -2,8 +2,20 @@
 
 ##Installation and setup
 
+Installation and setup consists of installing some basic dependancies, Theano, Lasagne, CUDA, BLAS.
+
+The non-trivial part of this installation is getting CUDA dn Theano to work.
+
+For detailed Theano, CUDA and BLAS guide, Please visit.
+
+http://deeplearning.net/software/theano/install_ubuntu.html#install-ubuntu
+
+The guide below is a modification of https://github.com/Lasagne/Lasagne/wiki/From-Zero-to-Lasagne-on-Ubuntu-14.04
+
+As I prefer using Conda over apt-get python install.
+
 ### Basics
->> sudo apt-get install -y gcc g++ gfortran build-essential git wget libopenblas-dev python-dev python-pip python-nose python-numpy python-scipy
+>> sudo apt-get install -y gcc g++ gfortran build-essential git wget libopenblas-dev
 
 ### Python
 >> wget "http://repo.continuum.io/archive/Anaconda2-4.0.0-Linux-x86_64.sh"
