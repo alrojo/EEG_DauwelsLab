@@ -62,7 +62,10 @@ for metadata_paths, name, colours in metasets: # colours not used anymore
         best_val = np.zeros(shape=topX, dtype='float32')
 #        best_test = np.zeros(shape=topX, dtype='float32')
         max_val = np.zeros(shape=topX, dtype=int)
-        for idx, x,v in enumerate(zip(auc_eval_train, auc_eval_valid)):
+        comb = zip(auc_eval_train, auc_eval_valid)
+        print(type(comb))
+        print(len(comb))
+        for idx, x,v in enumerate():
             print "%d: train = %.5f - validation = %.5f" % (idx, np.asarray(x), np.asarray(v))
         print metadata_path
         for i in range(topX):
