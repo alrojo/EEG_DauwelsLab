@@ -16,7 +16,7 @@ total_TPR = 0.0
 total_SPC = 0.0
 total_PPV = 0.0
 for CVsplit in range(8):
-    CVsplit += 8
+    CVsplit += 1
     CVsplit = str(CVsplit)
     print("---- %s ----" % CVsplit)
     p_path_all = "predictions/" + model + "/" + CVsplit + "/*"
