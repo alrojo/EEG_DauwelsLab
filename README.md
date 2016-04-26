@@ -351,9 +351,6 @@ However, seeing as some of the models have extremely high validation epochs and 
 ### Making predictions
 
 #### Get test set
-Since we needed to do the training with no access to test set, the test
-
-### Making predictions
 Now given the test dataset (you can enquire Justin Dauwels at jdauwels at ntu.edu.sg for access).
 
 Place the test data in the following folder `$PATH_TO_DIR/EEG_Dauwelslab/data/csv/test/`
@@ -376,6 +373,7 @@ Make the data into a numpy format
 >> cd $PATH_TO_DIR/EEG_Dauwelslab/
 
 >> python create_data test
+
 ```
 you csv path is: ./data/csv/test/*
 Converting data ...
@@ -387,6 +385,9 @@ Saved to ./data/numpy/test/Stst2.npy.gz
 Opening: ./data/csv/test/Stst4.csv
 Saved to ./data/numpy/test/Stst4.npy.gz
 ```
+
+#### Computing predictions
+
 
 
 # About
