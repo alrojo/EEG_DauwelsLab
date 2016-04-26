@@ -1,6 +1,6 @@
 # Recreating Results
 
-##Installation and setup
+## Installation and setup
 
 Installation and setup consists of installing some basic dependancies, Theano, Lasagne, CUDA, BLAS.
 
@@ -143,7 +143,7 @@ Go to where you want to install the repo.
 
 ### Setting up training/validation data
 
-Now given the dataset (you can enquire Justin Dauwels at jdauwels at ntu.edu.sg for access).
+Now given the train/valid dataset (you can enquire Justin Dauwels at jdauwels at ntu.edu.sg for access).
 
 Place the train and validation data in the following folder `$PATH_TO_DIR/EEG_Dauwelslab/data/csv/train/`
 
@@ -330,8 +330,64 @@ Cool tip: The model should only take up about 2400 mb memory. You should be able
 >> python train.py RNN 8 151
 
 ### Debugging all models
-
 Use the debugging tool `debug_model.py` to find maximas on the validation set.
+
+This tool will take a given `path` and a `topX` argument. The `topX` argument will list the highest validation epochs in sorted order.
+
+Usage `python debug_model.py <path> <topX>`
+
+Example `python debug_model.py metadata/dump_RNN-1-20160425-055244-150.pkl 20`
+
+Do this for every split (`...RNN-1-...`, `...RNN-2-...`, ..., `...RNN-8-...`)
+
+### Choosing epoch
+Next step is choosing which epoch to sample weigths for the neural network from, given the use of `debug_model` you will have validations for each epoch and train/validation for every epoch.
+
+The rule used when picking the correct epoch to sample weights from, is: pick the maximizing validation.
+However, seeing as some of the models have extremely high validation epochs and some have them very early in the training process (~5'th epoch), the following rules will also be used: Do not pick between the first 20 epochs if many (more than 30% of epochs) have AUC above 0.999.
+
+[TODO: talk about ensamble?]
+
+### Making predictions
+
+#### Get test set
+Since we needed to do the training with no access to test set, the test
+
+### Making predictions
+Now given the test dataset (you can enquire Justin Dauwels at jdauwels at ntu.edu.sg for access).
+
+Place the test data in the following folder `$PATH_TO_DIR/EEG_Dauwelslab/data/csv/test/`
+
+Such that.
+
+>> cd $PATH_TO_DIR/EEG_Dauwelslab/data/csv/train/
+
+>> ls
+
+```
+Btst1.csv  Btst3.csv  Btst5.csv  Btst7.csv  Stst1.csv
+Stst3.csv  Stst5.csv  Stst7.csv  Btst2.csv  Btst4.csv
+Btst6.csv  Btst8.csv  Stst2.csv  Stst4.csv  Stst6.csv
+Stst8.csv
+```
+
+Make the data into a numpy format
+
+>> cd $PATH_TO_DIR/EEG_Dauwelslab/
+
+>> python create_data test
+```
+you csv path is: ./data/csv/test/*
+Converting data ...
+Opening: ./data/csv/test/Btst7.csv
+Saved to ./data/numpy/test/Btst7.npy.gz
+Opening: ./data/csv/test/Stst2.csv
+Saved to ./data/numpy/test/Stst2.npy.gz
+...
+Opening: ./data/csv/test/Stst4.csv
+Saved to ./data/numpy/test/Stst4.npy.gz
+```
+
 
 # About
 
