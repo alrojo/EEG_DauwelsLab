@@ -9,7 +9,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import glob
 
-if not (len(sys.argv) == 4):
+if not (len(sys.argv) == 3):
     sys.exit("Usage: python debug_metadata.py <path> <topX>")
 
 RNNs = glob.glob(sys.argv[1] + "*")
