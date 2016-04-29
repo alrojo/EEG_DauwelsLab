@@ -1,7 +1,7 @@
 import numpy
 import lasagne
 
-numpy.random.seed(42)
+numpy.random.seed(1)
 
 #from BatchNormLayer import batch_norm
 validate_every = 1

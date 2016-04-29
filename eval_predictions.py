@@ -18,7 +18,7 @@ total_PPV = 0.0
 for CVsplit in range(8):
     CVsplit += 1
     CVsplit = str(CVsplit)
-    print("---- %s ----" % CVsplit)
+    print("-- SPLIT %s of 8 --" % CVsplit)
     p_path_all = "predictions/" + model + "/" + CVsplit + "/*"
     #print p_path_all
     predictions_path_all = glob.glob(p_path_all)
@@ -98,6 +98,7 @@ for CVsplit in range(8):
     total_PPV += PPV
     print("AUC (%s) is: %.5f" % (subset, AUC))
 
+print
 print("FINAL RESULTS")
 print(total_cm)
 #print(np.true_divide(total_cm, 8.0))
