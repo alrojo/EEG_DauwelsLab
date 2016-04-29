@@ -307,48 +307,86 @@ FOR_DEBUGGING  FOR_ENSEMBLE  __init__.py
 
 ### Training models
 
-Run the following commands (to train a model for every split)
-
-Cool tip: The model should only take up about 2400 mb memory. You should be able to run 4 concurrently on a Nvidia Titan X.
+This will take ~24 hours on a GPU
 
 >> cd $PATH_TO_DIR/EEG_Dauwelslab/
 
->> python train.py RNN 1 151
-
->> python train.py RNN 2 151
-
->> python train.py RNN 3 151
-
->> python train.py RNN 4 151
-
->> python train.py RNN 5 151
-
->> python train.py RNN 6 151
-
->> python train.py RNN 7 151
-
->> python train.py RNN 8 151
+>> bash batch_train.sh
 
 ### Debugging all models
 Use the debugging tool `debug_model.py` to find maximas on the validation set.
 
-This tool will take a given `path` and a `topX` argument. The `topX` argument will list the highest validation epochs in sorted order.
+This tool will take a given `path` (being the latest epoch, epoch no. 149) and a `topX` argument. The `topX` argument will list the highest validation epochs in sorted order.
 
 Usage `python debug_model.py <path> <topX>`
 
-Example `python debug_model.py metadata/dump_RNN-1-20160425-055244-150.pkl 20`
+Debug all of the models, you should get the following response.
+
+Example `python debug_model.py metadata/dump_RNN-1-20160425-055244-149.pkl 20`
 
 Do this for every split (`...RNN-1-...`, `...RNN-2-...`, ..., `...RNN-8-...`)
 
 ### Choosing epoch
 Next step is choosing which epoch to sample weigths for the neural network from, given the use of `debug_model` you will have validations for each epoch and train/validation for every epoch.
 
-The rule used when picking the correct epoch to sample weights from, is: pick the maximizing validation.
-However, seeing as some of the models have extremely high validation epochs and some have them very early in the training process (~5'th epoch), the following rules will also be used: Do not pick between the first 20 epochs if many (more than 30% of epochs) have AUC above 0.999.
+The rule used when picking the best epoch is as follows:
+- The epoch must be after the first 20 epochs (the network will often not have picked up features of high describtive value before after a certain amount of training)
+- Pick highest valued validation.
+- For ensemble, epochs picked must be at least 10 epochs apart (often you will find well performing epochs following each other, as they have very similar weights. Picking epochs apart will increase variance).
 
-[TODO: talk about ensamble?]
+Using these rules you should end up with:
+
+Given no ensemble:
+
+Epoch for 1st split: 22
+
+Epoch for 2nd split: 39
+
+Epoch for 3rd split: 20
+
+Epoch for 4th split: 137
+
+Epoch for 5th split: 26
+
+Epoch for 6th split: 35
+
+Epoch for 7th split: 81
+
+Epoch for 8th split: 140
+
+Given ensemble:
+
+Epochs for 1st split: 22, 39, 64
+
+Epochs for 2nd split: 39, 64, 129
+
+Epochs for 3rd split: 20, 30, 40
+
+Epochs for 4th split: 137, 93, 121
+
+Epochs for 5th split: 26, 41, 53
+
+Epochs for 6th split: 35, 46, 56
+
+Epochs for 7th split: 81, 131, 146
+
+Epochs for 8th split: 140, 91, 109
 
 ### Making predictions
+
+Move the epochs from:
+
+`$PATH_TO_DIR/EEG_Dauwelslab/metadata/dump_RNN-...`
+
+To:
+
+`$PATH_TO_DIR/EEG_Dauwelslab/metadata/FOR_ENSEMBLE/RNN/<split>`
+
+Example:
+
+>> $PATH_TO_DIR/EEG_Dauwelslab/metadata/
+
+>> mv metadata/dump_RNN-1-20160425-055244-149.pkl FOR_ENSEMBLE/RNN/1
 
 #### Get test set
 Now given the test dataset (you can enquire Justin Dauwels at jdauwels at ntu.edu.sg for access).
@@ -388,7 +426,178 @@ Saved to ./data/numpy/test/Stst4.npy.gz
 
 #### Computing predictions
 
+>> cd $PATH_TO_DIR/EEG_Dauwelslab/
 
+>> bash batch_predictions.sh
+
+(predictions will be saved in $PATH_TO_DIR/EEG_Dauwelslab/predictions/RNN/<split>)
+
+#### Evaluating predictions
+
+>> cd $PATH_TO_DIR/EEG_Dauwelslab/
+
+Please note that `eval_predictions.py` takes `p` being probability for spike/background as first system argument.
+
+`eval_predictions.py <probability> <model>`
+
+For `p=0.5`
+
+>> python eval_predictions.py 0.5 RNN
+
+(`eval_predictions.py` will average probabilities over all predictions in `$PATH_TO_DIR/EEG_Dauwelslab/predictions/RNN/<split>`)
+
+For no ensemble you should get the following results from `eval_predictions.py 0.5 RNN`:
+```
+-- SPLIT 1 of 8 --
+Using gpu device 1: GeForce GTX TITAN X (CNMeM is disabled, cuDNN Version is too old. Update to v5, was 3007.)
+loadTest started!
+TP 3198, FN 345
+FP 1095, TN 35298
+TPR: 0.90262
+SPC: 0.96991
+PPV: 0.74493
+AUC (test) is: 0.98532
+-- SPLIT 2 of 8 --
+loadTest started!
+TP 1971, FN 39
+FP 0, TN 64446
+TPR: 0.98060
+SPC: 1.00000
+PPV: 1.00000
+AUC (test) is: 0.99959
+-- SPLIT 3 of 8 --
+loadTest started!
+TP 1426, FN 336
+FP 421, TN 46761
+TPR: 0.80931
+SPC: 0.99108
+PPV: 0.77206
+AUC (test) is: 0.99484
+-- SPLIT 4 of 8 --
+loadTest started!
+TP 2735, FN 3
+FP 0, TN 68887
+TPR: 0.99890
+SPC: 1.00000
+PPV: 1.00000
+AUC (test) is: 1.00000
+-- SPLIT 5 of 8 --
+loadTest started!
+TP 807, FN 35
+FP 0, TN 53119
+TPR: 0.95843
+SPC: 1.00000
+PPV: 1.00000
+AUC (test) is: 0.99974
+-- SPLIT 6 of 8 --
+loadTest started!
+TP 1746, FN 0
+FP 1780, TN 57430
+TPR: 1.00000
+SPC: 0.96994
+PPV: 0.49518
+AUC (test) is: 0.99991
+-- SPLIT 7 of 8 --
+loadTest started!
+TP 2595, FN 215
+FP 865, TN 92763
+TPR: 0.92349
+SPC: 0.99076
+PPV: 0.75000
+AUC (test) is: 0.98956
+-- SPLIT 8 of 8 --
+loadTest started!
+TP 2810, FN 55
+FP 6236, TN 77167
+TPR: 0.98080
+SPC: 0.92523
+PPV: 0.31063
+AUC (test) is: 0.99241
+
+FINAL RESULTS
+[[  17288.    1028.]
+ [  10397.  495871.]]
+AUC = 0.99517
+TPR = 0.94427
+SPC = 0.98086
+PPV = 0.75910
+```
+For no ensemble you should get the following results from `eval_predictions.py 0.5 RNN`:
+```
+-- SPLIT 1 of 8 --
+Using gpu device 1: GeForce GTX TITAN X (CNMeM is disabled, cuDNN Version is too old. Update to v5, was 3007.)
+loadTest started!
+TP 3464, FN 79
+FP 1095, TN 35298
+TPR: 0.97770
+SPC: 0.96991
+PPV: 0.75982
+AUC (test) is: 0.98117
+-- SPLIT 2 of 8 --
+loadTest started!
+TP 2005, FN 5
+FP 0, TN 64446
+TPR: 0.99751
+SPC: 1.00000
+PPV: 1.00000
+AUC (test) is: 0.99992
+-- SPLIT 3 of 8 --
+loadTest started!
+TP 1758, FN 4
+FP 823, TN 46359
+TPR: 0.99773
+SPC: 0.98256
+PPV: 0.68113
+AUC (test) is: 0.99966
+-- SPLIT 4 of 8 --
+loadTest started!
+TP 2737, FN 1
+FP 0, TN 68887
+TPR: 0.99963
+SPC: 1.00000
+PPV: 1.00000
+AUC (test) is: 1.00000
+-- SPLIT 5 of 8 --
+loadTest started!
+TP 808, FN 34
+FP 0, TN 53119
+TPR: 0.95962
+SPC: 1.00000
+PPV: 1.00000
+AUC (test) is: 1.00000
+-- SPLIT 6 of 8 --
+loadTest started!
+TP 1746, FN 0
+FP 54, TN 59156
+TPR: 1.00000
+SPC: 0.99909
+PPV: 0.97000
+AUC (test) is: 1.00000
+-- SPLIT 7 of 8 --
+loadTest started!
+TP 2595, FN 215
+FP 433, TN 93195
+TPR: 0.92349
+SPC: 0.99538
+PPV: 0.85700
+AUC (test) is: 0.99348
+-- SPLIT 8 of 8 --
+loadTest started!
+TP 2810, FN 55
+FP 3905, TN 79498
+TPR: 0.98080
+SPC: 0.95318
+PPV: 0.41847
+AUC (test) is: 0.99472
+
+FINAL RESULTS
+[[  1.79230000e+04   3.93000000e+02]
+ [  6.31000000e+03   4.99958000e+05]]
+AUC = 0.99612
+TPR = 0.97956
+SPC = 0.98751
+PPV = 0.83580
+```
 
 # About
 
