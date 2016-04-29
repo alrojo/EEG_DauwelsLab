@@ -287,7 +287,7 @@ Cool tip: use `nohup <commands> > file &` to run script in background.
 
 Cool tip: use `nvidia-smi` to see usage.
 
-Cool tip: In the .theanorc file you specify the device. Setting device=gpu0 will make it use gpu numbered as 0, whereas device=gpu1 will make it use device 1. Using this will allow you to run multiple scripts simultanously.
+Cool tip: In the .theanorc file you specify the device. Setting device=gpu0 will make it use gpu numbered as 0, whereas device=gpu1 will make it use device 1. Using this will allow you to utilize multiple GPUs concurrently.
 
 Cool tip: during "testing" the script, you will generate metadata files. You are probably not interested in these. To remove, do as follows.
 
