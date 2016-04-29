@@ -384,7 +384,7 @@ To:
 
 Example:
 
->> $PATH_TO_DIR/EEG_Dauwelslab/metadata/
+>> cd $PATH_TO_DIR/EEG_Dauwelslab/metadata/
 
 >> mv metadata/dump_RNN-1-20160425-055244-149.pkl FOR_ENSEMBLE/RNN/1
 
