@@ -4,7 +4,7 @@
 
 Installation and setup consists of installing some basic dependancies, Theano, Lasagne, CUDA, BLAS.
 
-The non-trivial part of this installation is getting CUDA dn Theano to work.
+The non-trivial part of this installation is getting CUDA and Theano to work.
 
 For detailed Theano, CUDA and BLAS guide, Please visit.
 
