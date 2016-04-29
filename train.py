@@ -34,7 +34,6 @@ optimizer = config.optimizer
 print "Optimizer: %s" % optimizer
 lambda_reg = config.lambda_reg
 print "Lambda: %.5f" % lambda_reg
-#num_epochs = config.epochs
 batch_size = config.batch_size
 print "Batch size: %d" % batch_size
 timestamp = datetime.now().strftime("%Y%m%d-%H%M%S")

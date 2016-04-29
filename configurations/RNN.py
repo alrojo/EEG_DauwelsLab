@@ -1,13 +1,12 @@
 import numpy
 import lasagne
 
+# Setting configurations
 numpy.random.seed(1)
 
-#from BatchNormLayer import batch_norm
 validate_every = 1
 start_saving_at = 0
 save_every = 1
-#write_every_batch = 10
 
 epochs = 300
 batch_size = 2048
@@ -24,6 +23,8 @@ learning_rate_schedule = {
 	0: 0.001,
 }
 
+
+# Define the model
 def build_model():
 
 	# 1. Input layer
