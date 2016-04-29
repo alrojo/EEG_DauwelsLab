@@ -27,7 +27,7 @@ As I prefer using Conda over apt-get python install.
 
 >> pip install --upgrade https://github.com/Lasagne/Lasagne/archive/master.zip
 
-(Append --user if you are not working as root and want it in your user directory)
+(Use the flag --user if you are not working as root and want it in your user directory)
 
 ### Testing Lasagne and Theano
 
