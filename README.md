@@ -406,7 +406,7 @@ Btst6.csv  Btst8.csv  Stst2.csv  Stst4.csv  Stst6.csv
 Stst8.csv
 ```
 
-Make the data into a numpy format
+Make the data into a numpy format.
 
 >> cd $PATH_TO_DIR/EEG_Dauwelslab/
 
