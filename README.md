@@ -189,7 +189,7 @@ Training models is performed by the following command.
 
 Usage: python train.py <config_name> <CVNumber1,2,3> <num_epochs>
 
->> python train.py RNN 1 151
+>> python train.py RNN 1 150
 
 ```
 Using gpu device 1: GeForce GTX TITAN X (CNMeM is disabled, cuDNN Version is too old. Update to v5, was 3007.)
