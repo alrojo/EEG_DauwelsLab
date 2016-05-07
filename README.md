@@ -287,7 +287,7 @@ Cool tip: use `nohup <commands> > file &` to run script in background.
 
 Cool tip: use `nvidia-smi` to see usage.
 
-Cool tip: In the .theanorc file you specify the device. Setting device=gpu0 will make it use gpu numbered as 0, whereas device=gpu1 will make it use device 1. Using this will allow you to utilize multiple GPUs concurrently.
+Cool tip: In the `~/.theanorc` file you specify the device. Setting `device=gpu0` will make it use gpu numbered as 0, whereas device=gpu1 will make it use device 1. Using this will allow you to utilize multiple GPUs concurrently.
 
 Cool tip: during "testing" the script, you will generate metadata files. You are probably not interested in these. To remove, do as follows.
 
@@ -384,7 +384,7 @@ To:
 
 Example:
 
->> $PATH_TO_DIR/EEG_Dauwelslab/metadata/
+>> cd $PATH_TO_DIR/EEG_Dauwelslab/metadata/
 
 >> mv metadata/dump_RNN-1-20160425-055244-149.pkl FOR_ENSEMBLE/RNN/1
 
@@ -406,7 +406,7 @@ Btst6.csv  Btst8.csv  Stst2.csv  Stst4.csv  Stst6.csv
 Stst8.csv
 ```
 
-Make the data into a numpy format
+Make the data into a numpy format.
 
 >> cd $PATH_TO_DIR/EEG_Dauwelslab/
 
