@@ -56,7 +56,7 @@ def build_model():
     l_c_b = lasagne.layers.ConcatLayer([l_in,l_dim_b], axis=2)
     # 2. First Dense Layer    
     l_1 = lasagne.layers.DenseLayer(
-        l_c_b, num_units=N_L1, nonlinearity=lasagne.nonlinearities.rectify)
+        lasagne.layers.DropoutLayer(l_c_b), num_units=N_L1, nonlinearity=lasagne.nonlinearities.rectify)
 
     # 5. Output Layer
     l_out = lasagne.layers.DenseLayer(
