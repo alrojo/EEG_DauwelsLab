@@ -207,7 +207,7 @@ for epoch in range(num_epochs):
 	np.random.shuffle(seq_names_s) 
 	xb_train = xb_train[seq_names_b]
 	xs_train = xs_train[seq_names_s]
-	num_batches = nb_train // batch_size
+	num_batches = nb_train // (batch_size*2)
 
 	print("---------- Train ----------")
 
