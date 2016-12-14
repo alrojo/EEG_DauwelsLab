@@ -5,6 +5,8 @@ from __future__ import print_function
 
 import numpy as np
 from sklearn import metrics as sk
+import gzip
+import os
 
 
 def onehot(t, num_classes):
@@ -33,3 +35,18 @@ def conf_matrix(p, t, num_classes):
     if t.ndim == 1:
         t = one_hot(t, num_classes)
     return np.dot(p.T, t)
+
+
+def load_gz(path): # load a .npy.gz file
+	if path.endswith(".gz"):
+		f = gzip.open(path, 'rb')
+		return np.load(f)
+	else:
+		return np.load(path)
+
+
+def save_gz(path, arr):
+	tmp_path = os.path.join("/tmp", os.path.basename(path) + ".tmp.npy")
+	np.save(tmp_path, arr)
+	os.system("gzip -c %s > %s" % (tmp_path, path))
+	os.remove(tmp_path)
