@@ -97,18 +97,18 @@ class gen_data():
         if 'Xb_train' in self._data_dict.keys():
             if 'tb_train' in self._data_dict.keys():
                 print("Training is found!")
-                self._idcs_train_b = list(range(self._data_dict['Xb_train'].shape[0]))
-                self._idcs_train_s = list(range(self._data_dict['Xs_train'].shape[0]))
+                self._idcs_train_b = np.arange(0, self._data_dict['Xb_train'].shape[0])
+                self._idcs_train_s = np.arange(0, self._data_dict['Xs_train'].shape[0])
                 self._num_features = self._data_dict['Xb_train'].shape[-1]
         if 'X_valid' in self._data_dict.keys():
             if 't_valid' in self._data_dict.keys():
                 print("Valid is found!")
-                self._idcs_valid = list(range(self._data_dict['X_valid'].shape[0]))
+                self._idcs_valid = np.arange(0, self._data_dict['X_valid'].shape[0])
                 self._num_features = self._data_dict['X_valid'].shape[-1]
         if 'X_test' in self._data_dict.keys():
             if 't_test' in self._data_dict.keys():
                 print("Test is found!")
-                self._idcs_test = list(range(self._data_dict['X_test'].shape[0]))
+                self._idcs_test = np.arange(0, self._data_dict['X_test'].shape[0])
                 self._num_features = self._data_dict['X_test'].shape[-1]
 
 
@@ -153,6 +153,8 @@ class gen_data():
 
     def gen_train(self):
         batch = self._batch_init()
+        nb = self._data_dict['Xb_train'].shape[0]
+        ns = self._data_dict['Xs_train'].shape[0]
         iteration = 0
         i = 0
         while True:
