@@ -7,7 +7,7 @@ import os
 
 # User libs
 import utils
-
+np.random.seed(1)
 
 def convert_data(paths_from):
     file_paths = glob.glob(paths_from)

@@ -8,6 +8,7 @@ from sklearn import metrics as sk
 import gzip
 import os
 
+np.random.seed(1)
 
 def onehot(t, num_classes):
     out = np.zeros((t.shape[0], num_classes))

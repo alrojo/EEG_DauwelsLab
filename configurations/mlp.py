@@ -11,6 +11,8 @@ from tensorflow.python.ops.nn import dynamic_rnn, sparse_softmax_cross_entropy_w
 
 import data
 
+tf.set_random_seed(1)
+
 tb_log_freq = 50
 save_freq = 500
 valid_every = 50
@@ -26,6 +28,7 @@ clip_norm = 1
 data_gen = lambda split: data.gen_data(split, num_iterations=num_iterations, batch_size=batch_size)
 
 def model():
+    tf.set_random_seed(1)
     print("building model ...")
     with tf.variable_scope('train'):
         print("building model ...")

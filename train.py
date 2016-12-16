@@ -12,6 +12,9 @@ import os
 import time
 import utils
 
+np.random.seed(1)
+tf.set_random_seed(1)
+
 if len(sys.argv) != 3:
     sys.exit("Usage: python train.py <config_name> <split>")
 
@@ -59,6 +62,7 @@ train_losses = []
 train_accs = []
 
 with tf.Session() as sess:
+    tf.set_random_seed(1)
     if config.tb_log_freq and config_name:
         if not os.path.exists(summary_path) and config.tb_log_freq:
             os.makedirs(summary_path)
