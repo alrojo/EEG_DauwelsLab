@@ -11,9 +11,9 @@ from tensorflow.python.ops.nn import dynamic_rnn, sparse_softmax_cross_entropy_w
 
 import data
 
-tb_log_freq = 500
+tb_log_freq = 50
 save_freq = 500
-valid_every = 500
+valid_every = 50
 max_to_keep = 2000
 batch_size = 512
 num_classes = 2
@@ -35,19 +35,23 @@ def model():
         t_pl = tf.placeholder(tf.int32, [None,])
         print("t_pl", t_pl.get_shape())
         is_training_pl = tf.placeholder(tf.bool)
-        cell_fw = tf.nn.rnn_cell.GRUCell(100)
-        cell_bw = tf.nn.rnn_cell.GRUCell(100)
+        cell_fw = tf.contrib.rnn.LayerNormBasicLSTMCell(200)
+        cell_bw = tf.contrib.rnn.LayerNormBasicLSTMCell(200)
         seq_len = tf.reduce_sum(tf.ones(tf.shape(X_pl), dtype=tf.int32), axis=1)
-        _, enc_states = tf.nn.bidirectional_dynamic_rnn(cell_fw=cell_fw,
+        outputs, _ = tf.nn.bidirectional_dynamic_rnn(cell_fw=cell_fw,
             cell_bw=cell_bw, inputs=X_expand, sequence_length=seq_len,
             dtype=tf.float32)
-        enc_states = tf.concat(1, enc_states)
+        outputs_fw, outputs_bw = outputs
+        print(outputs_fw.get_shape())
+        states_fw = tf.squeeze(tf.slice(outputs_fw, [0, 63, 0], [-1, 1, -1]), squeeze_dims=1)
+        states_bw = tf.squeeze(tf.slice(outputs_bw, [0, 0, 0], [-1, 1, -1]), squeeze_dims=1)
+        enc_states = tf.concat(1, [states_fw, states_bw])
         enc_states_drop = dropout(enc_states, is_training=is_training_pl) 
-        l1 = fully_connected(enc_states_drop, 100, activation_fn=None)
+        l1 = fully_connected(enc_states_drop, 200, activation_fn=None)
         l1 = batch_norm(l1, is_training=is_training_pl)
         l1_relu = relu(l1)
         l1_dropout = dropout(l1_relu, is_training=is_training_pl)
-        l2 = fully_connected(l1_dropout, 100, activation_fn=None)
+        l2 = fully_connected(l1_dropout, 200, activation_fn=None)
         l2 = batch_norm(l2, is_training=is_training_pl)
         l2_relu = relu(l2)
         l_out = fully_connected(l2_relu, num_outputs=num_classes, activation_fn=None)

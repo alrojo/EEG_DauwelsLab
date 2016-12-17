@@ -159,12 +159,14 @@ class gen_data():
         i = 0
         while True:
             # shuffling all batches
-            self._shuffle_train()
+            #self._shuffle_train()
             for idx in self._idcs_train_s:
-                batch['X'][i] = self._data_dict['Xb_train'][idx]
-                batch['X'][i+1] = self._data_dict['Xs_train'][idx]
-                batch['t'][i] = self._data_dict['tb_train'][idx]
-                batch['t'][i+1] = self._data_dict['ts_train'][idx]
+                idx_b = np.random.randint(0, nb, dtype='int32')
+                idx_s = np.random.randint(0, ns, dtype='int32')
+                batch['X'][i] = self._data_dict['Xb_train'][idx_b]
+                batch['X'][i+1] = self._data_dict['Xs_train'][idx_s]
+                batch['t'][i] = self._data_dict['tb_train'][idx_b]
+                batch['t'][i+1] = self._data_dict['ts_train'][idx_s]
                 i += 2
                 if i >= self._batch_size:
                     yield batch

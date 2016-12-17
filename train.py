@@ -109,9 +109,9 @@ with tf.Session() as sess:
                     sum += i
                 valid_outs = np.concatenate(valid_outs, axis=0)[:sum]
                 valid_targets = np.concatenate(valid_targets, axis=0)[:sum]
-                valid_outs_binomial = valid_outs[:, 0]
+                #valid_outs_binomial = valid_outs[:, 0]
                 valid_outs_binomial_rev = valid_outs[:, 1]
-                valid_preds = valid_outs_binomial>0.5
+                valid_preds = valid_outs_binomial_rev>0.5
                 valid_accs = np.mean(np.equal(valid_preds, valid_targets))
                 valid_aucs = utils.auc(valid_targets, valid_outs_binomial_rev)
                 print(" valid_accs, %.3f" % (valid_accs*100))
