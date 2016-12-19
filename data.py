@@ -60,28 +60,27 @@ def load_test(CVsplit):
 
 def load_data(split, train=True):
     dict_out = dict()
+    xb_train, xb_valid, tb_train, tb_valid, xs_train, xs_valid, \
+        ts_train, ts_valid = load_train(split)
     if train:
-        xb_train, xb_valid, tb_train, tb_valid, xs_train, xs_valid, \
-            ts_train, ts_valid = load_train(split)
-
         dict_out['Xb_train'] = xb_train
         dict_out['Xs_train'] = xs_train
         dict_out['tb_train'] = tb_train
         dict_out['ts_train'] = ts_train
-        X_valid = np.concatenate([xb_valid, xs_valid], axis=0)
-        t_valid = np.concatenate([tb_valid, ts_valid], axis=0)
-        idcs_valid = list(range(X_valid.shape[0]))
-        np.random.shuffle(idcs_valid)
-        dict_out['X_valid'] = X_valid[idcs_valid]
-        dict_out['t_valid'] = t_valid[idcs_valid]
     else:
         xb_test, tb_test, xs_test, ts_test = load_test(split)
         X_test = np.concatenate([xb_test, xs_test], axis=0)
         t_test = np.concatenate([tb_test, ts_test], axis=0)
-        idcs_test = list(range(X_test.shape[0]))
-        np.random.shuffle(idcs_test)
-        dict_out['X_test'] = X_test[idcs_test]
-        dict_out['t_test'] = t_test[idcs_test]
+        #idcs_test = list(range(X_test.shape[0]))
+        #np.random.shuffle(idcs_test)
+        dict_out['X_test'] = X_test#[idcs_test]
+        dict_out['t_test'] = t_test#[idcs_test]
+    X_valid = np.concatenate([xb_valid, xs_valid], axis=0)
+    t_valid = np.concatenate([tb_valid, ts_valid], axis=0)
+    #idcs_valid = list(range(X_valid.shape[0]))
+    #np.random.shuffle(idcs_valid)
+    dict_out['X_valid'] = X_valid#[idcs_valid]
+    dict_out['t_valid'] = t_valid#[idcs_valid]
 
     return dict_out
 
