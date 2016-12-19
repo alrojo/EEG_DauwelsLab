@@ -35,8 +35,8 @@ def model():
         t_pl = tf.placeholder(tf.int32, [None,])
         print("t_pl", t_pl.get_shape())
         is_training_pl = tf.placeholder(tf.bool)
-        cell_fw = tf.nn.rnn_cell.GRUCell(200)
-        cell_bw = tf.nn.rnn_cell.GRUCell(200)
+        cell_fw = tf.nn.rnn_cell.GRUCell(205)
+        cell_bw = tf.nn.rnn_cell.GRUCell(205)
         seq_len = tf.reduce_sum(tf.ones(tf.shape(X_pl), dtype=tf.int32), axis=1)
         _, enc_states = tf.nn.bidirectional_dynamic_rnn(cell_fw=cell_fw,
             cell_bw=cell_bw, inputs=X_expand, sequence_length=seq_len,
