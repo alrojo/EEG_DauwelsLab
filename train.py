@@ -57,7 +57,7 @@ if config.save_freq:
 else:
     print("WARNING: Not saving checkpoints!")
 
-data_gen = config.data_gen(split)
+data_gen = config.data_gen(split, train=True)
 train_losses = []
 train_accs = []
 
