@@ -12,21 +12,26 @@ It will take about 2-3 days and cost about $75.
 5. Install [docker](https://docs.docker.com/engine/installation/) with user groups
 6. Install [nvidia-docker](https://github.com/NVIDIA/nvidia-docker)
 
-Run the following command
+Run the following commands
 
->git clone https://github.com/alrojo/EEG_Dauwelslab.git
->nvidia-docker run -v ~/EEG_Dauwelslab:/mnt/ -it alrojo/tf-sklearn-gpu
->cd mnt
->nohup bash train_all.sh > out &
+>$git clone https://github.com/alrojo/EEG_Dauwelslab.git
+
+>$nvidia-docker run -v ~/EEG_Dauwelslab:/mnt/ -it alrojo/tf-sklearn-gpu
+
+>$cd mnt
+
+>$nohup bash train_all.sh > out &
 
 Now click ctrl+q ctrl+p, this should get you out of the docker instance without shutting it down.
 Exit the AWS instance and let it run for about 48 hours, you can see with `nvidia-smi` if the job is still running.
 
 Once the job has completed connect to your instance with port forwarding, such as.
 
->ssh -i "key.pem" -L 8888:localhost:8888 ubuntu@instance.com
->nvidia-docker run -v ~/EEG_Dauwelslab:/mnt/ -p 8888:8888 -it alrojo/tf-sklearn-gpu
->./run_jupyter
+>$ssh -i "key.pem" -L 8888:localhost:8888 ubuntu@instance.com
+
+>$nvidia-docker run -v ~/EEG_Dauwelslab:/mnt/ -p 8888:8888 -it alrojo/tf-sklearn-gpu
+
+>$./run_jupyter
 
 Now go into your browser and type `localhost:8888`.
 This should open an ipynb at the docker root.
